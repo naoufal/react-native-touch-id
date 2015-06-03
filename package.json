@@ -1,0 +1,34 @@
+{
+  "name": "react-native-touch-id",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "react-native": "^0.4.4"
+  },
+  "main": "index.ios.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/naoufal/react-native-touch-id.git"
+  },
+  "keywords": [
+    "react-native",
+    "react",
+    "native",
+    "touch-id",
+    "react-component",
+    "react-native-component",
+    "authentication",
+    "auth",
+    "authenticate",
+    "mobile"
+  ],
+  "author": "Naoufal Kadhom <naoufalkadhom@gmail.com> (https://github.com/naoufal)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/naoufal/react-native-touch-id/issues"
+  },
+  "homepage": "https://github.com/naoufal/react-native-touch-id"
+}
