@@ -1,13 +1,13 @@
 {
   "name": "react-native-touch-id",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
     "react-native": "^0.4.4"
   },
-  "main": "index.ios.js",
+  "main": "TouchID.ios.js",
   "devDependencies": {},
   "repository": {
     "type": "git",
