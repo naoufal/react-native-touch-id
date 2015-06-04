@@ -3,9 +3,9 @@
 [![npm version](https://img.shields.io/npm/v/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 
-![touch-id-logo](https://cloud.githubusercontent.com/assets/1627824/7960608/e915ab4a-09cf-11e5-8dfb-a4e5bfa563b2.png)
+__`react-native-touch-id`__ is a React Native library for authenticating users with Touch ID.
 
-__`react-native-touch-id`__ is a library for authenticating users with Touch ID.
+![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
 ## Documentation
 - [Install](https://github.com/naoufal/react-native-touch-id#install)
@@ -13,7 +13,7 @@ __`react-native-touch-id`__ is a library for authenticating users with Touch ID.
 - [Example](https://github.com/naoufal/react-native-touch-id#example)
 - [Methods](https://github.com/naoufal/react-native-touch-id#methods)
 - [Errors](https://github.com/naoufal/react-native-touch-id#errors)
-- [Todo](https://github.com/naoufal/react-native-touch-id#roadmap)
+- [Todo](https://github.com/naoufal/react-native-touch-id#todo)
 - [License](https://github.com/naoufal/react-native-touch-id#license)
 
 ## Install
@@ -29,7 +29,7 @@ In order to use Touch ID, you must first link the library your project.  There's
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
 ```js
-var TouchID = require('NativeModules').TouchID;
+var TouchID = require('react-native-touch-id');
 ```
 
 Requesting Touch ID authentication is as simple as calling:
@@ -42,7 +42,7 @@ TouchID.authenticate(function(error, success) {
 ## Example
 Using Touch ID in your app will usually look like this:
 ```js
-var TouchID = require('NativeModules').TouchID;
+var TouchID = require('react-native-touch-id');
 
 var YourComponent = React.createClass({
   _pressHandler() {
@@ -112,9 +112,9 @@ Below is a list of error codes that can be returned:
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
 
 ## Todo
-- [ ] Add GIF example
 - [ ] Add `authReason` argument
-- [ ] Add `error` descriptions
+- [ ] Promisify `authenticate` method
+- [ ] Return better `error` objects
 
 ## License
 Copyright (c) 2015, Naoufal Kadhom
@@ -122,7 +122,3 @@ Copyright (c) 2015, Naoufal Kadhom
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
 THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
-
-***
-
-_The Touch ID logo is a trademark or registered trademark of Apple, Inc._
