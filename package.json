@@ -1,6 +1,6 @@
 {
   "name": "react-native-touch-id",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "React Native authentication with the native Touch ID popup.",
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
@@ -31,5 +31,9 @@
   "bugs": {
     "url": "https://github.com/naoufal/react-native-touch-id/issues"
   },
-  "homepage": "https://github.com/naoufal/react-native-touch-id"
+  "homepage": "https://github.com/naoufal/react-native-touch-id",
+  "jshintConfig": {
+    "esnext": true,
+    "node": true
+  }
 }

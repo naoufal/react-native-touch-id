@@ -34,8 +34,13 @@ var TouchID = require('react-native-touch-id');
 
 Requesting Touch ID authentication is as simple as calling:
 ```js
-TouchID.authenticate(function(error, success) {
-  // Your lovely code
+TouchID.authenticate()
+  .then((success) => {
+    // Success code
+  })
+  .catch((error) => {
+    // Failure code
+  });
 });
 ```
 
@@ -46,13 +51,13 @@ var TouchID = require('react-native-touch-id');
 
 var YourComponent = React.createClass({
   _pressHandler() {
-    TouchID.authenticate(function(error, success) {
-      if (error) {
-        // Failure code
-      } else {
-        // Success code
-      }
-    });
+    TouchID.authenticate()
+      .then((success) => {
+        AlertIOS.alert('Authenticated Successfully');
+      })
+      .catch((error) => {
+        AlertIOS.alert('Authentication Failed');
+      });
   },
 
   render() {
@@ -73,22 +78,21 @@ var YourComponent = React.createClass({
 ```
 
 ## Methods
-### authenticate(callback)
-Returns a Touch ID authentication success or error.  If there was a problem authenticating, and `error` object will be returned with the error reason.
-
-__Arguments__
-- `callback` - A _Function_ with `error` and `success` arguments.
+### authenticate()
+Attempts to authenticate with Touch ID and passes result to callback, along with a TouchIDError if there is any.
+Returns a `Promise` object.
 
 __Examples__
 ```js
-TouchID.authenticate(function(error, success) {
-  if (error) {
-    // Failure code
-    console.log(error.message);
-  } else {
+TouchID.authenticate()
+  .then((success) => {
     // Success code
     console.log('User authenticated with TouchID');
-  }
+  })
+  .catch((error) => {
+    // Failure code
+    console.log(error);
+  });
 });
 ```
 
@@ -113,8 +117,6 @@ _More information on errors can be found in [Apple's Documentation](https://deve
 
 ## Todo
 - [ ] Add `authReason` argument
-- [ ] Promisify `authenticate` method
-- [ ] Return better `error` objects
 
 ## License
 Copyright (c) 2015, Naoufal Kadhom
