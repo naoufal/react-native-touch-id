@@ -13,7 +13,19 @@ var ERRORS = require('./data/errors');
  */
 
 var TouchID = {
-  authenticate() {
+  authenticate(callback) {
+    // Return callback function if a callback is passed
+    if (typeof callback === 'function') {
+      return NativeTouchID.authenticate(function(error, success) {
+        if (error) {
+          return callback(createError(error.message));
+        }
+
+        callback(null, success);
+      });
+    }
+
+    // Return Promise if no callback is passed
     return new Promise(function(resolve, reject) {
       NativeTouchID.authenticate(function(error, success) {
         // Return error if rejected
