@@ -1,12 +1,12 @@
 {
   "name": "react-native-touch-id",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "React Native authentication with the native Touch ID popup.",
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
-    "react-native": "^0.4.4"
+    "react-native": ">=0.4.4"
   },
   "main": "TouchID.ios.js",
   "devDependencies": {},
