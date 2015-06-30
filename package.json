@@ -5,11 +5,10 @@
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
-  "dependencies": {
+  "devDependencies": {
     "react-native": ">=0.4.4"
   },
   "main": "TouchID.ios.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/naoufal/react-native-touch-id.git"

@@ -6,7 +6,8 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(authenticate: (RCTResponseSenderBlock)callback)
+RCT_EXPORT_METHOD(authenticate: (NSString *)reason
+                  callback: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
@@ -15,7 +16,7 @@ RCT_EXPORT_METHOD(authenticate: (RCTResponseSenderBlock)callback)
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         // Attempt Authentification
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
-                localizedReason: @" "
+                localizedReason: reason
                           reply:^(BOOL success, NSError *error)
          {
              // Failed Authentication
