@@ -42,7 +42,6 @@ TouchID.authenticate()
   .catch(error => {
     // Failure code
   });
-});
 ```
 
 ## Example
@@ -66,8 +65,7 @@ var YourComponent = React.createClass({
       <View>
         ...
         <TouchableHighlight
-          onPress={this._pressHandler}
-        />
+          onPress={this._pressHandler}>
           <Text>
             Authenticate with Touch ID
           </Text>
@@ -94,7 +92,6 @@ TouchID.authenticate()
     // Failure code
     console.log(error);
   });
-});
 ```
 
 ### isSupported()
@@ -112,7 +109,6 @@ TouchID.isSupported()
     // Failure code
     console.log(error);
   });
-});
 ```
 
 ## Errors
