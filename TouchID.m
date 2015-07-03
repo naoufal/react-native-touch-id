@@ -6,6 +6,20 @@
 
 RCT_EXPORT_MODULE();
 
+RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
+{
+    LAContext *context = [[LAContext alloc] init];
+    NSError *error;
+    
+    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+        callback(@[[NSNull null], @true]);
+        // Device does not support TouchID
+    } else {
+        callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
+        return;
+    }
+}
+
 RCT_EXPORT_METHOD(authenticate: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];

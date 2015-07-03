@@ -36,10 +36,10 @@ var TouchID = require('react-native-touch-id');
 Requesting Touch ID authentication is as simple as calling:
 ```js
 TouchID.authenticate()
-  .then((success) => {
+  .then(success => {
     // Success code
   })
-  .catch((error) => {
+  .catch(error => {
     // Failure code
   });
 });
@@ -53,10 +53,10 @@ var TouchID = require('react-native-touch-id');
 var YourComponent = React.createClass({
   _pressHandler() {
     TouchID.authenticate()
-      .then((success) => {
+      .then(success => {
         AlertIOS.alert('Authenticated Successfully');
       })
-      .catch((error) => {
+      .catch(error => {
         AlertIOS.alert('Authentication Failed');
       });
   },
@@ -80,17 +80,35 @@ var YourComponent = React.createClass({
 
 ## Methods
 ### authenticate()
-Attempts to authenticate with Touch ID and passes result to callback, along with a TouchIDError if there is any.
+Attempts to authenticate with Touch ID.
 Returns a `Promise` object.
 
 __Examples__
 ```js
 TouchID.authenticate()
-  .then((success) => {
+  .then(success => {
     // Success code
     console.log('User authenticated with TouchID');
   })
-  .catch((error) => {
+  .catch(error => {
+    // Failure code
+    console.log(error);
+  });
+});
+```
+
+### isSupported()
+Verify's that Touch ID is supported.
+Returns a `Promise` object.
+
+__Examples__
+```js
+TouchID.isSupported()
+  .then(supported => {
+    // Success code
+    console.log('TouchID is supported.');
+  })
+  .catch(error => {
     // Failure code
     console.log(error);
   });
