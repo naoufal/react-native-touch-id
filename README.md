@@ -64,8 +64,7 @@ var YourComponent = React.createClass({
     return (
       <View>
         ...
-        <TouchableHighlight
-          onPress={this._pressHandler}>
+        <TouchableHighlight onPress={this._pressHandler}>
           <Text>
             Authenticate with Touch ID
           </Text>
