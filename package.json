@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node_modules/react-native/packager/packager.sh"
   },
-  "devDependencies": {
+  "peerDependencies": {
     "react-native": ">=0.4.4"
   },
   "main": "TouchID.ios.js",

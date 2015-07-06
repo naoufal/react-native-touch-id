@@ -9,17 +9,35 @@ var {
   AppRegistry,
   StyleSheet,
   Text,
+    AlertIOS,
+    TouchableHighlight,
   View,
 } = React;
-var TouchID = require('./TouchID.ios')
-var NativeTouchID = require('NativeModules').TouchID;
+var TouchID = require('./TouchID.ios');
+
 var example = React.createClass({
-    componentDidMount: function(){
-        TouchID.authenticate("", function(error, success){
+    useTouchID: function(){
+        TouchID.authenticate("Test Reason", function(error, success){
             if(error){
-                console.log(error)
+                AlertIOS.alert(
+                    'Error',
+                    "Touch ID error=" + error.message,
+                    [
+                        {
+                            text: 'Ok'
+                        }
+                    ]
+                )
             } else {
-                console.log(success)
+                AlertIOS.alert(
+                    'Success',
+                    "Authentication Successful",
+                    [
+                        {
+                            text: 'Ok'
+                        }
+                    ]
+                )
             }
         })
     },
@@ -27,7 +45,7 @@ var example = React.createClass({
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcome to React Native TouchID
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
@@ -36,6 +54,11 @@ var example = React.createClass({
           Press Cmd+R to reload,{'\n'}
           Cmd+D or shake for dev menu
         </Text>
+          <TouchableHighlight
+              style = {styles.button}
+              onPress = {this.useTouchID}>
+              <Text style={styles.buttonText}> Authenticate with TouchID </Text>
+          </TouchableHighlight>
       </View>
     );
   }
@@ -58,6 +81,17 @@ var styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+    button:{
+        padding:10,
+        marginTop: 20,
+        backgroundColor: "#24c3c8",
+    },
+    buttonText:{
+        fontWeight: "bold",
+        fontSize: 20,
+        color: "white",
+    }
+
 });
 
 AppRegistry.registerComponent('example', () => example);
