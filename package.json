@@ -26,6 +26,11 @@
     "mobile"
   ],
   "author": "Naoufal Kadhom <naoufalkadhom@gmail.com> (https://github.com/naoufal)",
+  "contributors": [{
+    "name": "Rishabh Mehan",
+    "email": "darkrishabh@gmail.com",
+    "url": "https://github.com/darkrishabh"
+  }],
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/naoufal/react-native-touch-id/issues"
