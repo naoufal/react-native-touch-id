@@ -11,7 +11,9 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
-    
+  if ( [[reason stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0 ){
+    reason = @" ";
+  }
     // Device has TouchID
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         // Attempt Authentification
