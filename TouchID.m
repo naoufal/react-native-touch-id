@@ -65,7 +65,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
              }
              
              // Authenticated Successfully
-             callback(@[[NSNull null], @"Authenticat with Touch ID."]);
+             callback(@[[NSNull null], @"Authenticated with Touch ID."]);
          }];
         
         // Device does not support TouchID
