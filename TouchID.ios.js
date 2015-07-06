@@ -14,6 +14,10 @@ var ERRORS = require('./data/errors');
 
 var TouchID = {
   authenticate(reason, callback) {
+      // if user did not pass a reason or the reason was undefined
+      if(!reason){
+          reason = "";
+      }
     // Return callback function if a callback is passed
     if (typeof callback === 'function') {
       return NativeTouchID.authenticate(reason, function(error, success) {
