@@ -35,7 +35,7 @@ var TouchID = require('react-native-touch-id');
 
 Requesting Touch ID authentication is as simple as calling:
 ```js
-TouchID.authenticate()
+TouchID.authenticate(reasonText)
   .then((success) => {
     // Success code
   })
@@ -52,7 +52,8 @@ var TouchID = require('react-native-touch-id');
 
 var YourComponent = React.createClass({
   _pressHandler() {
-    TouchID.authenticate()
+  var reasonText = "Your reason string for the TouchID dialogue"
+    TouchID.authenticate(reasonText)
       .then((success) => {
         AlertIOS.alert('Authenticated Successfully');
       })
@@ -79,13 +80,16 @@ var YourComponent = React.createClass({
 ```
 
 ## Methods
-### authenticate()
+### authenticate(reason)
 Attempts to authenticate with Touch ID and passes result to callback, along with a TouchIDError if there is any.
+
+Takes in a `reason` string. Which will be displayed in the TouchID dialogue.
+
 Returns a `Promise` object.
 
 __Examples__
 ```js
-TouchID.authenticate()
+TouchID.authenticate(reason)
   .then((success) => {
     // Success code
     console.log('User authenticated with TouchID');
@@ -117,7 +121,7 @@ Below is a list of error codes that can be returned:
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
 
 ## Todo
-- [ ] Add `authReason` argument
+ ~~Add `authReason` argument~~
 
 ## License
 Copyright (c) 2015, Naoufal Kadhom
