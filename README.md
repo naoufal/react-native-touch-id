@@ -14,7 +14,6 @@ __`react-native-touch-id`__ is a React Native library for authenticating users w
 - [Example](https://github.com/naoufal/react-native-touch-id#example)
 - [Methods](https://github.com/naoufal/react-native-touch-id#methods)
 - [Errors](https://github.com/naoufal/react-native-touch-id#errors)
-- [Todo](https://github.com/naoufal/react-native-touch-id#todo)
 - [License](https://github.com/naoufal/react-native-touch-id#license)
 
 ## Install
@@ -35,7 +34,7 @@ var TouchID = require('react-native-touch-id');
 
 Requesting Touch ID authentication is as simple as calling:
 ```js
-TouchID.authenticate()
+TouchID.authenticate('to demo this react-native component')
   .then(success => {
     // Success code
   })
@@ -51,7 +50,7 @@ var TouchID = require('react-native-touch-id');
 
 var YourComponent = React.createClass({
   _pressHandler() {
-    TouchID.authenticate()
+    TouchID.authenticate('to demo this react-native component')
       .then(success => {
         AlertIOS.alert('Authenticated Successfully');
       })
@@ -76,13 +75,16 @@ var YourComponent = React.createClass({
 ```
 
 ## Methods
-### authenticate()
+### authenticate(reason)
 Attempts to authenticate with Touch ID.
 Returns a `Promise` object.
 
+__Arguments__
+- `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
+
 __Examples__
 ```js
-TouchID.authenticate()
+TouchID.authenticate('to demo this react-native component')
   .then(success => {
     // Success code
     console.log('User authenticated with TouchID');
@@ -128,9 +130,6 @@ Below is a list of error codes that can be returned:
 | `RCTTouchIDNotSupported` | Device does not support Touch ID. |
 
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
-
-## Todo
-- [ ] Add `authReason` argument
 
 ## License
 Copyright (c) 2015, Naoufal Kadhom

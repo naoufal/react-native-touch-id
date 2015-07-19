@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>9F5B1B62-8B3F-400B-9F40-F12FFE3EF071</string>
+	<key>IDESourceControlProjectName</key>
+	<string>project</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1CD020374FA2F1A50BAE8C5E41B060AD6A9501A1</key>
+		<string>github.com:naoufal/react-native-touch-id.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>TouchID.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1CD020374FA2F1A50BAE8C5E41B060AD6A9501A1</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:naoufal/react-native-touch-id.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1CD020374FA2F1A50BAE8C5E41B060AD6A9501A1</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1CD020374FA2F1A50BAE8C5E41B060AD6A9501A1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>react-native-touch-id</string>
+		</dict>
+	</array>
+</dict>
+</plist>

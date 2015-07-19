@@ -1,15 +1,13 @@
 {
   "name": "react-native-touch-id",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "React Native authentication with the native Touch ID popup.",
   "scripts": {
-    "start": "node_modules/react-native/packager/packager.sh"
-  },
-  "dependencies": {
-    "react-native": ">=0.4.4"
+    "lint": "node_modules/.bin/eslint .",
+    "start": "node_modules/react-native/packager/packager.sh",
+    "test": "npm run lint"
   },
   "main": "TouchID.ios.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/naoufal/react-native-touch-id.git"
@@ -32,8 +30,11 @@
     "url": "https://github.com/naoufal/react-native-touch-id/issues"
   },
   "homepage": "https://github.com/naoufal/react-native-touch-id",
-  "jshintConfig": {
-    "esnext": true,
-    "node": true
+  "peerDependencies": {
+    "react-native": ">=0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "0.24.1",
+    "eslint-plugin-react": "2.7.1"
   }
 }

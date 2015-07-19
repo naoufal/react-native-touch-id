@@ -4,9 +4,18 @@
  */
 'use strict';
 
-var NativeTouchID = require('NativeModules').TouchID;
-var invariant = require('invariant');
+var React = require('react-native');
+var {
+  NativeModules
+} = React;
+
+var NativeTouchID = NativeModules.TouchID;
 var ERRORS = require('./data/errors');
+
+/*eslint-disable no-unused-vars*/
+var invariant = require('invariant');
+/*eslint-enable no-unused-vars*/
+
 
 /**
  * High-level docs for the TouchID iOS API can be written here.
@@ -15,7 +24,7 @@ var ERRORS = require('./data/errors');
 var TouchID = {
   isSupported: function() {
     return new Promise(function(resolve, reject) {
-      NativeTouchID.isSupported(function(error, supported) {
+      NativeTouchID.isSupported(function(error) {
         if (error) {
           return reject(createError(error.message));
         }
@@ -25,9 +34,19 @@ var TouchID = {
     });
   },
 
-  authenticate() {
+  authenticate(reason) {
+    var authReason;
+
+    // Set auth reason
+    if (reason) {
+      authReason = reason;
+    // Set as empty string if no reason is passed
+    } else {
+      authReason = ' ';
+    }
+
     return new Promise(function(resolve, reject) {
-      NativeTouchID.authenticate(function(error, success) {
+      NativeTouchID.authenticate(authReason, function(error) {
         // Return error if rejected
         if (error) {
           return reject(createError(error.message));
@@ -39,13 +58,6 @@ var TouchID = {
   }
 };
 
-function createError(error) {
-  var details = ERRORS[error];
-  details.name = error;
-
-  return new TouchIDError(error, details);
-}
-
 function TouchIDError(name, details) {
   this.name = name || 'TouchIDError';
   this.message = details.message || 'Touch ID Error';
@@ -54,5 +66,12 @@ function TouchIDError(name, details) {
 
 TouchIDError.prototype = Object.create(Error.prototype);
 TouchIDError.prototype.constructor = TouchIDError;
+
+function createError(error) {
+  var details = ERRORS[error];
+  details.name = error;
+
+  return new TouchIDError(error, details);
+}
 
 module.exports = TouchID;
