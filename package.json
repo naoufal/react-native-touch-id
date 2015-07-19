@@ -7,9 +7,6 @@
     "start": "node_modules/react-native/packager/packager.sh",
     "test": "npm run lint"
   },
-  "peerDependencies": {
-    "react-native": ">=0.4.0"
-  },
   "main": "TouchID.ios.js",
   "repository": {
     "type": "git",
@@ -33,9 +30,8 @@
     "url": "https://github.com/naoufal/react-native-touch-id/issues"
   },
   "homepage": "https://github.com/naoufal/react-native-touch-id",
-  "jshintConfig": {
-    "esnext": true,
-    "node": true
+  "peerDependencies": {
+    "react-native": ">=0.4.0"
   },
   "devDependencies": {
     "eslint": "0.24.1",
