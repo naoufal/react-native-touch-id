@@ -9,7 +9,7 @@
 var warning = require('warning');
 
 var TouchID = {
-  test: function() {
+  test: function test() {
     warning('Not yet implemented for Android.');
   }
 };

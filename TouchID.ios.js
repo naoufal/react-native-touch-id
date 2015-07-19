@@ -12,9 +12,9 @@ var {
 var NativeTouchID = NativeModules.TouchID;
 var ERRORS = require('./data/errors');
 
-/*eslint-disable no-unused-vars*/
+/* eslint-disable no-unused-vars*/
 var invariant = require('invariant');
-/*eslint-enable no-unused-vars*/
+/* eslint-enable no-unused-vars*/
 
 
 /**
@@ -22,7 +22,7 @@ var invariant = require('invariant');
  */
 
 var TouchID = {
-  isSupported: function() {
+  isSupported() {
     return new Promise(function(resolve, reject) {
       NativeTouchID.isSupported(function(error) {
         if (error) {
