@@ -23,7 +23,7 @@ npm i --save react-native-touch-id
 
 ## Usage
 ### Linking the Library
-In order to use Touch ID, you must first link the library your project.  There's excellent documentation on how to do this in the [React Native Docs](https://facebook.github.io/react-native/docs/linking-libraries.html#content).
+In order to use Touch ID, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
 ### Requesting Touch ID Authentication
 Once you've linked the library, you'll want to make it available to your app by requiring it:
@@ -132,7 +132,7 @@ Below is a list of error codes that can be returned:
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
 
 ## License
-Copyright (c) 2015, Naoufal Kadhom
+Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com/)
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
