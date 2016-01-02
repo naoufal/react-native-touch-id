@@ -29,7 +29,7 @@ var TouchID = {
     });
   },
 
-  authenticate(reason) {
+  authenticate(reason, fallback) {
     var authReason;
 
     // Set auth reason
@@ -41,7 +41,7 @@ var TouchID = {
     }
 
     return new Promise(function(resolve, reject) {
-      NativeTouchID.authenticate(authReason, function(error) {
+      NativeTouchID.authenticate(authReason, fallback, function(error) {
         // Return error if rejected
         if (error) {
           return reject(createError(error.message));
