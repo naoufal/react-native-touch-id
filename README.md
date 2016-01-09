@@ -1,10 +1,10 @@
-# react-native-touch-id
+# React Native Touch ID
 
 [![npm version](https://img.shields.io/npm/v/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-touch-id.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-touch-id)
 
-__`react-native-touch-id`__ is a React Native library for authenticating users with Touch ID.
+React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with Touch ID.
 
 ![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
