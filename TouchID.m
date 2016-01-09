@@ -21,22 +21,57 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 }
 
 RCT_EXPORT_METHOD(authenticate: (NSString *)reason
+            fallbackToPasscode: (BOOL) fallbackToPasscode
                       callback: (RCTResponseSenderBlock)callback)
 {
-    LAContext *context = [[LAContext alloc] init];
-    NSError *error;
+    [self authenticateWithPolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+                          reason:reason
+               completionHandler:^(NSInteger errorCode, NSString* errorReason) {
 
-    // Device has TouchID
-    if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
+        if (errorCode == errSecSuccess) {
+            callback(@[[NSNull null], @"Authenticated with Touch ID."]);
+            return;
+        }
+
+        // check if we can fallback
+        if (!fallbackToPasscode || (
+             errorCode != LAErrorTouchIDNotAvailable &&
+             errorCode != LAErrorTouchIDNotEnrolled
+            )) {
+            callback(@[RCTMakeError(errorReason, nil, nil)]);
+            return;
+        }
+
+        [self authenticateWithPolicy:LAPolicyDeviceOwnerAuthentication
+                              reason:reason
+                   completionHandler:^(NSInteger errorCode, NSString *errorReason) {
+
+            if (errorCode == errSecSuccess) {
+                callback(@[[NSNull null], @"Authenticated with passcode."]);
+                return;
+            }
+
+            callback(@[RCTMakeError(errorReason, nil, nil)]);
+        }];
+    }];
+}
+
+- (void) authenticateWithPolicy:(LAPolicy) policy
+               reason:(NSString *)reason
+    completionHandler:(void(^) (NSInteger, NSString *))handler
+{
+    LAContext *context = [[LAContext alloc] init];
+    __block NSString* errorReason;
+    NSError* error;
+
+    if ([context canEvaluatePolicy:policy error:&error]) {
         // Attempt Authentification
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+        [context evaluatePolicy:policy
                 localizedReason:reason
                           reply:^(BOOL success, NSError *error)
          {
              // Failed Authentication
              if (error) {
-                 NSString *errorReason;
-
                  switch (error.code) {
                      case LAErrorAuthenticationFailed:
                          errorReason = @"LAErrorAuthenticationFailed";
@@ -66,24 +101,36 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                          errorReason = @"LAErrorTouchIDNotEnrolled";
                          break;
 
+                     case LAErrorTouchIDLockout:
+                         errorReason = @"LAErrorTouchIDLockout";
+                         break;
                      default:
                          errorReason = @"RCTTouchIDUnknownError";
                          break;
                  }
 
                  NSLog(@"Authentication failed: %@", errorReason);
-                 callback(@[RCTMakeError(errorReason, nil, nil)]);
+                 handler(error.code, errorReason);
                  return;
              }
 
+             handler(errSecSuccess, nil);
              // Authenticated Successfully
-             callback(@[[NSNull null], @"Authenticat with Touch ID."]);
          }];
 
-        // Device does not support TouchID
     } else {
-        callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
-        return;
+        // Device does not support TouchID
+        NSInteger errCode;
+        NSString* errReason;
+        if (policy == LAPolicyDeviceOwnerAuthenticationWithBiometrics) {
+            errCode = LAErrorTouchIDNotAvailable;
+            errReason = @"RCTTouchIDNotSupported";
+        } else {
+            errCode = LAErrorAuthenticationFailed;
+            errReason = @"LAErrorAuthenticationFailed";
+        }
+
+        handler(errCode, errReason);
     }
 }
 
