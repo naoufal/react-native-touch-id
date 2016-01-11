@@ -1,22 +1,21 @@
 {
-  "name": "react-native-touch-id",
-  "version": "1.2.3",
-  "description": "React Native authentication with the native Touch ID popup.",
+  "name": "react-native-local-auth",
+  "version": "1.0.0",
+  "description": "React Native local authentication with touch id or passcode",
   "scripts": {
-    "lint": "node_modules/.bin/eslint .",
-    "start": "node_modules/react-native/packager/packager.sh",
-    "test": "npm run lint"
+    "test": "Echo \"no tests\" && exit 1"
   },
-  "main": "TouchID.ios.js",
+  "main": "LocalAuth.ios.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/naoufal/react-native-touch-id.git"
+    "url": "https://github.com/tradle/react-native-local-auth.git"
   },
   "keywords": [
     "react-native",
     "react",
     "native",
     "touch-id",
+    "passcode",
     "react-component",
     "react-native-component",
     "authentication",
@@ -24,14 +23,10 @@
     "authenticate",
     "mobile"
   ],
-  "author": "Naoufal Kadhom <naoufalkadhom@gmail.com> (https://github.com/naoufal)",
+  "author": "Mark Vayngrib <mark@tradle.io> (https://github.com/mvayngrib)",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/naoufal/react-native-touch-id/issues"
+    "url": "https://github.com/tradle/react-native-local-auth/issues"
   },
-  "homepage": "https://github.com/naoufal/react-native-touch-id",
-  "devDependencies": {
-    "eslint": "0.24.1",
-    "eslint-plugin-react": "2.7.1"
-  }
+  "homepage": "https://github.com/tradle/react-native-local-auth"
 }

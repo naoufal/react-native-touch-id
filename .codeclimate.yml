@@ -1,5 +1,5 @@
 exclude_paths:
-  - "TouchID.xcodeproj"
+  - "LocalAuth.xcodeproj"
   - "**/*.h"
   - "**/*.m"
   - "**/*.swift"

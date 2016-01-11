@@ -1,62 +1,39 @@
-# React Native Touch ID
+# react-native-local-auth
 
-[![npm version](https://img.shields.io/npm/v/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
-[![npm downloads](https://img.shields.io/npm/dm/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
-[![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-touch-id.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-touch-id)
-
-React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with Touch ID.
-
-![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
+Authenticate users with Touch ID, with optional fallback to passcode (if TouchID is unavailable or not enrolled). Most of the code and documentation is originally from [react-native-touch-id](https://github.com/naoufal/react-native-touch-id), but [naoufal](https://github.com/naoufal) and I decided fallback to passcode didn't belong in [react-native-touch-id](https://github.com/naoufal/react-native-touch-id).
 
 ## Documentation
-- [Install](https://github.com/naoufal/react-native-touch-id#install)
-- [Usage](https://github.com/naoufal/react-native-touch-id#usage)
-- [Example](https://github.com/naoufal/react-native-touch-id#example)
-- [Methods](https://github.com/naoufal/react-native-touch-id#methods)
-- [Errors](https://github.com/naoufal/react-native-touch-id#errors)
-- [License](https://github.com/naoufal/react-native-touch-id#license)
+- [Install](https://github.com/tradle/react-native-local-auth#install)
+- [Usage](https://github.com/tradle/react-native-local-auth#usage)
+- [Errors](https://github.com/tradle/react-native-local-auth#errors)
+- [License](https://github.com/tradle/react-native-local-auth#license)
 
 ## Install
 ```shell
-npm i --save react-native-touch-id
+npm i --save react-native-local-auth
 ```
+
+### Linking the Library
+First link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
 ## Usage
-### Linking the Library
-In order to use Touch ID, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
-
-### Requesting Touch ID Authentication
-Once you've linked the library, you'll want to make it available to your app by requiring it:
 
 ```js
-var TouchID = require('react-native-touch-id');
-```
-
-Requesting Touch ID authentication is as simple as calling:
-```js
-TouchID.authenticate('to demo this react-native component')
-  .then(success => {
-    // Success code
-  })
-  .catch(error => {
-    // Failure code
-  });
-```
-
-## Example
-Using Touch ID in your app will usually look like this:
-```js
-var TouchID = require('react-native-touch-id');
+var LocalAuth = require('react-native-local-auth')
 
 var YourComponent = React.createClass({
   _pressHandler() {
-    TouchID.authenticate('to demo this react-native component')
+      LocalAuth.authenticate({
+          reason: 'this is a secure area, please authenticate yourself',
+          falbackToPasscode: true,    // fallback to passcode on cancel
+          suppressEnterPassword: true // disallow Enter Password fallback
+        })
       .then(success => {
-        AlertIOS.alert('Authenticated Successfully');
+        AlertIOS.alert('Authenticated Successfully')
       })
       .catch(error => {
-        AlertIOS.alert('Authentication Failed');
-      });
+        AlertIOS.alert('Authentication Failed', error.message)
+      })
   },
 
   render() {
@@ -65,55 +42,21 @@ var YourComponent = React.createClass({
         ...
         <TouchableHighlight onPress={this._pressHandler}>
           <Text>
-            Authenticate with Touch ID
+            Authenticate with Touch ID / Passcode
           </Text>
         </TouchableHighlight>
       </View>
-    );
+    )
   }
-});
+})
 ```
 
-## Methods
-### authenticate(reason)
-Attempts to authenticate with Touch ID.
+### hasTouchID()
+check if Touch ID is supported.
 Returns a `Promise` object.
-
-__Arguments__
-- `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
-
-__Examples__
-```js
-TouchID.authenticate('to demo this react-native component')
-  .then(success => {
-    // Success code
-    console.log('User authenticated with TouchID');
-  })
-  .catch(error => {
-    // Failure code
-    console.log(error);
-  });
-```
-
-### isSupported()
-Verify's that Touch ID is supported.
-Returns a `Promise` object.
-
-__Examples__
-```js
-TouchID.isSupported()
-  .then(supported => {
-    // Success code
-    console.log('TouchID is supported.');
-  })
-  .catch(error => {
-    // Failure code
-    console.log(error);
-  });
-```
 
 ## Errors
-There are various reasons why authenticating with Touch ID may fail.  Whenever calling Touch ID authentication fails, `TouchID.authenticate` will return an error code representing the reason.
+There are various reasons why authenticating with Touch ID or device passcode may fail.  Whenever authentication fails, `LocalAuth.authenticate` will return an error code representing the reason.
 
 Below is a list of error codes that can be returned:
 
@@ -132,8 +75,5 @@ Below is a list of error codes that can be returned:
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
 
 ## License
-Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com/)
 
-Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
-
-THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ISC. [react-native-touch-id](https://github.com/naoufal/react-native-touch-id) license also included.
