@@ -3,10 +3,19 @@
 Authenticate users with Touch ID, with optional fallback to passcode (if TouchID is unavailable or not enrolled). Most of the code and documentation is originally from [react-native-touch-id](https://github.com/naoufal/react-native-touch-id), but [naoufal](https://github.com/naoufal) and I decided fallback to passcode didn't belong in [react-native-touch-id](https://github.com/naoufal/react-native-touch-id).
 
 ## Documentation
+- [UI](https://github.com/tradle/react-native-local-auth#ui)
 - [Install](https://github.com/tradle/react-native-local-auth#install)
 - [Usage](https://github.com/tradle/react-native-local-auth#usage)
 - [Errors](https://github.com/tradle/react-native-local-auth#errors)
 - [License](https://github.com/tradle/react-native-local-auth#license)
+
+## UI
+
+If TouchID is supported and enrolled
+![Touch ID](gifs/touchID.gif)
+
+If TouchID is not supported or not enrolled
+![fallback to passcode](gifs/fallback to passcode.gif)
 
 ## Install
 ```shell
