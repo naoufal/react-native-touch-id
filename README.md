@@ -1,6 +1,6 @@
 # react-native-local-auth
 
-Authenticate users with Touch ID, with optional fallback to passcode (if TouchID is unavailable or not enrolled). Most of the code and documentation is originally from [react-native-touch-id](https://github.com/naoufal/react-native-touch-id), but [naoufal](https://github.com/naoufal) and I decided fallback to passcode didn't belong in [react-native-touch-id](https://github.com/naoufal/react-native-touch-id).
+Authenticate users with Touch ID, with optional fallback to passcode (if TouchID is unavailable or not enrolled). Most of the code and documentation is originally from [react-native-touch-id](https://github.com/naoufal/react-native-touch-id), but together with [naoufal](https://github.com/naoufal) we decided that fallback to passcode didn't belong in [react-native-touch-id](https://github.com/naoufal/react-native-touch-id).
 
 ## Documentation
 - [UI](https://github.com/tradle/react-native-local-auth#ui)
@@ -11,10 +11,12 @@ Authenticate users with Touch ID, with optional fallback to passcode (if TouchID
 
 ## UI
 
-If TouchID is supported and enrolled
+If TouchID is supported and enrolled (in this gif, 1st touch fails, 2nd succeeds)
+
 ![Touch ID](gifs/touchID.gif)
 
-If TouchID is not supported or not enrolled
+If TouchID is not supported or not enrolled, you can fallback to device passcode
+
 ![fallback to passcode](gifs/fallback to passcode.gif)
 
 ## Install
@@ -32,11 +34,11 @@ var LocalAuth = require('react-native-local-auth')
 
 var YourComponent = React.createClass({
   _pressHandler() {
-      LocalAuth.authenticate({
-          reason: 'this is a secure area, please authenticate yourself',
-          falbackToPasscode: true,    // fallback to passcode on cancel
-          suppressEnterPassword: true // disallow Enter Password fallback
-        })
+    LocalAuth.authenticate({
+        reason: 'this is a secure area, please authenticate yourself',
+        falbackToPasscode: true,    // fallback to passcode on cancel
+        suppressEnterPassword: true // disallow Enter Password fallback
+      })
       .then(success => {
         AlertIOS.alert('Authenticated Successfully')
       })
