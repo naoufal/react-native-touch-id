@@ -12,6 +12,7 @@ React Native Touch ID is a [React Native](http://facebook.github.io/react-native
 - [Install](https://github.com/naoufal/react-native-touch-id#install)
 - [Usage](https://github.com/naoufal/react-native-touch-id#usage)
 - [Example](https://github.com/naoufal/react-native-touch-id#example)
+- [Fallback](https://github.com/naoufal/react-native-touch-id#fallback)
 - [Methods](https://github.com/naoufal/react-native-touch-id#methods)
 - [Errors](https://github.com/naoufal/react-native-touch-id#errors)
 - [License](https://github.com/naoufal/react-native-touch-id#license)
@@ -72,6 +73,31 @@ var YourComponent = React.createClass({
     );
   }
 });
+```
+
+## Fallback
+When Touch ID isn't available on a device, you should fallback to using something like [Passcode Auth](https://github.com/naoufal/react-native-passcode-auth) to authenticate users.
+
+```js
+import TouchID from 'react-native-touch-id';
+import PasscodeAuth from 'react-native-passcode-auth';
+const reason = 'to demo this react-native component';
+
+TouchID.authenticate(reason)
+  .then(success => {
+    // Success code
+  })
+  .catch(fallbackAuth);
+  
+function fallbackAuth(reason) {
+  return PasscodeAuth.authenticate(reason)
+  .then(success => {
+    // Success code
+  })
+  .catch(error => {
+    // Failure code
+  });
+}
 ```
 
 ## Methods
