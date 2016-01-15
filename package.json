@@ -30,9 +30,6 @@
     "url": "https://github.com/naoufal/react-native-touch-id/issues"
   },
   "homepage": "https://github.com/naoufal/react-native-touch-id",
-  "peerDependencies": {
-    "react-native": ">=0.4.0"
-  },
   "devDependencies": {
     "eslint": "0.24.1",
     "eslint-plugin-react": "2.7.1"
