@@ -20,6 +20,9 @@ module.exports = {
   LAErrorTouchIDNotEnrolled: {
     message: 'Authentication could not start because Touch ID has no enrolled fingers.'
   },
+  LAErrorTouchIDLockout: {
+    message: 'Touch ID has been temporarily locked to prevent abuse. Please wait a while.'
+  },
   RCTTouchIDUnknownError: {
     message: 'Could not authenticate for an unknown reason.'
   },
