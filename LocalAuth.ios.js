@@ -12,7 +12,7 @@ let ERRORS = require('./data/errors')
 let LocalAuth = {
   hasTouchID() {
     return new Promise(function(resolve, reject) {
-      NativeLocalAuth.isSupported(function(error) {
+      NativeLocalAuth.hasTouchID(function(error) {
         if (error) {
           return reject(createError(error.message))
         }

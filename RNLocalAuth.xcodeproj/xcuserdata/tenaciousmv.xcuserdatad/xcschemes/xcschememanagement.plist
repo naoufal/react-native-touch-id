@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>TouchID.xcscheme</key>
+		<key>RNLocalAuth.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>13</integer>

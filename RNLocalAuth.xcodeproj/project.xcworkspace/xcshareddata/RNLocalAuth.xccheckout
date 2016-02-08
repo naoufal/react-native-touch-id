@@ -14,7 +14,7 @@
 		<string>github.com:naoufal/react-native-touch-id.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>TouchID.xcodeproj/project.xcworkspace</string>
+	<string>RNLocalAuth.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>1CD020374FA2F1A50BAE8C5E41B060AD6A9501A1</key>

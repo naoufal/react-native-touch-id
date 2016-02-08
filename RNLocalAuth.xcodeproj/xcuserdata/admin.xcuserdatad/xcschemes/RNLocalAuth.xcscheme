@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "58B511DA1A9E6C8500147676"
-               BuildableName = "libTouchID.a"
-               BlueprintName = "TouchID"
-               ReferencedContainer = "container:TouchID.xcodeproj">
+               BuildableName = "libRNLocalAuth.a"
+               BlueprintName = "RNLocalAuth"
+               ReferencedContainer = "container:RNLocalAuth.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "58B511DA1A9E6C8500147676"
-            BuildableName = "libTouchID.a"
-            BlueprintName = "TouchID"
-            ReferencedContainer = "container:TouchID.xcodeproj">
+            BuildableName = "libRNLocalAuth.a"
+            BlueprintName = "RNLocalAuth"
+            ReferencedContainer = "container:RNLocalAuth.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -61,9 +61,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "58B511DA1A9E6C8500147676"
-            BuildableName = "libTouchID.a"
-            BlueprintName = "TouchID"
-            ReferencedContainer = "container:TouchID.xcodeproj">
+            BuildableName = "libRNLocalAuth.a"
+            BlueprintName = "RNLocalAuth"
+            ReferencedContainer = "container:RNLocalAuth.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
