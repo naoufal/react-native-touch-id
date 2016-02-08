@@ -17,7 +17,7 @@ module.exports = {
   LAErrorTouchIDNotAvailable: {
     message: 'Authentication could not start because Touch ID is not available on the device'
   },
-  LAErrorTouchIDNotEnrolle: {
+  LAErrorTouchIDNotEnrolled: {
     message: 'Authentication could not start because Touch ID has no enrolled fingers.'
   },
   RCTTouchIDUnknownError: {
