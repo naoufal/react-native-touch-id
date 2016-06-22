@@ -20,10 +20,11 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		843753931C41AB38006803DC /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 843753921C41AB2F006803DC /* libTouchID.a */; };
-		ADBAA6B51C44A868003F132F /* libPasscodeAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBAA6A91C44A860003F132F /* libPasscodeAuth.a */; };
+		ADB417971D1ACD4500386AA6 /* libPasscodeAuth.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB417961D1ACD3A00386AA6 /* libPasscodeAuth.a */; };
+		ADB417981D1ACD4500386AA6 /* libTouchID.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADB417901D1ACD2600386AA6 /* libTouchID.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,16 +105,16 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		843753911C41AB2F006803DC /* PBXContainerItemProxy */ = {
+		ADB4178F1D1ACD2600386AA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 843753831C41AB2E006803DC /* TouchID.xcodeproj */;
+			containerPortal = ADB417811D1ACD2600386AA6 /* TouchID.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = TouchID;
 		};
-		ADBAA6A81C44A860003F132F /* PBXContainerItemProxy */ = {
+		ADB417951D1ACD3A00386AA6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = ADBAA6A41C44A85F003F132F /* PasscodeAuth.xcodeproj */;
+			containerPortal = ADB417911D1ACD3A00386AA6 /* PasscodeAuth.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = PasscodeAuth;
@@ -142,8 +143,8 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		843753831C41AB2E006803DC /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
-		ADBAA6A41C44A85F003F132F /* PasscodeAuth.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PasscodeAuth.xcodeproj; path = "../node_modules/react-native-passcode-auth/PasscodeAuth.xcodeproj"; sourceTree = "<group>"; };
+		ADB417811D1ACD2600386AA6 /* TouchID.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TouchID.xcodeproj; path = "../node_modules/react-native-touch-id/TouchID.xcodeproj"; sourceTree = "<group>"; };
+		ADB417911D1ACD3A00386AA6 /* PasscodeAuth.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PasscodeAuth.xcodeproj; path = "../node_modules/react-native-passcode-auth/PasscodeAuth.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,8 +160,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADBAA6B51C44A868003F132F /* libPasscodeAuth.a in Frameworks */,
-				843753931C41AB38006803DC /* libTouchID.a in Frameworks */,
+				ADB417971D1ACD4500386AA6 /* libPasscodeAuth.a in Frameworks */,
+				ADB417981D1ACD4500386AA6 /* libTouchID.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -282,8 +284,8 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				ADBAA6A41C44A85F003F132F /* PasscodeAuth.xcodeproj */,
-				843753831C41AB2E006803DC /* TouchID.xcodeproj */,
+				ADB417911D1ACD3A00386AA6 /* PasscodeAuth.xcodeproj */,
+				ADB417811D1ACD2600386AA6 /* TouchID.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
 				00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */,
@@ -327,18 +329,18 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		843753841C41AB2E006803DC /* Products */ = {
+		ADB417821D1ACD2600386AA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				843753921C41AB2F006803DC /* libTouchID.a */,
+				ADB417901D1ACD2600386AA6 /* libTouchID.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		ADBAA6A51C44A85F003F132F /* Products */ = {
+		ADB417921D1ACD3A00386AA6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				ADBAA6A91C44A860003F132F /* libPasscodeAuth.a */,
+				ADB417961D1ACD3A00386AA6 /* libPasscodeAuth.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -410,8 +412,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = ADBAA6A51C44A85F003F132F /* Products */;
-					ProjectRef = ADBAA6A41C44A85F003F132F /* PasscodeAuth.xcodeproj */;
+					ProductGroup = ADB417921D1ACD3A00386AA6 /* Products */;
+					ProjectRef = ADB417911D1ACD3A00386AA6 /* PasscodeAuth.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
@@ -454,8 +456,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 843753841C41AB2E006803DC /* Products */;
-					ProjectRef = 843753831C41AB2E006803DC /* TouchID.xcodeproj */;
+					ProductGroup = ADB417821D1ACD2600386AA6 /* Products */;
+					ProjectRef = ADB417811D1ACD2600386AA6 /* TouchID.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -537,18 +539,18 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		843753921C41AB2F006803DC /* libTouchID.a */ = {
+		ADB417901D1ACD2600386AA6 /* libTouchID.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libTouchID.a;
-			remoteRef = 843753911C41AB2F006803DC /* PBXContainerItemProxy */;
+			remoteRef = ADB4178F1D1ACD2600386AA6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		ADBAA6A91C44A860003F132F /* libPasscodeAuth.a */ = {
+		ADB417961D1ACD3A00386AA6 /* libPasscodeAuth.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libPasscodeAuth.a;
-			remoteRef = ADBAA6A81C44A860003F132F /* PBXContainerItemProxy */;
+			remoteRef = ADB417951D1ACD3A00386AA6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -585,7 +587,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -634,10 +636,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -655,10 +653,6 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = TouchIDExampleTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -679,7 +673,10 @@
 				);
 				INFOPLIST_FILE = TouchIDExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
 				PRODUCT_NAME = TouchIDExample;
 			};
 			name = Debug;
@@ -695,7 +692,10 @@
 				);
 				INFOPLIST_FILE = TouchIDExample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_LDFLAGS = "-ObjC";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-lc++",
+				);
 				PRODUCT_NAME = TouchIDExample;
 			};
 			name = Release;

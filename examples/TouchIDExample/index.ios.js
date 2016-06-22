@@ -1,8 +1,8 @@
 'use strict';
-import React, {
+import React, { Component } from 'react';
+import {
   AlertIOS,
   AppRegistry,
-  Component,
   StyleSheet,
   Text,
   TouchableHighlight,
@@ -41,6 +41,7 @@ class TouchIDExample extends Component {
   }
 
   _clickHandler() {
+    console.log(TouchID);
     TouchID.isSupported()
       .then(authenticate)
       .catch(error => {
@@ -93,10 +94,10 @@ const errors = {
 
 function authenticate() {
   return TouchID.authenticate()
-    .then((success) => {
+    .then(success => {
       AlertIOS.alert('Authenticated Successfully');
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error)
       AlertIOS.alert(error.message);
     });
@@ -107,10 +108,10 @@ function passcodeAuth() {
     .then(() => {
       return PasscodeAuth.authenticate()
     })
-    .then((success) => {
+    .then(success => {
       AlertIOS.alert('Authenticated Successfully');
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error)
       AlertIOS.alert(error.message);
     });

@@ -4,22 +4,20 @@
  */
 'use strict';
 
-var React = require('react-native');
-var {
-  NativeModules
-} = React;
+import { NativeModules } from 'react-native';
+const NativeTouchID = NativeModules.TouchID;
+const ERRORS = require('./data/errors');
 
-var NativeTouchID = NativeModules.TouchID;
-var ERRORS = require('./data/errors');
+console.log(NativeModules);
 
 /**
  * High-level docs for the TouchID iOS API can be written here.
  */
 
-var TouchID = {
+export default {
   isSupported() {
-    return new Promise(function(resolve, reject) {
-      NativeTouchID.isSupported(function(error) {
+    return new Promise((resolve, reject) => {
+      NativeTouchID.isSupported(error => {
         if (error) {
           return reject(createError(error.message));
         }
@@ -40,8 +38,8 @@ var TouchID = {
       authReason = ' ';
     }
 
-    return new Promise(function(resolve, reject) {
-      NativeTouchID.authenticate(authReason, function(error) {
+    return new Promise((resolve, reject) => {
+      NativeTouchID.authenticate(authReason, error => {
         // Return error if rejected
         if (error) {
           return reject(createError(error.message));
@@ -63,10 +61,8 @@ TouchIDError.prototype = Object.create(Error.prototype);
 TouchIDError.prototype.constructor = TouchIDError;
 
 function createError(error) {
-  var details = ERRORS[error];
+  let details = ERRORS[error];
   details.name = error;
 
   return new TouchIDError(error, details);
 }
-
-module.exports = TouchID;
