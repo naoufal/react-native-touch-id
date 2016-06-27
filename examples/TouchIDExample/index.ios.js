@@ -87,7 +87,7 @@ const errors = {
   "LAErrorSystemCancel": "Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up.",
   "LAErrorPasscodeNotSet": "Authentication could not start because the passcode is not set on the device.",
   "LAErrorTouchIDNotAvailable": "Authentication could not start because Touch ID is not available on the device",
-  "LAErrorTouchIDNotEnrolle": "Authentication could not start because Touch ID has no enrolled fingers.",
+  "LAErrorTouchIDNotEnrolled": "Authentication could not start because Touch ID has no enrolled fingers.",
   "RCTTouchIDUnknownError": "Could not authenticate for an unknown reason.",
   "RCTTouchIDNotSupported": "Device does not support Touch ID."
 };
