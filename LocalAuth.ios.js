@@ -6,9 +6,9 @@
 'use strict'
 
 import { NativeModules } from 'react-native'
-let NativeLocalAuth = NativeModules.RNLocalAuth
-let ERRORS = require('./data/errors')
+import { createError } from './error'
 
+let NativeLocalAuth = NativeModules.RNLocalAuth
 let LocalAuth = {
   hasTouchID() {
     return new Promise(function(resolve, reject) {
@@ -35,22 +35,6 @@ let LocalAuth = {
       )
     })
   }
-}
-
-function LocalAuthError(name, details) {
-  this.name = name || 'LocalAuthError'
-  this.message = details.message || 'Local Authentication Error'
-  this.details = details || {}
-}
-
-LocalAuthError.prototype = Object.create(Error.prototype)
-LocalAuthError.prototype.constructor = LocalAuthError
-
-function createError(error) {
-  let details = ERRORS[error]
-  details.name = error
-
-  return new LocalAuthError(error, details)
 }
 
 module.exports = LocalAuth

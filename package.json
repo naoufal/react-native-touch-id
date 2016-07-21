@@ -5,7 +5,7 @@
   "scripts": {
     "test": "Echo \"no tests\" && exit 1"
   },
-  "main": "LocalAuth.ios.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/tradle/react-native-local-auth.git"
