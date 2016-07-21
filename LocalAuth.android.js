@@ -8,7 +8,7 @@
 import { createError } from './error'
 import Errors from './data/errors'
 
-const noTouchID = new Promise.reject(createError(Errors.RCTTouchIDNotSupported))
+const noTouchID = new Promise.reject(createError('RCTTouchIDNotSupported'))
 
 module.exports = {
   hasTouchID() {
