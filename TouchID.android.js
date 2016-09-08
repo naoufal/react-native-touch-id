@@ -10,4 +10,4 @@ export default {
   isSupported() {
     return false;
   }
-}
+};
