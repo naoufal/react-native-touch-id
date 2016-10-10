@@ -7,7 +7,7 @@
     "start": "node_modules/react-native/packager/packager.sh",
     "test": "npm run lint"
   },
-  "main": "TouchID.ios.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/naoufal/react-native-touch-id.git"
