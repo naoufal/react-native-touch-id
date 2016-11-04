@@ -7,7 +7,9 @@
 
 import { createError } from './error'
 import Errors from './data/errors'
+import { NativeModules } from 'react-native'
 
+const { RNLocalAuth } = NativeModules
 const noTouchID = Promise.reject(createError('RCTTouchIDNotSupported'))
 
 module.exports = {
@@ -15,7 +17,11 @@ module.exports = {
     return noTouchID
   },
 
-  authenticate(opts) {
-    return noTouchID
+  authenticate() {
+    return RNLocalAuth.authenticate()
+      .catch(err => {
+        err.name = err.code
+        throw err
+      })
   }
 }
