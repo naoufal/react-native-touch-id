@@ -17,8 +17,8 @@ module.exports = {
     return noTouchID
   },
 
-  authenticate() {
-    return RNLocalAuth.authenticate()
+  authenticate(opts) {
+    return RNLocalAuth.authenticate(opts)
       .catch(err => {
         err.name = err.code
         throw err
