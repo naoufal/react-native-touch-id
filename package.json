@@ -1,6 +1,6 @@
 {
   "name": "react-native-local-auth",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "description": "React Native local authentication with touch id or passcode",
   "scripts": {
     "test": "Echo \"no tests\" && exit 1"
