@@ -1,5 +1,5 @@
 #import "TouchID.h"
-#import "<React/RCTUtils.h>"
+#import <React/RCTUtils.h>
 #import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation TouchID
