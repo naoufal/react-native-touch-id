@@ -17,6 +17,10 @@ module.exports = {
     return noTouchID
   },
 
+  isDeviceSecure() {
+    return RNLocalAuth.isDeviceSecure()
+  },
+
   authenticate(opts) {
     return RNLocalAuth.authenticate(opts)
       .catch(err => {

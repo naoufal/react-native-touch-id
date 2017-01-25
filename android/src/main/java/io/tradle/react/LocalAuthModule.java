@@ -57,6 +57,11 @@ public class LocalAuthModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void isDeviceSecure(final Promise promise) {
+    promise.resolve(mKeyguardManager.isDeviceSecure());
+  }
+
+  @ReactMethod
   public void authenticate(ReadableMap map, final Promise promise) {
     // Create the Confirm Credentials screen. You can customize the title and description. Or
     // we will provide a generic one for you if you leave it null

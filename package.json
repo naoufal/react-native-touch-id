@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/tradle/react-native-local-auth/issues"
   },
-  "homepage": "https://github.com/tradle/react-native-local-auth"
+  "homepage": "https://github.com/tradle/react-native-local-auth",
+  "peerDependencies": {
+    "react-native-passcode-status": ">=1.1.0"
+  }
 }
