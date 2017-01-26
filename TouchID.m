@@ -1,5 +1,12 @@
 #import "TouchID.h"
+// import RCTUtils
+#if __has_include(<React/RCTUtils.h>)
+#import <React/RCTUtils.h>
+#elif __has_include("RCTUtils.h")
 #import "RCTUtils.h"
+#else
+#import "React/RCTUtils.h"   // Required when used as a Pod in a Swift project
+#endif
 #import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation TouchID
