@@ -10,11 +10,10 @@ import Errors from './data/errors'
 import { NativeModules } from 'react-native'
 
 const { RNLocalAuth } = NativeModules
-const noTouchID = Promise.reject(createError('RCTTouchIDNotSupported'))
 
 module.exports = {
   hasTouchID() {
-    return noTouchID
+    return Promise.reject(createError('RCTTouchIDNotSupported'))
   },
 
   isDeviceSecure() {
