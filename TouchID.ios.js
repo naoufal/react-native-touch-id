@@ -12,7 +12,7 @@ const ERRORS = require('./data/errors');
  * High-level docs for the TouchID iOS API can be written here.
  */
 
-export default {
+module.exports = {
   isSupported() {
     return new Promise((resolve, reject) => {
       NativeTouchID.isSupported(error => {
