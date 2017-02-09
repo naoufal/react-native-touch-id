@@ -1,5 +1,6 @@
 # React Native Touch ID
 
+[![react-native version](https://img.shields.io/badge/react--native-0.40-blue.svg?style=flat-square)](http://facebook.github.io/react-native/releases/0.40)
 [![npm version](https://img.shields.io/npm/v/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![npm downloads](https://img.shields.io/npm/dm/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-touch-id.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-touch-id)
@@ -21,6 +22,9 @@ React Native Touch ID is a [React Native](http://facebook.github.io/react-native
 ```shell
 npm i --save react-native-touch-id
 ```
+
+## Support
+Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README.  If it's out of date, we encourage you to submit a pull request!
 
 ## Usage
 ### Linking the Library
@@ -73,31 +77,6 @@ var YourComponent = React.createClass({
     );
   }
 });
-```
-
-## Fallback
-When Touch ID isn't available on a device, you should fallback to using something like [Passcode Auth](https://github.com/naoufal/react-native-passcode-auth) to authenticate users.
-
-```js
-import TouchID from 'react-native-touch-id';
-import PasscodeAuth from 'react-native-passcode-auth';
-const reason = 'to demo this react-native component';
-
-TouchID.authenticate(reason)
-  .then(success => {
-    // Success code
-  })
-  .catch(fallbackAuth);
-  
-function fallbackAuth(reason) {
-  return PasscodeAuth.authenticate(reason)
-  .then(success => {
-    // Success code
-  })
-  .catch(error => {
-    // Failure code
-  });
-}
 ```
 
 ## Methods

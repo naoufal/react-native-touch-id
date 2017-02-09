@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import TouchID from "react-native-touch-id";
-import PasscodeAuth from "react-native-passcode-auth";
 
 class TouchIDExample extends Component {
   render() {
@@ -41,11 +40,10 @@ class TouchIDExample extends Component {
   }
 
   _clickHandler() {
-    console.log(TouchID);
     TouchID.isSupported()
       .then(authenticate)
       .catch(error => {
-        passcodeAuth();
+        AlertIOS.alert('TouchID not supported');
       });
   }
 }
