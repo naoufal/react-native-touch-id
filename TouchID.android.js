@@ -8,6 +8,6 @@
 
 export default {
   isSupported() {
-    return false;
+    return Promise.reject(new Error('Android does not support TouchID.'));
   }
 };
