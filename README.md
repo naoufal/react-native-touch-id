@@ -47,6 +47,16 @@ TouchID.authenticate('to demo this react-native component')
     // Failure code
   });
 ```
+Knowing if the user closed or canceled is as simple as calling:
+```js
+TouchID.authenticate('to demo this react-native component')
+  .then(close => {
+    // Close code
+  })
+ .catch(error => {
+   // Failure code 
+});
+```
 
 ## Example
 Using Touch ID in your app will usually look like this:
@@ -58,6 +68,8 @@ var YourComponent = React.createClass({
     TouchID.authenticate('to demo this react-native component')
       .then(success => {
         AlertIOS.alert('Authenticated Successfully');
+      }, close => {
+        AlertIOS.alert('Closed');
       })
       .catch(error => {
         AlertIOS.alert('Authentication Failed');
