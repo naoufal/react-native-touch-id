@@ -47,7 +47,7 @@ On Android you can customize the title and color of the pop-up by passing in the
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
-On android you will need to Android
+On android you will need to add
 ```xml
 <uses-permission  android:name="android.permission.USE_FINGERPRINT" />
 ```
