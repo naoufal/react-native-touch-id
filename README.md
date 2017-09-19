@@ -5,7 +5,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-touch-id.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-touch-id)
 
-React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with Touch ID.
+React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with Touch ID on both iOS and Android (experimental).
 
 ![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
@@ -22,6 +22,10 @@ React Native Touch ID is a [React Native](http://facebook.github.io/react-native
 ```shell
 npm i --save react-native-touch-id
 ```
+or
+```shell
+yarn add react-native-touch-id
+```
 
 ## Support
 Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README.  If it's out of date, we encourage you to submit a pull request!
@@ -30,11 +34,28 @@ Due to the rapid changes being made in the React Native ecosystem, we are not of
 ### Linking the Library
 In order to use Touch ID, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
+Or use the built-in command:
+```shell
+react-native link react-native-touch-id
+```
+
+### Platform Differences
+
+iOS and Android differ slightly in their TouchID authentication.
+
+On Android you can customize the title and color of the pop-up by passing in the **required** config object with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up.
+
+Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
+
 ### Requesting Touch ID Authentication
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
 ```js
 var TouchID = require('react-native-touch-id');
+```
+or
+```js
+import TouchID from 'react-native-touch-id'
 ```
 
 Requesting Touch ID authentication is as simple as calling:
@@ -51,9 +72,11 @@ TouchID.authenticate('to demo this react-native component')
 ## Example
 Using Touch ID in your app will usually look like this:
 ```js
+import React from "react"
 var TouchID = require('react-native-touch-id');
+//or import TouchID from 'react-native-touch-id'
 
-var YourComponent = React.createClass({
+class YourComponent extends React.Component {
   _pressHandler() {
     TouchID.authenticate('to demo this react-native component')
       .then(success => {
@@ -76,32 +99,38 @@ var YourComponent = React.createClass({
       </View>
     );
   }
-});
+};
 ```
 
 ## Methods
-### authenticate(reason)
+### authenticate(reason, config)
 Attempts to authenticate with Touch ID.
 Returns a `Promise` object.
 
 __Arguments__
 - `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
 
+- `config` - **required on Android** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog. **the color must be in hex format** (PRs welcome to help change this).
+
 __Examples__
 ```js
-TouchID.authenticate('to demo this react-native component')
+//config is only required to be passed in on Android
+const config = {
+  title: "Authentication Required",
+  color: "#e00606"
+}
+
+TouchID.authenticate('to demo this react-native component', config)
   .then(success => {
-    // Success code
-    console.log('User authenticated with TouchID');
+    AlertIOS.alert('Authenticated Successfully');
   })
   .catch(error => {
-    // Failure code
-    console.log(error);
+    AlertIOS.alert('Authentication Failed');
   });
 ```
 
 ### isSupported()
-Verify's that Touch ID is supported.
+Verifies that Touch ID is supported.
 Returns a `Promise` object.
 
 __Examples__
@@ -120,7 +149,7 @@ TouchID.isSupported()
 ## Errors
 There are various reasons why authenticating with Touch ID may fail.  Whenever calling Touch ID authentication fails, `TouchID.authenticate` will return an error code representing the reason.
 
-Below is a list of error codes that can be returned:
+Below is a list of error codes that can be returned **on iOS**:
 
 | Code | Description |
 |---|---|
