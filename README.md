@@ -43,7 +43,7 @@ react-native link react-native-touch-id
 
 iOS and Android differ slightly in their TouchID authentication.
 
-On Android you can customize the title and color of the pop-up by passing in the **required** config object with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up.
+On Android you can customize the title and color of the pop-up by passing in the **optional config object** with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up.
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
@@ -60,7 +60,7 @@ import TouchID from 'react-native-touch-id'
 
 Requesting Touch ID authentication is as simple as calling:
 ```js
-TouchID.authenticate('to demo this react-native component')
+TouchID.authenticate('to demo this react-native component', optionalConfigObject)
   .then(success => {
     // Success code
   })
@@ -78,7 +78,7 @@ var TouchID = require('react-native-touch-id');
 
 class YourComponent extends React.Component {
   _pressHandler() {
-    TouchID.authenticate('to demo this react-native component')
+    TouchID.authenticate('to demo this react-native component', optionalConfigObject)
       .then(success => {
         AlertIOS.alert('Authenticated Successfully');
       })
@@ -110,17 +110,17 @@ Returns a `Promise` object.
 __Arguments__
 - `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
 
-- `config` - **required on Android** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog. **the color must be in hex format** (PRs welcome to help change this).
+- `config` - **optional - Android only** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog. **The color must be in hex format** (PRs welcome to help change this).
 
 __Examples__
 ```js
-//config is only required to be passed in on Android
-const config = {
+//config is optional to be passed in on Android
+const optionalConfigObject = {
   title: "Authentication Required",
   color: "#e00606"
 }
 
-TouchID.authenticate('to demo this react-native component', config)
+TouchID.authenticate('to demo this react-native component', optionalConfigObject)
   .then(success => {
     AlertIOS.alert('Authenticated Successfully');
   })
