@@ -122,12 +122,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
           return false;
       }
 
-      if (ActivityCompat.checkSelfPermission(getReactApplicationContext(),
-              Manifest.permission.USE_FINGERPRINT) !=
-              PackageManager.PERMISSION_GRANTED) {
-          return false;
-      }
-
       if (!fingerprintManager.hasEnrolledFingerprints()) {
           return false;
       }

@@ -12,13 +12,13 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     private CancellationSignal cancellationSignal;
     private boolean selfCancelled;
-    private Context appContext;
+    private Context mAppContext;
 
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
 
     public FingerprintHandler(Context context, FingerprintManager fingerprintManager, Callback callback) {
-        appContext = context;
+        mAppContext = context;
         mFingerprintManager = fingerprintManager;
         mCallback = callback;
     }
@@ -27,21 +27,12 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         return (android.os.Build.VERSION.SDK_INT >= 23)
                 && mFingerprintManager.isHardwareDetected()
                 && mFingerprintManager.hasEnrolledFingerprints()
-                && (ActivityCompat.checkSelfPermission(appContext,
-                        Manifest.permission.USE_FINGERPRINT) ==
-                        PackageManager.PERMISSION_GRANTED);
     }
 
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
 
         cancellationSignal = new CancellationSignal();
         selfCancelled = false;
-
-        if (ActivityCompat.checkSelfPermission(appContext,
-                Manifest.permission.USE_FINGERPRINT) !=
-                PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
     }
 

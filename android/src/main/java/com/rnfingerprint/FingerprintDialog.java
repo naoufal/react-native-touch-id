@@ -34,13 +34,8 @@ public class FingerprintDialog extends DialogFragment
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        // Do not create a new Fragment when the Activity is re-created such as orientation changes.
-        setRetainInstance(true);
+        super.onCreate(savedInstanceState);        
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
-
-        // dialogCallback = null;
     }
 
     @Override
@@ -79,7 +74,6 @@ public class FingerprintDialog extends DialogFragment
             @Override
             public void onClick(View view) {
                 mFingerprintHandler.endAuth();
-                // dismiss();
             }
         });
 
