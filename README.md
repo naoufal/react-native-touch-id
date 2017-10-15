@@ -28,7 +28,15 @@ Due to the rapid changes being made in the React Native ecosystem, we are not of
 
 ## Usage
 ### Linking the Library
-In order to use Touch ID, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
+In order to use Touch ID, you must first link the library to your project.
+**Automatically**
+
+```
+react-native link react-native-touch-id
+```
+**Manually**
+
+ There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
 ### Requesting Touch ID Authentication
 Once you've linked the library, you'll want to make it available to your app by requiring it:
