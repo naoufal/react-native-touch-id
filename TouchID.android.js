@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, processColor } from 'react-native';
 const NativeTouchID = NativeModules.FingerprintAuth;
 // Android provides more flexibility than iOS for handling the Fingerprint. Currently the config object accepts customizable title or color. Otherwise it defaults to this constant
 DEFAULT_CONFIG = { title: 'Authentication Required', color: '#1306ff' };
@@ -22,6 +22,9 @@ export default {
 
   authenticate(reason, config = DEFAULT_CONFIG) {
     var authReason = reason ? reason : ' ';
+
+    const color = processColor(config.color);
+    config.color = color != null ? color :  processColor('#1306ff');
 
     return new Promise((resolve, reject) => {
       NativeTouchID.authenticate(

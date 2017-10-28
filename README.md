@@ -110,7 +110,7 @@ Returns a `Promise` object.
 __Arguments__
 - `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
 
-- `config` - **optional - Android only** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog. **The color must be in hex format** (PRs welcome to help change this).
+- `config` - **optional - Android only** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog.
 
 __Examples__
 ```js
