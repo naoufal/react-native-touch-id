@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.content.DialogInterface;
 import android.view.KeyEvent;
-import android.graphics.Color;
 import com.facebook.react.bridge.ReadableMap;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Handler.Callback;
@@ -44,7 +43,7 @@ public class FingerprintDialog extends DialogFragment
 
 
         getDialog().setTitle(authConfig.getString("title"));
-        int color = Color.parseColor(authConfig.getString("color"));
+        int color = authConfig.getInt("color");
 
         setCancelable(false);
 

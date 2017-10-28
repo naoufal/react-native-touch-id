@@ -26,7 +26,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public boolean isFingerprintAuthAvailable() {
         return (android.os.Build.VERSION.SDK_INT >= 23)
                 && mFingerprintManager.isHardwareDetected()
-                && mFingerprintManager.hasEnrolledFingerprints()
+                && mFingerprintManager.hasEnrolledFingerprints();
     }
 
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
