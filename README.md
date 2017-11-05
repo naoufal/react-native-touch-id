@@ -5,7 +5,7 @@
 [![npm downloads](https://img.shields.io/npm/dm/react-native-touch-id.svg?style=flat-square)](https://www.npmjs.com/package/react-native-touch-id)
 [![Code Climate](https://img.shields.io/codeclimate/github/naoufal/react-native-touch-id.svg?style=flat-square)](https://codeclimate.com/github/naoufal/react-native-touch-id)
 
-React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with Touch ID.
+React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with biometric authentication methods like Face ID and Touch ID.
 
 ![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
@@ -28,16 +28,16 @@ Due to the rapid changes being made in the React Native ecosystem, we are not of
 
 ## Usage
 ### Linking the Library
-In order to use Touch ID, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
+In order to use Biometric Authentication, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
-### Requesting Touch ID Authentication
+### Requesting Face ID/Touch ID Authentication
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
 ```js
 var TouchID = require('react-native-touch-id');
 ```
 
-Requesting Touch ID authentication is as simple as calling:
+Requesting Face ID/Touch ID Authentication is as simple as calling:
 ```js
 TouchID.authenticate('to demo this react-native component')
   .then(success => {
@@ -48,8 +48,9 @@ TouchID.authenticate('to demo this react-native component')
   });
 ```
 
+
 ## Example
-Using Touch ID in your app will usually look like this:
+Using Face ID/Touch ID in your app will usually look like this:
 ```js
 var TouchID = require('react-native-touch-id');
 
@@ -81,7 +82,7 @@ var YourComponent = React.createClass({
 
 ## Methods
 ### authenticate(reason)
-Attempts to authenticate with Touch ID.
+Attempts to authenticate with Face ID/Touch ID.
 Returns a `Promise` object.
 
 __Arguments__
@@ -102,14 +103,18 @@ TouchID.authenticate('to demo this react-native component')
 
 ### isSupported()
 Verify's that Touch ID is supported.
-Returns a `Promise` object.
+Returns a `Promise` that resolves to a `String` of `FaceID` or `TouchID` .
 
 __Examples__
 ```js
 TouchID.isSupported()
-  .then(supported => {
+  .then(biometryType => {
     // Success code
-    console.log('TouchID is supported.');
+    if (biometryType === 'FaceID') {
+        console.log('FaceID is supported.');
+    } else {
+        console.log('TouchID is supported.');
+    }
   })
   .catch(error => {
     // Failure code
@@ -118,7 +123,7 @@ TouchID.isSupported()
 ```
 
 ## Errors
-There are various reasons why authenticating with Touch ID may fail.  Whenever calling Touch ID authentication fails, `TouchID.authenticate` will return an error code representing the reason.
+There are various reasons why biomentric authentication may fail.  When it does fails, `TouchID.authenticate` will return an error code representing the reason.
 
 Below is a list of error codes that can be returned:
 
