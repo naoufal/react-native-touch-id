@@ -15,12 +15,12 @@ const ERRORS = require('./data/errors');
 export default {
   isSupported() {
     return new Promise((resolve, reject) => {
-      NativeTouchID.isSupported(error => {
+      NativeTouchID.isSupported((error, biometryType) => {
         if (error) {
           return reject(createError(error.message));
         }
 
-        resolve(true);
+        resolve(biometryType);
       });
     });
   },
