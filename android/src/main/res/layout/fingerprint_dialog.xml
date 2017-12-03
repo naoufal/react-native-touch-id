@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fingerprint_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <!-- https://medium.com/@chrisbanes/appcompat-v23-2-age-of-the-vectors-91cbafa87c88#.btn3al2l2 appCompat works if app is srcCompat 7 activity-->
+    <!-- app:srcCompat="@drawable/ic_fp_40px" -->
+
+    <TextView
+        android:id="@+id/fingerprint_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="20dp"
+        android:gravity="left"
+        android:text="TextView"
+        android:textColor="#000"
+        android:textSize="17dp" />
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="30dp"
+        android:paddingRight="20dp"
+        android:paddingTop="28dp">
+
+        <ImageView
+            android:id="@+id/fingerprint_icon"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="25dp"
+            android:gravity="left"
+            android:src="@drawable/ic_fp_40px" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="9dp"
+            android:gravity="left"
+            android:text="Touch sensor"
+            android:textColor="#696969"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/cancel_button"
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="88dp"
+        android:layout_height="44dp"
+        android:layout_gravity="bottom|right"
+        android:background="#fff"
+        android:text="Cancel"
+        android:textColor="#000" />
+
+</LinearLayout>
