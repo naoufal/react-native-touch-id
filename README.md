@@ -28,7 +28,8 @@ yarn add react-native-touch-id
 ```
 
 ## Support
-Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README.  If it's out of date, we encourage you to submit a pull request!
+Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README. If it's out of date, we encourage you to submit a pull request :)
+We are currently working on the android support of the project. 
 
 ## Usage
 ### Linking the Library
