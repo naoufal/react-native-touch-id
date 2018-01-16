@@ -25,7 +25,7 @@ export default {
     });
   },
 
-  authenticate(reason) {
+  authenticate(reason /* ::?: string */) {
     var authReason;
 
     // Set auth reason
