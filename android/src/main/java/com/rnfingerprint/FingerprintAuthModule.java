@@ -182,11 +182,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
                   null);
           cipher.init(Cipher.ENCRYPT_MODE, key);
           return true;
-      } catch (KeyPermanentlyInvalidatedException e) {
+      } catch (InvalidKeyException e) {
           return false;
       } catch (KeyStoreException | CertificateException
               | UnrecoverableKeyException | IOException
-              | NoSuchAlgorithmException | InvalidKeyException e) {
+              | NoSuchAlgorithmException e) {
           throw new RuntimeException("Failed to init Cipher", e);
       }
   }
