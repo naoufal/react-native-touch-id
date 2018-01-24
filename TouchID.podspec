@@ -1,6 +1,10 @@
+require 'json'
+
+package = JSON.parse(File.read(File.join(__dir__, 'package.json')))
+
 Pod::Spec.new do |s|
   s.name         = "TouchID"
-  s.version      = "4.0.0"
+  s.version      = package['version']
   s.summary      = "A React Native library for authenticating users with Touch ID"
   s.homepage     = "https://github.com/naoufal/react-native-touch-id"
   s.license      = "MIT"
