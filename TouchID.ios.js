@@ -25,7 +25,7 @@ export default {
     });
   },
 
-  authenticate(reason) {
+  authenticate(reason, displayFallback = true) {
     var authReason;
 
     // Set auth reason
@@ -37,7 +37,7 @@ export default {
     }
 
     return new Promise((resolve, reject) => {
-      NativeTouchID.authenticate(authReason, error => {
+      NativeTouchID.authenticate(authReason, displayFallback, error => {
         // Return error if rejected
         if (error) {
           return reject(createError(error.message));
