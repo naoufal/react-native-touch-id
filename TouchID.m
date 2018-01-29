@@ -14,8 +14,16 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
         callback(@[[NSNull null], [self getBiometryType:context]]);
         // Device does not support TouchID
     } else {
-        callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
-        return;
+        if (error) {
+            NSString *errorReason = [self errorReason: error];
+            
+            NSLog(@"is supported failed: %@", errorReason);
+            callback(@[RCTMakeError(errorReason, nil, nil)]);
+            return;
+        } else {
+            callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
+            return;
+        }
     }
 }
 
@@ -35,41 +43,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
              if (success) { // Authentication Successful
                  callback(@[[NSNull null], @"Authenticated with Touch ID."]);
              } else if (error) { // Authentication Error
-                 NSString *errorReason;
-
-                 switch (error.code) {
-                     case LAErrorAuthenticationFailed:
-                         errorReason = @"LAErrorAuthenticationFailed";
-                         break;
-
-                     case LAErrorUserCancel:
-                         errorReason = @"LAErrorUserCancel";
-                         break;
-
-                     case LAErrorUserFallback:
-                         errorReason = @"LAErrorUserFallback";
-                         break;
-
-                     case LAErrorSystemCancel:
-                         errorReason = @"LAErrorSystemCancel";
-                         break;
-
-                     case LAErrorPasscodeNotSet:
-                         errorReason = @"LAErrorPasscodeNotSet";
-                         break;
-
-                     case LAErrorTouchIDNotAvailable:
-                         errorReason = @"LAErrorTouchIDNotAvailable";
-                         break;
-
-                     case LAErrorTouchIDNotEnrolled:
-                         errorReason = @"LAErrorTouchIDNotEnrolled";
-                         break;
-
-                     default:
-                         errorReason = @"RCTTouchIDUnknownError";
-                         break;
-                 }
+                 NSString *errorReason = [self errorReason: error];
 
                  NSLog(@"Authentication failed: %@", errorReason);
                  callback(@[RCTMakeError(errorReason, nil, nil)]);
@@ -92,6 +66,46 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
     }
 
     return @"TouchID";
+}
+
+- (NSString *) errorReason:(NSError *) error {
+    NSString *errorReason;
+    
+    switch (error.code) {
+        case LAErrorAuthenticationFailed:
+            errorReason = @"LAErrorAuthenticationFailed";
+            break;
+            
+        case LAErrorUserCancel:
+            errorReason = @"LAErrorUserCancel";
+            break;
+            
+        case LAErrorUserFallback:
+            errorReason = @"LAErrorUserFallback";
+            break;
+            
+        case LAErrorSystemCancel:
+            errorReason = @"LAErrorSystemCancel";
+            break;
+            
+        case LAErrorPasscodeNotSet:
+            errorReason = @"LAErrorPasscodeNotSet";
+            break;
+            
+        case LAErrorTouchIDNotAvailable:
+            errorReason = @"LAErrorTouchIDNotAvailable";
+            break;
+            
+        case LAErrorTouchIDNotEnrolled:
+            errorReason = @"LAErrorTouchIDNotEnrolled";
+            break;
+            
+        default:
+            errorReason = @"RCTTouchIDUnknownError";
+            break;
+    }
+    
+    return errorReason;
 }
 
 @end
