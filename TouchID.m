@@ -42,6 +42,22 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                          errorReason = @"LAErrorAuthenticationFailed";
                          break;
 
+                     case LAErrorAppCancel:
+                         errorReason = @"LAErrorAppCancel";
+                         break;
+
+                     case LAErrorInvalidContext:
+                         errorReason = @"LAErrorInvalidContext";
+                         break;
+
+                     case LAErrorNotInteractive:
+                         errorReason = @"LAErrorNotInteractive";
+                         break;
+
+                    case LAErrorTouchIDLockout:
+                         errorReason = @"LAErrorTouchIDLockout";
+                         break;
+
                      case LAErrorUserCancel:
                          errorReason = @"LAErrorUserCancel";
                          break;
