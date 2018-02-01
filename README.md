@@ -111,7 +111,7 @@ Returns a `Promise` object.
 __Arguments__
 - `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
 
-- `config` - _optional_ an object that specifies the title and color to present in the confirmation dialog (on Android) 
+- `config` - An _optional_ `Object` that specifies the title and color to present in the confirmation dialog (on Android) 
 or text/visibility of 'Show Password' label when touch id authentication failed.
 
 __Examples__

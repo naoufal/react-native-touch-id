@@ -10,7 +10,7 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
-    
+
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         callback(@[[NSNull null], [self getBiometryType:context]]);
         // Device does not support TouchID
@@ -43,36 +43,36 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                  callback(@[[NSNull null], @"Authenticated with Touch ID."]);
              } else if (error) { // Authentication Error
                  NSString *errorReason;
-                 
+
                  switch (error.code) {
                      case LAErrorAuthenticationFailed:
                          errorReason = @"LAErrorAuthenticationFailed";
                          break;
-                         
+
                      case LAErrorUserCancel:
                          errorReason = @"LAErrorUserCancel";
                          break;
-                         
+
                      case LAErrorUserFallback:
                          errorReason = @"LAErrorUserFallback";
                          break;
-                         
+
                      case LAErrorSystemCancel:
                          errorReason = @"LAErrorSystemCancel";
                          break;
-                         
+
                      case LAErrorPasscodeNotSet:
                          errorReason = @"LAErrorPasscodeNotSet";
                          break;
-                         
+
                      case LAErrorTouchIDNotAvailable:
                          errorReason = @"LAErrorTouchIDNotAvailable";
                          break;
-                         
+
                      case LAErrorTouchIDNotEnrolled:
                          errorReason = @"LAErrorTouchIDNotEnrolled";
                          break;
-                         
+
                      default:
                          errorReason = @"RCTTouchIDUnknownError";
                          break;
