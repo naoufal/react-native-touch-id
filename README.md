@@ -111,14 +111,16 @@ Returns a `Promise` object.
 __Arguments__
 - `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
 
-- `config` - **optional - Android only** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog.
+- `config` - _optional_ an object that specifies the title and color to present in the confirmation dialog (on Android) 
+or text/visibility of 'Show Password' label when touch id authentication failed.
 
 __Examples__
 ```js
 //config is optional to be passed in on Android
 const optionalConfigObject = {
-  title: "Authentication Required",
-  color: "#e00606"
+  title: "Authentication Required", // Android
+  color: "#e00606", // Android,
+  failbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
