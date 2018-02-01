@@ -1,5 +1,6 @@
 #import "TouchID.h"
 #import <React/RCTUtils.h>
+#import "React/RCTConvert.h"
 
 @implementation TouchID
 
@@ -9,7 +10,7 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
-
+    
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         callback(@[[NSNull null], [self getBiometryType:context]]);
         // Device does not support TouchID
@@ -20,10 +21,16 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 }
 
 RCT_EXPORT_METHOD(authenticate: (NSString *)reason
+                  options:(NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
+
+    if ([options objectForKey:@"fallbackLabel"] != nil) {
+        NSString *fallbackLabel = [RCTConvert NSString:options[@"fallbackLabel"]];   
+        context.localizedFallbackTitle = fallbackLabel;
+    }
 
     // Device has TouchID
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
@@ -36,36 +43,36 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                  callback(@[[NSNull null], @"Authenticated with Touch ID."]);
              } else if (error) { // Authentication Error
                  NSString *errorReason;
-
+                 
                  switch (error.code) {
                      case LAErrorAuthenticationFailed:
                          errorReason = @"LAErrorAuthenticationFailed";
                          break;
-
+                         
                      case LAErrorUserCancel:
                          errorReason = @"LAErrorUserCancel";
                          break;
-
+                         
                      case LAErrorUserFallback:
                          errorReason = @"LAErrorUserFallback";
                          break;
-
+                         
                      case LAErrorSystemCancel:
                          errorReason = @"LAErrorSystemCancel";
                          break;
-
+                         
                      case LAErrorPasscodeNotSet:
                          errorReason = @"LAErrorPasscodeNotSet";
                          break;
-
+                         
                      case LAErrorTouchIDNotAvailable:
                          errorReason = @"LAErrorTouchIDNotAvailable";
                          break;
-
+                         
                      case LAErrorTouchIDNotEnrolled:
                          errorReason = @"LAErrorTouchIDNotEnrolled";
                          break;
-
+                         
                      default:
                          errorReason = @"RCTTouchIDUnknownError";
                          break;
@@ -95,4 +102,5 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 }
 
 @end
+
 
