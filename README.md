@@ -109,10 +109,13 @@ Attempts to authenticate with Face ID/Touch ID.
 Returns a `Promise` object.
 
 __Arguments__
-- `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
+- `reason` - **optional** - `String` that provides a clear reason for requesting authentication.
 
-- `config` - An _optional_ `Object` that specifies the title and color to present in the confirmation dialog (on Android) 
-or text/visibility of 'Show Password' label when touch id authentication failed.
+- `config` - **optional** - configuration object for more detailed dialog setup:
+  - `title` - **Android** - title of confirmation dialog
+  - `color` - **Android** - color of confirmation dialog
+  - `failbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
+
 
 __Examples__
 ```js
