@@ -122,10 +122,6 @@ public class FingerprintDialog extends DialogFragment
 
     @Override
     public void onError(String errorString) {
-        if (errorString == "Authentication Failed") {
-            return;
-        }
-
         dialogCallback.onError(errorString);
         dismiss();
     }
