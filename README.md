@@ -114,7 +114,7 @@ __Arguments__
 - `config` - **optional** - configuration object for more detailed dialog setup:
   - `title` - **Android** - title of confirmation dialog
   - `color` - **Android** - color of confirmation dialog
-  - `failbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
+  - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
 
 
 __Examples__
