@@ -25,5 +25,17 @@ module.exports = {
   },
   RCTTouchIDNotSupported: {
     message: 'Device does not support Touch ID.'
+  },
+  LAErrorAppCancel: {
+    message: 'LAErrorAppCancel'
+  },
+  LAErrorInvalidContext: {
+    message: 'LAErrorInvalidContext'
+  },
+  LAErrorNotInteractive: {
+    message: 'LAErrorNotInteractive'
+  },
+  LAErrorTouchIDLockout: {
+    message: 'LAErrorTouchIDLockout'
   }
 };
