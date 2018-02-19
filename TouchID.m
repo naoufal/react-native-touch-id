@@ -87,7 +87,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 
 - (NSString *)getBiometryType:(LAContext *)context
 {
-    if (@available(iOS 11, *)) {
+    if (@available(iOS 11.0.1, *)) {
         return (context.biometryType == LABiometryTypeFaceID) ? @"FaceID" : @"TouchID";
     }
 
