@@ -37,13 +37,12 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     public void endAuth() {
-        if (cancellationSignal != null) {
-            cancellationSignal.cancel();
-            cancellationSignal = null;
+        if (!selfCancelled) {
             selfCancelled = true;
         } else {
           mCallback.onError("Authentication Failed");
         }
+        cancellationSignal.cancel();
     }
 
     @Override
@@ -54,16 +53,19 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         } else {
             mCallback.onCancelled();
         }
+        cancellationSignal.cancel();
     }
 
     @Override
     public void onAuthenticationFailed() {
         mCallback.onError("Authentication Failed");
+        cancellationSignal.cancel();
     }
 
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         mCallback.onAuthenticated();
+        cancellationSignal.cancel();
     }
 
     public interface Callback {
