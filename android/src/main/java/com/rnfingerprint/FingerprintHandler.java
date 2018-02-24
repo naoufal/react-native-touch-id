@@ -57,11 +57,6 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     @Override
-    public void onAuthenticationFailed() {
-        mCallback.onError("Authentication Failed");
-    }
-
-    @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
         mCallback.onAuthenticated();
     }

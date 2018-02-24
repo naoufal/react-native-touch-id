@@ -33,7 +33,7 @@ public class FingerprintDialog extends DialogFragment
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
     }
 
