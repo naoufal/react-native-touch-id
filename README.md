@@ -32,12 +32,26 @@ Due to the rapid changes being made in the React Native ecosystem, we are not of
 
 ## Usage
 ### Linking the Library
-In order to use Biometric Authentication, you must first link the library to your project.  There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
+In order to use Biometric Authentication, you must first link the library to your project.
 
-Or use the built-in command:
+#### Using react-native link
+Use the built-in command:
 ```shell
 react-native link react-native-touch-id
 ```
+
+#### Using Cocoapods (iOS only)
+On iOS you can also link package by updating your podfile
+```ruby
+pod 'TouchID', :path => "#{node_modules_path}/react-native-touch-id"
+```
+and then run
+```shell
+pod install
+```
+
+#### Using native linking
+There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
 ### Platform Differences
 
