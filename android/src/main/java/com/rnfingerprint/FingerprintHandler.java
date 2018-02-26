@@ -1,5 +1,4 @@
 package com.rnfingerprint;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -37,33 +36,36 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     public void endAuth() {
-        if (cancellationSignal != null) {
-            cancellationSignal.cancel();
-            cancellationSignal = null;
-            selfCancelled = true;
-        } else {
-          mCallback.onError("Authentication Failed");
-        }
+        cancelAuthenticationSignal();
     }
 
     @Override
     public void onAuthenticationError(int errMsgId,
                                       CharSequence errString) {
-        if(!selfCancelled) {
-            mCallback.onError(errString.toString());
-        } else {
-            mCallback.onCancelled();
+        if (!selfCancelled) {
+            mCallback.onError(errString.toString()); 
         }
     }
 
     @Override
     public void onAuthenticationFailed() {
-        mCallback.onError("Authentication Failed");
+        mCallback.onError("failed"); 
+        selfCancelled = true;
+        cancelAuthenticationSignal(); 
     }
 
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+        
         mCallback.onAuthenticated();
+        cancelAuthenticationSignal();
+    }
+
+    private void cancelAuthenticationSignal() {
+        if (cancellationSignal != null) {
+            cancellationSignal.cancel();
+            cancellationSignal = null;
+        }
     }
 
     public interface Callback {
