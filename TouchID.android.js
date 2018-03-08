@@ -17,17 +17,16 @@ export default {
   },
 
   authenticate(reason, config) {
-    DEFAULT_CONFIG = { 
+    DEFAULT_CONFIG = {
       title: 'Authentication Required',
       color: '#1306ff',
       sensorDescription: 'Touch sensor',
       cancelText: 'Cancel'
     };
     var authReason = reason ? reason : ' ';
-    var authConfig = config ? {
-        ...DEFAULT_CONFIG,
-        ...config
-      } : DEFAULT_CONFIG;
+    var authConfig = config
+       ? Object.assign({}, DEFAULT_CONFIG, config)
+       : DEFAULT_CONFIG;
     var color = processColor(authConfig.color);
 
     authConfig.color = color;
