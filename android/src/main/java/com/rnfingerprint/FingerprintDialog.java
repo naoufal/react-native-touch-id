@@ -23,6 +23,7 @@ public class FingerprintDialog extends DialogFragment
     private View mFingerprintContent;
     private TextView mFingerprintDescription;
     private ImageView mFingerprintImage;
+    private TextView mFingerprintSensorDescription;
 
     private FingerprintManager.CryptoObject mCryptoObject;
     private DialogResultListener dialogCallback;
@@ -56,6 +57,9 @@ public class FingerprintDialog extends DialogFragment
         mFingerprintDescription.setText(authReason);
         mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
 
+        mFingerprintSensorDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
+        mFingerprintSensorDescription.setText(authConfig.getString("sensorDescription"));
+
         mFingerprintImage.setColorFilter(color);
 
         mFingerprintHandler = new FingerprintHandler(this.getContext(), this.getActivity().getSystemService(FingerprintManager.class), this);
@@ -68,6 +72,7 @@ public class FingerprintDialog extends DialogFragment
 
 
         mCancelButton = (Button) v.findViewById(R.id.cancel_button);
+        mCancelButton.setText(authConfig.getString("cancelText"));
         mCancelButton.setTextColor(color);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override

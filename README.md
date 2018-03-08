@@ -118,7 +118,9 @@ __Examples__
 //config is optional to be passed in on Android
 const optionalConfigObject = {
   title: "Authentication Required",
-  color: "#e00606"
+  color: "#e00606",
+  sensorDescription: "Touch sensor",
+  cancelText: "Cancel"
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
