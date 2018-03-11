@@ -24,9 +24,7 @@ export default {
       cancelText: 'Cancel'
     };
     var authReason = reason ? reason : ' ';
-    var authConfig = config
-       ? Object.assign({}, DEFAULT_CONFIG, config)
-       : DEFAULT_CONFIG;
+    var authConfig = Object.assign({}, DEFAULT_CONFIG, config);
     var color = processColor(authConfig.color);
 
     authConfig.color = color;
