@@ -28,7 +28,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
     // Device has TouchID
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         // Attempt Authentification
-        [context evaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics
+        [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
                 localizedReason:reason
                           reply:^(BOOL success, NSError *error)
          {
@@ -95,4 +95,3 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 }
 
 @end
-
