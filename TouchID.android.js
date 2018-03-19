@@ -16,7 +16,7 @@ export default {
     });
   },
 
-  authenticate(reason, cancelText= 'Cancel', title = 'Authentication Required', touchText = 'Touch Sensor', config) {
+  authenticate(reason, cancelText = 'Cancel', title = 'Authentication Required', touchText = 'Touch Sensor', config) {
     DEFAULT_CONFIG = { title, color: '#1306ff' };
     var authReason = reason ? reason : ' ';
     var authConfig = Object.assign({}, DEFAULT_CONFIG, config);
