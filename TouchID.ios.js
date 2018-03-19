@@ -25,7 +25,7 @@ export default {
     });
   },
 
-  authenticate(reason, cancelText= 'Cancel') {
+  authenticate(reason, cancelText = 'Cancel') {
     var authReason;
 
     // Set auth reason
