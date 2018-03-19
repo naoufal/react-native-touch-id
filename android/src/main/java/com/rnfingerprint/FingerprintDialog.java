@@ -22,6 +22,7 @@ public class FingerprintDialog extends DialogFragment
     private Button mCancelButton;
     private View mFingerprintContent;
     private TextView mFingerprintDescription;
+    private TextView mTouchSensorDescription;
     private ImageView mFingerprintImage;
 
     private FingerprintManager.CryptoObject mCryptoObject;
@@ -29,11 +30,13 @@ public class FingerprintDialog extends DialogFragment
     private FingerprintHandler mFingerprintHandler;
 
     private String authReason;
+    private String touchSensorText;
+    private String cancelText;
     private ReadableMap authConfig;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
+        super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
     }
 
@@ -50,12 +53,13 @@ public class FingerprintDialog extends DialogFragment
         View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
 
         mFingerprintContent = v.findViewById(R.id.fingerprint_container);
-
         mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
-
         mFingerprintDescription.setText(authReason);
-        mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
 
+        mTouchSensorDescription = (TextView) v.findViewById(R.id.touchsensor_description);
+        mTouchSensorDescription.setText(touchSensorText);
+
+        mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
         mFingerprintImage.setColorFilter(color);
 
         mFingerprintHandler = new FingerprintHandler(this.getContext(), this.getActivity().getSystemService(FingerprintManager.class), this);
@@ -69,6 +73,7 @@ public class FingerprintDialog extends DialogFragment
 
         mCancelButton = (Button) v.findViewById(R.id.cancel_button);
         mCancelButton.setTextColor(color);
+        mCancelButton.setText(cancelText);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +107,14 @@ public class FingerprintDialog extends DialogFragment
 
     public void setReasonForAuthentication(String reason) {
       authReason = reason;
+    }
+
+    public void setTouchSensorText(String label) {
+      touchSensorText = label;
+    }
+
+    public void setCancelText(String label) {
+      cancelText = label;
     }
 
     public void setAuthConfig(ReadableMap config) {

@@ -16,8 +16,8 @@ export default {
     });
   },
 
-  authenticate(reason, config) {
-    DEFAULT_CONFIG = { title: 'Authentication Required', color: '#1306ff' };
+  authenticate(reason, title = 'Authentication Required', touchText = 'Touch Sensor', cancelText= 'Cancel', config) {
+    DEFAULT_CONFIG = { title, color: '#1306ff' };
     var authReason = reason ? reason : ' ';
     var authConfig = Object.assign({}, DEFAULT_CONFIG, config);
     var color = processColor(authConfig.color);
@@ -27,6 +27,8 @@ export default {
     return new Promise((resolve, reject) => {
       NativeTouchID.authenticate(
         authReason,
+        touchText,
+        cancelText,
         authConfig,
         error => {
           return reject(typeof error == 'String' ? createError(error, error) : createError(error));

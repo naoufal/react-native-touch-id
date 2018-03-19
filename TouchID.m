@@ -20,9 +20,12 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 }
 
 RCT_EXPORT_METHOD(authenticate: (NSString *)reason
+                  cancelText: (NSString *)cancelText
                   callback: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];
+    context.localizedFallbackTitle = @"";
+    context.localizedCancelTitle = cancelText;
     NSError *error;
 
     // Device has TouchID

@@ -41,6 +41,7 @@
             android:src="@drawable/ic_fp_40px" />
 
         <TextView
+            android:id="@+id/touchsensor_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
@@ -59,6 +60,7 @@
         android:layout_gravity="bottom|right"
         android:background="#fff"
         android:text="Cancel"
+        android:layout_marginBottom="30dp"
         android:textColor="#000" />
 
 </LinearLayout>
