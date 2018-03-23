@@ -96,7 +96,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
     }
   }
 
-  /*** TOUH ID ACTIVITY REALTED STUFF ***/
+  /*** TOUCH ID ACTIVITY REALTED STUFF ***/
   private FingerprintDialog fingerprintDialog;
 
   private FingerprintManager fingerprintManager;
@@ -121,9 +121,9 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
       if (!keyguardManager.isKeyguardSecure()) {
           return false;
       }
-    
+
       if (!fingerprintManager.isHardwareDetected()) {
-          return false; 
+          return false;
       }
 
       if (!fingerprintManager.hasEnrolledFingerprints()) {
