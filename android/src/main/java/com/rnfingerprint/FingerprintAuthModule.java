@@ -96,7 +96,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
     }
   }
 
-  /*** TOUCH ID ACTIVITY REALTED STUFF ***/
+  /*** TOUCH ID ACTIVITY RELATED STUFF ***/
   private FingerprintDialog fingerprintDialog;
 
   private FingerprintManager fingerprintManager;
