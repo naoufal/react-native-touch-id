@@ -11,6 +11,7 @@ import com.facebook.react.bridge.ReadableMap;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.app.KeyguardManager;
 import android.hardware.fingerprint.FingerprintManager;
