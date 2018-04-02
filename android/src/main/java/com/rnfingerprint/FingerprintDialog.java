@@ -132,8 +132,9 @@ public class FingerprintDialog extends DialogFragment
         dismiss();
     }
 
+
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(Bundle outState) {
         //No call for super(). Bug on API Level > 11.
     }
 
