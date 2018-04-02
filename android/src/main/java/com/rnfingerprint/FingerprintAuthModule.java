@@ -87,7 +87,9 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
           fingerprintDialog.setAuthConfig(authConfig);
           fingerprintDialog.setDialogCallback(drh);
 
-          fingerprintDialog.show(activity.getFragmentManager());
+          FragmentManager fragmentManager = activity.getFragmentManager();
+
+          fragmentManager.beingTransaction.add(fingerprintDialog, "fingerprint_dialog").commitAllowingStateLoss();
         }
       }
 
