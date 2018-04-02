@@ -10,7 +10,7 @@ import com.facebook.react.bridge.ReadableMap;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.support.v4.app.FragmentManager;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.app.KeyguardManager;
 import android.hardware.fingerprint.FingerprintManager;
