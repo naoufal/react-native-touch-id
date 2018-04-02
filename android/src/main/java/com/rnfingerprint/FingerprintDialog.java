@@ -1,6 +1,7 @@
 package com.rnfingerprint;
 
 import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -138,8 +139,8 @@ public class FingerprintDialog extends DialogFragment
         //No call for super(). Bug on API Level > 11.
     }
 
-    @override
-    public void show(FragmentManager fragmentManager)
+    @Override
+    public boolean show(FragmentManager fragmentManager)
     {
         if(fragmentManager.isStateSaved()) return false;
         show(fragmentManager, "fingerprint_dialog");
