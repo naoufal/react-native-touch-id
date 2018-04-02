@@ -138,4 +138,12 @@ public class FingerprintDialog extends DialogFragment
         //No call for super(). Bug on API Level > 11.
     }
 
+    @override
+    public void show(FragmentManager fragmentManager)
+    {
+        if(fragmentManager.isStateSaved()) return false;
+        show(fragmentManager, "fingerprint_dialog");
+        return true;
+    }
+
 }
