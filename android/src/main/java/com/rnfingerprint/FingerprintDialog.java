@@ -4,12 +4,14 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.lang.String;
 import android.view.LayoutInflater;
+import android.view.WindowManager;
 import android.view.ViewGroup;
 import android.content.DialogInterface;
 import android.view.KeyEvent;
@@ -48,6 +50,7 @@ public class FingerprintDialog
 
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.fingerprint_dialog);
+        setWidthToDialog(context, dialog, true);
 
         dialog.setCancelable(false);
 
@@ -127,5 +130,22 @@ public class FingerprintDialog
     public void onCancelled() {
         dialogCallback.onCancelled();
         dismiss();
+    }
+
+    public void setWidthToDialog(Context context, Dialog dialog, boolean setDrim)
+    {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        int width = metrics.widthPixels;
+
+        final WindowManager.LayoutParams params = dialog.getWindow().getAttributes();
+        dialog.getWindow().setLayout((6 * width)/7, 0);
+        params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+
+        if(setDrim)
+        {
+            params.dimAmount = 0.4f;
+            params.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+            dialog.getWindow().setAttributes( params );
+        }
     }
 }
