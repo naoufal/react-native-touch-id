@@ -105,22 +105,6 @@ public class FingerprintDialog
         }
     }
 
-    public void setCryptoObject(FingerprintManager.CryptoObject cryptoObject) {
-        mCryptoObject = cryptoObject;
-    }
-
-    public void setDialogCallback(DialogResultListener newDialogCallback) {
-      dialogCallback = newDialogCallback;
-    }
-
-    public void setReasonForAuthentication(String reason) {
-      authReason = reason;
-    }
-
-    public void setAuthConfig(ReadableMap config) {
-      authConfig = config;
-    }
-
     public interface DialogResultListener {
       void onAuthenticated();
       void onError(String errorString);
