@@ -78,17 +78,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
         generateKey();
         if (cipherInit()) {
           cryptoObject = new FingerprintManager.CryptoObject(cipher);
-          fingerprintDialog = new FingerprintDialog();
-          fingerprintDialog.setCryptoObject(cryptoObject);
+
 
           DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
 
-          fingerprintDialog.setReasonForAuthentication(reason);
-          fingerprintDialog.setAuthConfig(authConfig);
-          fingerprintDialog.setDialogCallback(drh);
-
-          FragmentManager fragmentManager = activity.getFragmentManager();
-          fragmentManager.beginTransaction().add(fingerprintDialog, "fingerprint_dialog").commitAllowingStateLoss();
+          fingerprintDialog = new FingerprintDialog(activity, cryptoObject, drh, reason, authConfig);
 
         }
       }

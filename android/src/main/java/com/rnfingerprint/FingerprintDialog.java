@@ -33,7 +33,7 @@ public class FingerprintDialog
     private ReadableMap authConfig;
 
     private Context context;
-    privtae Dialog dialog;
+    private Dialog dialog;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
