@@ -1,6 +1,7 @@
 package com.rnfingerprint;
 
-import android.app.DialogFragment;
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +17,7 @@ import com.facebook.react.bridge.ReadableMap;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Handler.Callback;
 
-public class FingerprintDialog extends DialogFragment
+public class FingerprintDialog
         implements FingerprintHandler.Callback {
 
     private Button mCancelButton;
@@ -31,25 +32,27 @@ public class FingerprintDialog extends DialogFragment
     private String authReason;
     private ReadableMap authConfig;
 
+    private Context context;
+    privtae Dialog dialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public FingerprintDialog(Context context, FingerprintManager.CryptoObject cryptoObject, DialogResultListener newDialogCallback, String reason, ReadableMap config)
+    {
+        this.context = context;
+        this.mCryptoObject = cryptoObject;
+        this.dialogCallback = newDialogCallback;
+        this.authReason = reason;
+        this.authConfig = config;
 
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.fingerprint_dialog);
 
-        getDialog().setTitle(authConfig.getString("title"));
-        int color = authConfig.getInt("color");
-
-        setCancelable(false);
-
-        View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
-
-        mFingerprintContent = v.findViewById(R.id.fingerprint_container);
+        dialog.setCancelable(false);
 
         mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
 
@@ -58,7 +61,7 @@ public class FingerprintDialog extends DialogFragment
 
         mFingerprintImage.setColorFilter(color);
 
-        mFingerprintHandler = new FingerprintHandler(this.getContext(), this.getActivity().getSystemService(FingerprintManager.class), this);
+        mFingerprintHandler = new FingerprintHandler(context, context.getSystemService(FingerprintManager.class), this);
 
         if (!mFingerprintHandler.isFingerprintAuthAvailable()) {
             dismiss(); //dismiss if fingerpint not available
@@ -76,20 +79,32 @@ public class FingerprintDialog extends DialogFragment
             }
         });
 
-        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener()
-         {
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener()
+        {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event){
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-              dialogCallback.onCancelled();
-              dismiss();
-              return true; // pretend we've processed it
-            } else {
-              return false; // pass on to be processed as normal
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    dialogCallback.onCancelled();
+                    dismiss();
+                    return true; // pretend we've processed it
+                } else {
+                    return false; // pass on to be processed as normal
+                }
             }
-          }
         });
 
-        return v;
+        try {
+            dialog.show();
+        } catch (WindowManager.BadTokenException bte) {
+            Log.e("ChimeAlertDialog", "Received bad token exception for acivity not running.  Ignoring dialog!");
+        }
+    }
+
+    public void dismiss()
+    {
+        if(dialog != null)
+        {
+            dialog.dismiss();
+        }
     }
 
     public void setCryptoObject(FingerprintManager.CryptoObject cryptoObject) {
@@ -131,7 +146,6 @@ public class FingerprintDialog extends DialogFragment
         dialogCallback.onCancelled();
         dismiss();
     }
-
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
