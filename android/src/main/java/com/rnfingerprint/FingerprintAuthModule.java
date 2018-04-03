@@ -69,12 +69,10 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
   public void authenticate(String reason, ReadableMap authConfig, Callback reactErrorCallback, Callback reactSuccessCallback) {
     if (!inProgress) {
       inProgress = true;
-      keyguardManager =
-      (KeyguardManager) getCurrentActivity().getSystemService(Context.KEYGUARD_SERVICE);
-      fingerprintManager =
-      (FingerprintManager) getCurrentActivity().getSystemService(Context.FINGERPRINT_SERVICE);
-
       Activity activity = getCurrentActivity();
+      keyguardManager = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
+      fingerprintManager = (FingerprintManager) activity.getSystemService(Context.FINGERPRINT_SERVICE);
+
 
       if (isFingerprintAuthAvailable()) {
         generateKey();
@@ -89,9 +87,9 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
           fingerprintDialog.setAuthConfig(authConfig);
           fingerprintDialog.setDialogCallback(drh);
 
-            FragmentManager fragmentManager = activity.getFragmentManager();
+          FragmentManager fragmentManager = activity.getFragmentManager();
+          fragmentManager.beginTransaction().add(fingerprintDialog, "fingerprint_dialog").commitAllowingStateLoss();
 
-          fragmentManager.beginTransaction.add(fingerprintDialog, "fingerprint_dialog").commitAllowingStateLoss();
         }
       }
 
