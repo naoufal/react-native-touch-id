@@ -30,7 +30,6 @@ public class FingerprintDialog
     private DialogResultListener dialogCallback;
     private FingerprintHandler mFingerprintHandler;
 
-    private String authReason;
     private ReadableMap authConfig;
 
     private Context context;
@@ -42,7 +41,6 @@ public class FingerprintDialog
         this.context = context;
         this.mCryptoObject = cryptoObject;
         this.dialogCallback = newDialogCallback;
-        this.authReason = reason;
         this.authConfig = config;
 
         String title = authConfig.getString("title");
@@ -56,10 +54,9 @@ public class FingerprintDialog
         dialog.setTitle(title);
 
         mFingerprintDescription = (TextView) dialog.findViewById(R.id.fingerprint_description);
+        mFingerprintDescription.setText(reason);
 
-        mFingerprintDescription.setText(authReason);
         mFingerprintImage = (ImageView) dialog.findViewById(R.id.fingerprint_icon);
-
         mFingerprintImage.setColorFilter(color);
 
         mFingerprintHandler = new FingerprintHandler(context, context.getSystemService(FingerprintManager.class), this);

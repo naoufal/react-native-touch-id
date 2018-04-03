@@ -4,6 +4,7 @@
     android:id="@+id/fingerprint_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -41,6 +42,7 @@
             android:src="@drawable/ic_fp_40px" />
 
         <TextView
+            android:id="@+id/fingerprint_description"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
