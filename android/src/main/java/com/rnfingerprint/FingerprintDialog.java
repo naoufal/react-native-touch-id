@@ -48,7 +48,7 @@ public class FingerprintDialog
         String title = authConfig.getString("title");
         int color = authConfig.getInt("color");
 
-        dialog = new Dialog(context);
+        dialog = new Dialog(context, R.style.Dialog);
         dialog.setContentView(R.layout.fingerprint_dialog);
         setWidthToDialog(context, dialog, true);
 
