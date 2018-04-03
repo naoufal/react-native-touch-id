@@ -16,6 +16,7 @@ import android.view.KeyEvent;
 import com.facebook.react.bridge.ReadableMap;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Handler.Callback;
+import android.view.WindowManager;
 
 public class FingerprintDialog
         implements FingerprintHandler.Callback {
@@ -35,11 +36,6 @@ public class FingerprintDialog
     private Context context;
     private Dialog dialog;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
-    }
 
     public FingerprintDialog(Context context, FingerprintManager.CryptoObject cryptoObject, DialogResultListener newDialogCallback, String reason, ReadableMap config)
     {
@@ -49,15 +45,20 @@ public class FingerprintDialog
         this.authReason = reason;
         this.authConfig = config;
 
+        String title = authConfig.getString("title");
+        int color = authConfig.getInt("color");
+
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.fingerprint_dialog);
 
         dialog.setCancelable(false);
 
-        mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
+        dialog.setTitle(title);
+
+        mFingerprintDescription = (TextView) dialog.findViewById(R.id.fingerprint_description);
 
         mFingerprintDescription.setText(authReason);
-        mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
+        mFingerprintImage = (ImageView) dialog.findViewById(R.id.fingerprint_icon);
 
         mFingerprintImage.setColorFilter(color);
 
@@ -70,7 +71,7 @@ public class FingerprintDialog
         }
 
 
-        mCancelButton = (Button) v.findViewById(R.id.cancel_button);
+        mCancelButton = (Button) dialog.findViewById(R.id.cancel_button);
         mCancelButton.setTextColor(color);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
