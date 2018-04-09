@@ -27,7 +27,7 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
 
-    if ([options objectForKey:@"fallbackLabel"] != nil) {
+    if (RCTNilIfNull([options objectForKey:@"fallbackLabel"]) != nil) {
         NSString *fallbackLabel = [RCTConvert NSString:options[@"fallbackLabel"]];   
         context.localizedFallbackTitle = fallbackLabel;
     }
