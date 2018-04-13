@@ -59,7 +59,7 @@ TouchIDError.prototype = Object.create(Error.prototype);
 TouchIDError.prototype.constructor = TouchIDError;
 
 function createError(error) {
-  let details = ERRORS[error];
+  let details = {...ERRORS[error]};
   details.name = error;
 
   return new TouchIDError(error, details);
