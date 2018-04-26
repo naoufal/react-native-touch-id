@@ -64,7 +64,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void authenticate(String reason, ReadableMap authConfig, Callback reactErrorCallback, Callback reactSuccessCallback) {
+  public void authenticate(String reason, String touchText, String cancelText, ReadableMap authConfig, Callback reactErrorCallback, Callback reactSuccessCallback) {
     if (!inProgress) {
       inProgress = true;
       keyguardManager =
@@ -84,6 +84,8 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
           DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
 
           fingerprintDialog.setReasonForAuthentication(reason);
+          fingerprintDialog.setTouchSensorText(touchText);
+          fingerprintDialog.setCancelText(cancelText);
           fingerprintDialog.setAuthConfig(authConfig);
           fingerprintDialog.setDialogCallback(drh);
 
