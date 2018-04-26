@@ -61,6 +61,23 @@ On Android you can customize the title and color of the pop-up by passing in the
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
+### App Permissions
+
+Add the following permissions to their respective files:
+
+In your `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.USE_FINGERPRINT" />
+```
+
+In your `Info.plist`:
+
+```xml
+<key>NSFaceIDUsageDescription</key>
+<string>Enabling Face ID allows you quick and secure access to your account.</string>
+```
+
 ### Requesting Face ID/Touch ID Authentication
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
