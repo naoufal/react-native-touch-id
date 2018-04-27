@@ -51,6 +51,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void isSupported(Callback reactErrorCallback, Callback reactSuccessCallback) {
+    if (!isSupportedSDK()) {
+        reactErrorCallback.invoke("Not supported.");
+        return;
+    }
+
     keyguardManager =
             (KeyguardManager) getCurrentActivity().getSystemService(Context.KEYGUARD_SERVICE);
     fingerprintManager =
@@ -60,7 +65,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
     } else {
       reactSuccessCallback.invoke("Is supported.");
     }
-    return ;
+    return;
   }
 
   @ReactMethod
@@ -112,12 +117,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule {
 
   private Context appContext;
 
+  public boolean isSupportedSDK() {
+    return android.os.Build.VERSION.SDK_INT >= 23;
+  }
+
   public boolean isFingerprintAuthAvailable() {
-
-      if (android.os.Build.VERSION.SDK_INT < 23) {
-          return false;
-      }
-
       if (!keyguardManager.isKeyguardSecure()) {
           return false;
       }
