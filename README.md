@@ -140,16 +140,21 @@ Attempts to authenticate with Face ID/Touch ID.
 Returns a `Promise` object.
 
 __Arguments__
-- `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
+- `reason` - **optional** - `String` that provides a clear reason for requesting authentication.
 
-- `config` - **optional - Android only** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog.
+- `config` - **optional** - configuration object for more detailed dialog setup:
+  - `title` - **Android** - title of confirmation dialog
+  - `color` - **Android** - color of confirmation dialog
+  - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
+
 
 __Examples__
 ```js
 //config is optional to be passed in on Android
 const optionalConfigObject = {
-  title: "Authentication Required",
-  color: "#e00606"
+  title: "Authentication Required", // Android
+  color: "#e00606", // Android,
+  failbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)

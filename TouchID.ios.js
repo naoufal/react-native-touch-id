@@ -25,19 +25,13 @@ export default {
     });
   },
 
-  authenticate(reason) {
-    var authReason;
-
-    // Set auth reason
-    if (reason) {
-      authReason = reason;
-    // Set as empty string if no reason is passed
-    } else {
-      authReason = ' ';
-    }
+  authenticate(reason, config) {
+    const DEFAULT_CONFIG = { fallbackLabel: null };
+    const authReason = reason ? reason : ' ';
+    const authConfig = config ? config : DEFAULT_CONFIG;
 
     return new Promise((resolve, reject) => {
-      NativeTouchID.authenticate(authReason, error => {
+      NativeTouchID.authenticate(authReason, authConfig, error => {
         // Return error if rejected
         if (error) {
           return reject(createError(error.message));
