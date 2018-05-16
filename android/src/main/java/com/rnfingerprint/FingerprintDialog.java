@@ -61,7 +61,7 @@ public class FingerprintDialog extends DialogFragment
         mFingerprintHandler = new FingerprintHandler(this.getContext(), this.getActivity().getSystemService(FingerprintManager.class), this);
 
         if (!mFingerprintHandler.isFingerprintAuthAvailable()) {
-            dismiss(); //dismiss if fingerpint not available
+            dismissAllowingStateLoss(); //dismiss if fingerpint not available
         } else {
             mFingerprintHandler.startAuth(mCryptoObject);
         }
@@ -81,7 +81,7 @@ public class FingerprintDialog extends DialogFragment
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event){
             if (keyCode == KeyEvent.KEYCODE_BACK) {
               dialogCallback.onCancelled();
-              dismiss();
+              dismissAllowingStateLoss();
               return true; // pretend we've processed it
             } else {
               return false; // pass on to be processed as normal
@@ -117,19 +117,25 @@ public class FingerprintDialog extends DialogFragment
     @Override
     public void onAuthenticated() {
         dialogCallback.onAuthenticated();
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
     @Override
     public void onError(String errorString) {
         dialogCallback.onError(errorString);
-        dismiss();
+        dismissAllowingStateLoss();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+      outState.putString("WORKAROUND_FOR_BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
+      super.onSaveInstanceState(outState);
     }
 
     @Override
     public void onCancelled() {
         dialogCallback.onCancelled();
-        dismiss();
+        dismissAllowingStateLoss();
     }
 
 }
