@@ -1,23 +1,19 @@
 package com.rnfingerprint;
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
+import android.annotation.TargetApi;
 import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
 import android.os.CancellationSignal;
-import android.support.v4.app.ActivityCompat;
-import android.widget.Toast;
 
+@TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private CancellationSignal cancellationSignal;
     private boolean selfCancelled;
-    private Context mAppContext;
 
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
 
-    public FingerprintHandler(Context context, FingerprintManager fingerprintManager, Callback callback) {
-        mAppContext = context;
+    public FingerprintHandler(FingerprintManager fingerprintManager, Callback callback) {
         mFingerprintManager = fingerprintManager;
         mCallback = callback;
     }

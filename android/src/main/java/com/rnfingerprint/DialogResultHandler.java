@@ -11,7 +11,7 @@ public class DialogResultHandler implements FingerprintDialog.DialogResultListen
     public DialogResultHandler(Callback reactErrorCallback, Callback reactSuccessCallback) {
       errorCallback = reactErrorCallback;
       successCallback = reactSuccessCallback;
-    };
+    }
 
     @Override
     public void onAuthenticated() {
