@@ -20,7 +20,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
 
-    private Cipher cipher;
+    private FingerprintManager.CryptoObject cryptoObject;
     private FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
     private boolean isAppActive;
@@ -33,14 +33,16 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         reactContext.addLifecycleEventListener(this);
     }
 
-    private Cipher getCipher() {
-        if (cipher != null) {
-            return cipher;
+    @TargetApi(Build.VERSION_CODES.M)
+    private FingerprintManager.CryptoObject getCryptoObject() {
+        if (cryptoObject != null) {
+            return cryptoObject;
         }
 
-        cipher = new FingerprintCipher().getCipher();
+        final Cipher cipher = new FingerprintCipher().getCipher();
+        cryptoObject = new FingerprintManager.CryptoObject(cipher);
 
-        return cipher;
+        return cryptoObject;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -58,7 +60,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         return fingerprintManager;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private KeyguardManager getKeyguardManager() {
         if (keyguardManager != null) {
             return keyguardManager;
@@ -78,7 +79,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         return "FingerprintAuth";
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     @ReactMethod
     public void isSupported(final Callback reactErrorCallback, final Callback reactSuccessCallback) {
         final Activity activity = getCurrentActivity();
@@ -93,17 +93,12 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     @ReactMethod
     public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
-        if (inProgress || !isAppActive) {
-            return;
-        }
         final Activity activity = getCurrentActivity();
-        if (activity == null) {
+        if (inProgress || !isAppActive || activity == null) {
             return;
         }
-
         inProgress = true;
 
         if (!isFingerprintAuthAvailable()) {
@@ -112,21 +107,17 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             return;
         }
 
-        final Cipher cipher = this.getCipher();
-        if (cipher == null) {
+        final FingerprintManager.CryptoObject cryptoObject = this.getCryptoObject();
+        if (cryptoObject == null) {
             inProgress = false;
             reactErrorCallback.invoke("Not supported");
             return;
         }
 
-        final FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
-
         /* FINGERPRINT ACTIVITY RELATED STUFF */
+        final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
         final FingerprintDialog fingerprintDialog = new FingerprintDialog();
         fingerprintDialog.setCryptoObject(cryptoObject);
-
-        final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
-
         fingerprintDialog.setReasonForAuthentication(reason);
         fingerprintDialog.setAuthConfig(authConfig);
         fingerprintDialog.setDialogCallback(drh);
