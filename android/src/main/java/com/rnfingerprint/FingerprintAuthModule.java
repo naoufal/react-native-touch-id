@@ -121,7 +121,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         final FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
 
-        /* TOUCH ID ACTIVITY RELATED STUFF */
+        /* FINGERPRINT ACTIVITY RELATED STUFF */
         final FingerprintDialog fingerprintDialog = new FingerprintDialog();
         fingerprintDialog.setCryptoObject(cryptoObject);
 
