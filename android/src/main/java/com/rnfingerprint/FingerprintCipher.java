@@ -12,15 +12,16 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 
 /**
- * Created by Nikolay Demyankov on 24.05.18.
+ * Helper to create a Cipher.
  */
+@TargetApi(Build.VERSION_CODES.M)
 public class FingerprintCipher {
 
     private static final String KEY_NAME = "example_key";
+    private static final String CIPHER_ALGO = KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7;
 
     private Cipher cipher;
 
-    @TargetApi(Build.VERSION_CODES.M)
     public Cipher getCipher() {
         if (cipher != null) {
             return cipher;
@@ -28,20 +29,17 @@ public class FingerprintCipher {
 
         try {
             final KeyStore keyStore = generateKey();
-            final String algo = KeyProperties.KEY_ALGORITHM_AES + "/" + KeyProperties.BLOCK_MODE_CBC + "/" + KeyProperties.ENCRYPTION_PADDING_PKCS7;
-            cipher = Cipher.getInstance(algo);
+            cipher = Cipher.getInstance(CIPHER_ALGO);
 
             keyStore.load(null);
-            SecretKey key = (SecretKey) keyStore.getKey(KEY_NAME, null);
-            cipher.init(Cipher.ENCRYPT_MODE, key);
+            cipher.init(Cipher.ENCRYPT_MODE, keyStore.getKey(KEY_NAME, null));
         } catch (Exception e) {
-            // ignored
+            // nothing we can do about it, return null
         }
 
         return cipher;
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     private KeyStore generateKey() throws Exception {
         final KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
         final KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
