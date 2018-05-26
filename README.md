@@ -154,7 +154,7 @@ __Examples__
 const optionalConfigObject = {
   title: "Authentication Required", // Android
   color: "#e00606", // Android,
-  failbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
+  fallbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
