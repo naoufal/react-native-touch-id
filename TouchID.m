@@ -1,5 +1,6 @@
 #import "TouchID.h"
 #import <React/RCTUtils.h>
+#import "React/RCTConvert.h"
 
 @implementation TouchID
 
@@ -20,10 +21,16 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 }
 
 RCT_EXPORT_METHOD(authenticate: (NSString *)reason
+                  options:(NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
+
+    if (RCTNilIfNull([options objectForKey:@"fallbackLabel"]) != nil) {
+        NSString *fallbackLabel = [RCTConvert NSString:options[@"fallbackLabel"]];   
+        context.localizedFallbackTitle = fallbackLabel;
+    }
 
     // Device has TouchID
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
@@ -95,4 +102,5 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 }
 
 @end
+
 

@@ -61,6 +61,23 @@ On Android you can customize the title and color of the pop-up by passing in the
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
+### App Permissions
+
+Add the following permissions to their respective files:
+
+In your `AndroidManifest.xml`:
+
+```xml
+<uses-permission android:name="android.permission.USE_FINGERPRINT" />
+```
+
+In your `Info.plist`:
+
+```xml
+<key>NSFaceIDUsageDescription</key>
+<string>Enabling Face ID allows you quick and secure access to your account.</string>
+```
+
 ### Requesting Face ID/Touch ID Authentication
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
@@ -123,18 +140,25 @@ Attempts to authenticate with Face ID/Touch ID.
 Returns a `Promise` object.
 
 __Arguments__
-- `reason` - An _optional_ `String` that provides a clear reason for requesting authentication.
+- `reason` - **optional** - `String` that provides a clear reason for requesting authentication.
 
-- `config` - **optional - Android only** (does nothing on iOS) - an object that specifies the title and color to present in the confirmation dialog.
+- `config` - **optional** - configuration object for more detailed dialog setup:
+  - `title` - **Android** - title of confirmation dialog
+  - `color` - **Android** - color of confirmation dialog
+  - `sensorDescription` - **Android** - text shown next to the fingerprint image
+  - `cancelText` - **Android** - cancel button text
+  - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
+
 
 __Examples__
 ```js
 //config is optional to be passed in on Android
 const optionalConfigObject = {
-  title: "Authentication Required",
-  color: "#e00606",
-  sensorDescription: "Touch sensor",
-  cancelText: "Cancel"
+  title: "Authentication Required", // Android
+  color: "#e00606", // Android
+  sensorDescription: "Touch sensor", // Android
+  cancelText: "Cancel", // Android
+  fallbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)

@@ -2,8 +2,6 @@ package com.rnfingerprint;
 
 import com.facebook.react.bridge.Callback;
 
-import android.util.Log;
-
 public class DialogResultHandler implements FingerprintDialog.DialogResultListener {
     private Callback errorCallback;
     private Callback successCallback;
@@ -11,7 +9,7 @@ public class DialogResultHandler implements FingerprintDialog.DialogResultListen
     public DialogResultHandler(Callback reactErrorCallback, Callback reactSuccessCallback) {
       errorCallback = reactErrorCallback;
       successCallback = reactSuccessCallback;
-    };
+    }
 
     @Override
     public void onAuthenticated() {
