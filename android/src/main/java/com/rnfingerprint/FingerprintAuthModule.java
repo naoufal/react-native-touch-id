@@ -4,9 +4,9 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -20,8 +20,8 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
 
-    private FingerprintManager.CryptoObject cryptoObject;
-    private FingerprintManager fingerprintManager;
+    private FingerprintManagerCompat.CryptoObject cryptoObject;
+    private FingerprintManagerCompat fingerprintManager;
     private KeyguardManager keyguardManager;
     private boolean isAppActive;
 
@@ -34,19 +34,19 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private FingerprintManager.CryptoObject getCryptoObject() {
+    private FingerprintManagerCompat.CryptoObject getCryptoObject() {
         if (cryptoObject != null) {
             return cryptoObject;
         }
 
         final Cipher cipher = new FingerprintCipher().getCipher();
-        cryptoObject = new FingerprintManager.CryptoObject(cipher);
+        cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
 
         return cryptoObject;
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    private FingerprintManager getFingerprintManager() {
+    private FingerprintManagerCompat getFingerprintManager() {
         if (fingerprintManager != null) {
             return fingerprintManager;
         }
@@ -55,7 +55,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         if (activity == null) {
             return null;
         }
-        fingerprintManager = (FingerprintManager) activity.getSystemService(Context.FINGERPRINT_SERVICE);
+        fingerprintManager = activity.getSystemService(FingerprintManagerCompat.class);
 
         return fingerprintManager;
     }
@@ -107,7 +107,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             return;
         }
 
-        final FingerprintManager.CryptoObject cryptoObject = this.getCryptoObject();
+        final FingerprintManagerCompat.CryptoObject cryptoObject = this.getCryptoObject();
         if (cryptoObject == null) {
             inProgress = false;
             reactErrorCallback.invoke("Not supported");
@@ -136,7 +136,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
 
         final KeyguardManager keyguardManager = getKeyguardManager();
-        final FingerprintManager fingerprintManager = getFingerprintManager();
+        final FingerprintManagerCompat fingerprintManager = getFingerprintManager();
 
         if (keyguardManager == null || !keyguardManager.isKeyguardSecure()) {
             return false;

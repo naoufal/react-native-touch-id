@@ -3,8 +3,8 @@ package com.rnfingerprint;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,7 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class FingerprintDialog extends DialogFragment implements FingerprintHandler.Callback {
 
-    private FingerprintManager.CryptoObject mCryptoObject;
+    private FingerprintManagerCompat.CryptoObject mCryptoObject;
     private DialogResultListener dialogCallback;
     private FingerprintHandler mFingerprintHandler;
     private boolean isAuthInProgress;
@@ -95,7 +95,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     }
 
 
-    public void setCryptoObject(FingerprintManager.CryptoObject cryptoObject) {
+    public void setCryptoObject(FingerprintManagerCompat.CryptoObject cryptoObject) {
         mCryptoObject = cryptoObject;
     }
 
