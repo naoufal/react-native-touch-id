@@ -91,10 +91,12 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        this.mFingerprintHandler.endAuth();
+    public void onPause() {
+        super.onPause();
+        if (isAuthInProgress) {
+            this.mFingerprintHandler.endAuth();
+            this.isAuthInProgress = false;
+        }
     }
 
 
