@@ -9,7 +9,6 @@ import java.security.KeyStore;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 
 /**
  * Helper to create a Cipher.
