@@ -14,11 +14,23 @@ module.exports = {
   LAErrorPasscodeNotSet: {
     message: 'Authentication could not start because the passcode is not set on the device.'
   },
+  LAErrorBiometryNotAvailable: {
+    message: 'Authentication could not start because Biometry is not available on the device.'
+  },
+  LAErrorBiometryNotEnrolled: {
+    message: 'Authentication could not start because Biometry has no enrolled biometric identities.'
+  },
+  LAErrorBiometryLockout: {
+    message: 'Authentication could not start because Biometry had too many failed attempts.'
+  },
   LAErrorTouchIDNotAvailable: {
-    message: 'Authentication could not start because Touch ID is not available on the device'
+    message: 'Authentication could not start because Touch ID is not available on the device.'
   },
   LAErrorTouchIDNotEnrolled: {
     message: 'Authentication could not start because Touch ID has no enrolled fingers.'
+  },
+  LAErrorTouchIDLockout: {
+    message: 'Authentication could not start because Touch ID had too many failed attempts.'
   },
   RCTTouchIDUnknownError: {
     message: 'Could not authenticate for an unknown reason.'
