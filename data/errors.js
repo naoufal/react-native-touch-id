@@ -23,15 +23,6 @@ module.exports = {
   LAErrorBiometryLockout: {
     message: 'Authentication could not start because Biometry had too many failed attempts.'
   },
-  LAErrorTouchIDNotAvailable: {
-    message: 'Authentication could not start because Touch ID is not available on the device.'
-  },
-  LAErrorTouchIDNotEnrolled: {
-    message: 'Authentication could not start because Touch ID has no enrolled fingers.'
-  },
-  LAErrorTouchIDLockout: {
-    message: 'Authentication could not start because Touch ID had too many failed attempts.'
-  },
   RCTTouchIDUnknownError: {
     message: 'Could not authenticate for an unknown reason.'
   },
