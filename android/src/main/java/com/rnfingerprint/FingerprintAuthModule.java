@@ -62,11 +62,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         final int result = isFingerprintAuthAvailable();
         if (result == SUPPORTED) {
-            reactSuccessCallback.invoke("Is supported.");
+            reactSuccessCallback.invoke("Is supported");
         } else if (result == NOT_SUPPORTED) {
-            reactErrorCallback.invoke("Not supported.");
+            reactErrorCallback.invoke("Not supported");
         } else {
-            reactErrorCallback.invoke("No enrolled fingerprint.");
+            reactErrorCallback.invoke("No enrolled fingerprint");
         }
     }
 
