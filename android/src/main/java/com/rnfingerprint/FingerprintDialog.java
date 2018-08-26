@@ -64,6 +64,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         }
 
         getDialog().setTitle(this.dialogTitle);
+        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
