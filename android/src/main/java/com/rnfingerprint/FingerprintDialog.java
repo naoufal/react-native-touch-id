@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.view.Window;
 
@@ -26,6 +27,8 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private String authReason;
     private int dialogColor = 0;
     private String dialogTitle = "";
+    private int dialogWidth = 400;
+    private int dialogHeight = 350;
 
     @Override
     public void onAttach(Context context) {
@@ -77,6 +80,13 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             }
         });
 
+        LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.fingerprint_container);
+
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
+        layoutParams.width = this.dialogWidth;
+        layoutParams.height = this.dialogHeight;
+
+
         return v;
     }
 
@@ -125,6 +135,14 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         if (config.hasKey("color")) {
             this.dialogColor = config.getInt("color");
+        }
+
+        if (config.hasKey("dialogWidth")) {
+            this.dialogWidth = config.getInt("dialogWidth");
+        }
+
+        if (config.hasKey("dialogHeight")) {
+            this.dialogHeight = config.getInt("dialogHeight");
         }
     }
 
