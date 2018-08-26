@@ -82,10 +82,8 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.fingerprint_container);
 
-        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) linearLayout.getLayoutParams();
-        layoutParams.width = this.dialogWidth;
-        layoutParams.height = this.dialogHeight;
-
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dialogWidth, dialogHeight);
+        linearLayout.setLayoutParams(layoutParams);
 
         return v;
     }
