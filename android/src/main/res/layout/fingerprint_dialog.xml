@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:minWidth="400"
-    android:minHeight="300"
+    android:minWidth="400dp"
+    android:minHeight="300dp"
     android:weightSum="1">
 
     <!-- https://medium.com/@chrisbanes/appcompat-v23-2-age-of-the-vectors-91cbafa87c88#.btn3al2l2 appCompat works if app is srcCompat 7 activity-->
