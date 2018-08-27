@@ -1,5 +1,6 @@
 package com.rnfingerprint;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,8 +28,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private String authReason;
     private int dialogColor = 0;
     private String dialogTitle = "";
-    private int dialogWidth = 400;
-    private int dialogHeight = 350;
+    private int dialogTitleSize = 20;
 
     @Override
     public void onAttach(Context context) {
@@ -40,16 +40,19 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
         setCancelable(false);
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
 
         final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
         mFingerprintDescription.setText(this.authReason);
+
+        final TextView titleTextView = (TextView) v.findViewById(R.id.title);
+        titleTextView.setText(dialogTitle);
+        titleTextView.setTextSize(dialogTitleSize);
 
         final ImageView mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
         if (this.dialogColor != 0) {
@@ -67,8 +70,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             mCancelButton.setTextColor(this.dialogColor);
         }
 
-        getDialog().setTitle(this.dialogTitle);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
@@ -79,11 +80,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
                 return true; // pretend we've processed it
             }
         });
-
-        LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.fingerprint_container);
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(dialogWidth, dialogHeight);
-        linearLayout.setLayoutParams(layoutParams);
 
         return v;
     }
@@ -135,12 +131,8 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             this.dialogColor = config.getInt("color");
         }
 
-        if (config.hasKey("dialogWidth")) {
-            this.dialogWidth = config.getInt("dialogWidth");
-        }
-
-        if (config.hasKey("dialogHeight")) {
-            this.dialogHeight = config.getInt("dialogHeight");
+        if (config.hasKey("titleSize")) {
+            this.dialogTitleSize = config.getInt("titleSize");
         }
     }
 
