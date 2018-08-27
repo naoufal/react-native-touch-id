@@ -1,5 +1,6 @@
 package com.rnfingerprint;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -29,6 +30,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private String dialogTitle = "";
     private int dialogWidth = 400;
     private int dialogHeight = 350;
+    private int dialogTitleSize;
 
     @Override
     public void onAttach(Context context) {
@@ -67,8 +69,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             mCancelButton.setTextColor(this.dialogColor);
         }
 
-        getDialog().setTitle(this.dialogTitle);
-        getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
@@ -141,6 +141,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         if (config.hasKey("dialogHeight")) {
             this.dialogHeight = config.getInt("dialogHeight");
+        }
+
+        if (config.hasKey("titleSize")) {
+            this.dialogTitleSize = config.getInt("titleSize");
         }
     }
 
