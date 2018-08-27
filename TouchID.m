@@ -13,8 +13,12 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
 
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         callback(@[[NSNull null], [self getBiometryType:context]]);
-        // Device does not support TouchID
+    } else if (error.code == LAErrorTouchIDNotEnrolled) {
+        // Device does not enrolled TouchID
+        callback(@[RCTMakeError(@"LAErrorTouchIDNotEnrolled", nil, nil)]);
+        return;
     } else {
+        // Device does not support TouchID
         callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
         return;
     }
