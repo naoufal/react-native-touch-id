@@ -25,5 +25,8 @@ module.exports = {
   },
   RCTTouchIDNotSupported: {
     message: 'Device does not support Touch ID.'
-  }
+  },
+  LAErrorFaceIDNotEnrolled: {
+    message: 'Authentication could not start because Face ID has no enrolled.'
+  },
 };
