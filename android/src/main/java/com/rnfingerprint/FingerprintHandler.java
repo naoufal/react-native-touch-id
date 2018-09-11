@@ -37,7 +37,11 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void onAuthenticationError(int errMsgId,
                                       CharSequence errString) {
         if (!selfCancelled) {
-            mCallback.onError(errString.toString());
+            if (attemptCount == 1) {
+                mCallback.onError(errString.toString());
+            } else {
+                mCallback.onError("reached limit attempt");
+            }
         }
     }
 
