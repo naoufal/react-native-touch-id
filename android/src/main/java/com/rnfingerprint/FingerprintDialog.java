@@ -1,6 +1,5 @@
 package com.rnfingerprint;
 
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -12,9 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.view.Window;
 
 import com.facebook.react.bridge.ReadableMap;
 
@@ -29,12 +26,13 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private int dialogColor = 0;
     private String dialogTitle = "";
     private int dialogTitleSize = 20;
+    private int limitAttempt = 3;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        this.mFingerprintHandler = new FingerprintHandler(context, this);
+        this.mFingerprintHandler = new FingerprintHandler(context, this, limitAttempt);
     }
 
     @Override
@@ -133,6 +131,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         if (config.hasKey("titleSize")) {
             this.dialogTitleSize = config.getInt("titleSize");
+        }
+
+        if (config.hasKey("limitAttempt")) {
+            this.limitAttempt = config.getInt("limitAttempt");
         }
     }
 
