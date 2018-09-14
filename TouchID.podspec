@@ -14,5 +14,4 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/naoufal/react-native-touch-id.git" }
 
   s.source_files  = "*.{h,m}"
-  s.dependency "React"
 end
