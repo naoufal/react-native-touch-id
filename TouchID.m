@@ -65,12 +65,16 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                          errorReason = @"LAErrorPasscodeNotSet";
                          break;
 
-                     case LAErrorTouchIDNotAvailable:
-                         errorReason = @"LAErrorTouchIDNotAvailable";
+                     case LAErrorBiometryNotAvailable:
+                         errorReason = @"LAErrorBiometryNotAvailable";
                          break;
 
-                     case LAErrorTouchIDNotEnrolled:
-                         errorReason = @"LAErrorTouchIDNotEnrolled";
+                     case LAErrorBiometryNotEnrolled:
+                         errorReason = @"LAErrorBiometryNotEnrolled";
+                         break;
+
+                     case LAErrorBiometryLockout:
+                         errorReason = @"LAErrorBiometryLockout";
                          break;
 
                      default:

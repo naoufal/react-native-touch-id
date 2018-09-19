@@ -84,8 +84,9 @@ const errors = {
   "LAErrorUserFallback": "Authentication was canceled because the user tapped the fallback button (Enter Password).",
   "LAErrorSystemCancel": "Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up.",
   "LAErrorPasscodeNotSet": "Authentication could not start because the passcode is not set on the device.",
-  "LAErrorTouchIDNotAvailable": "Authentication could not start because Touch ID is not available on the device",
-  "LAErrorTouchIDNotEnrolled": "Authentication could not start because Touch ID has no enrolled fingers.",
+  "LAErrorBiometryNotAvailable": "Authentication could not start because Biometry is not available on the device.",
+  "LAErrorBiometryNotEnrolled": "Authentication could not start because Biometry has no enrolled biometric identities.",
+  "LAErrorBiometryLockout": "Authentication could not start because Biometry had too many failed attempts.",
   "RCTTouchIDUnknownError": "Could not authenticate for an unknown reason.",
   "RCTTouchIDNotSupported": "Device does not support Touch ID."
 };
