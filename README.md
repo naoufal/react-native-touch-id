@@ -148,15 +148,16 @@ __Arguments__
   - `title` - **Android** - title of confirmation dialog
   - `color` - **Android** - color of confirmation dialog
   - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
+  - `unifiedErrors` - return unified error messages (see below) (default = false)
 
 
 __Examples__
 ```js
-//config is optional to be passed in on Android
 const optionalConfigObject = {
   title: "Authentication Required", // Android
   color: "#e00606", // Android,
-  fallbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
+  fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
+  unifiedErrors: false // use unified error messages (default false)
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
@@ -169,12 +170,15 @@ TouchID.authenticate('to demo this react-native component', optionalConfigObject
 ```
 
 ### isSupported()
-Verify's that Touch ID is supported.
-Returns a `Promise` that resolves to a `String` of `FaceID` or `TouchID` .
+Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`.
 
 __Examples__
 ```js
-TouchID.isSupported()
+const optionalConfigObject = {
+  unifiedErrors: false // use unified error messages (default false)
+}
+
+TouchID.isSupported(optionalConfigObject)
   .then(biometryType => {
     // Success code
     if (biometryType === 'FaceID') {
@@ -190,11 +194,23 @@ TouchID.isSupported()
 ```
 
 ## Errors
-There are various reasons why biomentric authentication may fail.  When it does fails, `TouchID.authenticate` will return an error code representing the reason.
+There are various reasons why biomentric authentication may not be available or fail.  `TouchID.isSupported` and `TouchID.authenticate` will return an error representing the reason.
 
-Below is a list of error codes that can be returned **on iOS**:
+#### iOS Errors
 
-| Code | Description |
+Format:
+```
+{
+  name: "TheErrorCode",
+  message: "the error message",
+  details: {
+    name: "TheErrorCode",
+    message: "the error message"
+  }
+}
+```
+
+| name | message |
 |---|---|
 | `LAErrorAuthenticationFailed` | Authentication was not successful because the user failed to provide valid credentials. |
 | `LAErrorUserCancel` | Authentication was canceled by the user—for example, the user tapped Cancel in the dialog. |
@@ -207,6 +223,71 @@ Below is a list of error codes that can be returned **on iOS**:
 | `RCTTouchIDNotSupported` | Device does not support Touch ID. |
 
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
+
+#### Android errors
+
+Format:
+```
+{
+  name: "Touch ID Error",
+  message: "Touch ID Error",
+  details: "the error message",
+  code: "THE_ERROR_CODE"
+}
+```
+
+isSupported:
+| name | message | details | code |
+|---|---|---|---|
+|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_SUPPORTED`|
+|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_AVAILABLE`|
+|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_PRESENT`|
+|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_ENROLLED`|
+
+authenticate:
+| name | message | details | code |
+|---|---|---|---|
+|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_SUPPORTED`|
+|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_AVAILABLE`|
+|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_PRESENT`|
+|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_ENROLLED`|
+|`Touch ID Error`|`Touch ID Error`|failed|`AUTHENTICATION_FAILED`|
+|`Touch ID Error`|`Touch ID Error`|cancelled|`AUTHENTICATION_CANCELED`|
+|`Touch ID Error`|`Touch ID Error`|Too many attempts. Try again Later.|`FINGERPRINT_ERROR_LOCKOUT`
+|`Touch ID Error`|`Touch ID Error`|Too many attempts. Fingerprint sensor disabled.|`FINGERPRINT_ERROR_LOCKOUT_PERMANENT`
+|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_UNABLE_TO_PROCESS`,
+|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_TIMEOUT`,
+|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_CANCELED`,
+|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_VENDOR`,
+
+#### Unified errors
+
+Format:
+```
+{
+  name: "TouchIDError",
+  message: "the error message",
+  code: "THE_ERROR_CODE"
+}
+```
+
+| name | message | code |
+|---|---|---|
+|`TouchIDError`|Authentication failed|`AUTHENTICATION_FAILED`
+|`TouchIDError`|User canceled authentication|`USER_CANCELED`
+|`TouchIDError`|System canceled authentication|`SYSTEM_CANCELED`
+|`TouchIDError`|Biometry hardware not present|`NOT_PRESENT`
+|`TouchIDError`|Biometry is not supported|`NOT_SUPPORTED`
+|`TouchIDError`|Biometry is not currently available|`NOT_AVAILABLE`
+|`TouchIDError`|Biometry is not enrolled|`NOT_ENROLLED`
+|`TouchIDError`|Biometry timeout|`TIMEOUT`
+|`TouchIDError`|Biometry lockout|`LOCKOUT`
+|`TouchIDError`|Biometry permanent lockout|`LOCKOUT_PERMANENT`
+|`TouchIDError`|Biometry processing error|`PROCESSING_ERROR`
+|`TouchIDError`|User selected fallback|`USER_FALLBACK`
+|`TouchIDError`|User selected fallback not enrolled|`FALLBACK_NOT_ENROLLED`
+|`TouchIDError`|Unknown error|`UNKNOWN_ERROR`
+
 
 ## License
 Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com/)

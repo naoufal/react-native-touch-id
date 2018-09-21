@@ -129,7 +129,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     public interface DialogResultListener {
         void onAuthenticated();
 
-        void onError(String errorString);
+        void onError(String errorString, int errorCode);
 
         void onCancelled();
     }
@@ -142,9 +142,9 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     }
 
     @Override
-    public void onError(String errorString) {
+    public void onError(String errorString, int errorCode) {
         this.isAuthInProgress = false;
-        this.dialogCallback.onError(errorString);
+        this.dialogCallback.onError(errorString, errorCode);
         dismiss();
     }
 
