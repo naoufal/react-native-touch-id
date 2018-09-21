@@ -147,6 +147,8 @@ __Arguments__
 - `config` - **optional** - configuration object for more detailed dialog setup:
   - `title` - **Android** - title of confirmation dialog
   - `color` - **Android** - color of confirmation dialog
+  - `sensorDescription` - **Android** - text shown next to the fingerprint image
+  - `cancelText` - **Android** - cancel button text
   - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
   - `unifiedErrors` - return unified error messages (see below) (default = false)
 
@@ -155,8 +157,10 @@ __Examples__
 ```js
 const optionalConfigObject = {
   title: "Authentication Required", // Android
-  color: "#e00606", // Android,
-  fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
+  color: "#e00606", // Android
+  sensorDescription: "Touch sensor", // Android
+  cancelText: "Cancel", // Android
+  fallbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
   unifiedErrors: false // use unified error messages (default false)
 }
 
