@@ -160,7 +160,7 @@ const optionalConfigObject = {
   color: "#e00606", // Android
   sensorDescription: "Touch sensor", // Android
   cancelText: "Cancel", // Android
-  fallbackLabel: "Show Passcode" // iOS (if empty, then label is hidden)
+  fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
   unifiedErrors: false // use unified error messages (default false)
 }
 
