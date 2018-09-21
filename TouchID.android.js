@@ -22,7 +22,8 @@ export default {
       title: 'Authentication Required',
       color: '#1306ff',
       sensorDescription: 'Touch sensor',
-      cancelText: 'Cancel'
+      cancelText: 'Cancel',
+      unifiedErrors: false
     };
     var authReason = reason ? reason : ' ';
     var authConfig = Object.assign({}, DEFAULT_CONFIG, config);
