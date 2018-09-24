@@ -241,6 +241,7 @@ Format:
 ```
 
 isSupported:
+
 | name | message | details | code |
 |---|---|---|---|
 |`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_SUPPORTED`|
@@ -249,6 +250,7 @@ isSupported:
 |`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_ENROLLED`|
 
 authenticate:
+
 | name | message | details | code |
 |---|---|---|---|
 |`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_SUPPORTED`|
