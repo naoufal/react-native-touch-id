@@ -1,135 +1,170 @@
 package com.rnfingerprint;
 
 import android.app.DialogFragment;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.lang.String;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
-import android.content.DialogInterface;
-import android.view.KeyEvent;
+
 import com.facebook.react.bridge.ReadableMap;
-import android.hardware.fingerprint.FingerprintManager;
-import android.os.Handler.Callback;
 
-public class FingerprintDialog extends DialogFragment
-        implements FingerprintHandler.Callback {
-
-    private Button mCancelButton;
-    private View mFingerprintContent;
-    private TextView mFingerprintDescription;
-    private ImageView mFingerprintImage;
+public class FingerprintDialog extends DialogFragment implements FingerprintHandler.Callback {
 
     private FingerprintManager.CryptoObject mCryptoObject;
     private DialogResultListener dialogCallback;
     private FingerprintHandler mFingerprintHandler;
+    private boolean isAuthInProgress;
 
     private String authReason;
-    private ReadableMap authConfig;
+    private int dialogColor = 0;
+    private String dialogTitle = "";
+    private String cancelText = "";
+    private String sensorDescription = "";
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);        
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        this.mFingerprintHandler = new FingerprintHandler(context, this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-
-        getDialog().setTitle(authConfig.getString("title"));
-        int color = authConfig.getInt("color");
-
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
         setCancelable(false);
+    }
 
-        View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
 
-        mFingerprintContent = v.findViewById(R.id.fingerprint_container);
+        final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
+        mFingerprintDescription.setText(this.authReason);
 
-        mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
-
-        mFingerprintDescription.setText(authReason);
-        mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
-
-        mFingerprintImage.setColorFilter(color);
-
-        mFingerprintHandler = new FingerprintHandler(this.getContext(), this.getActivity().getSystemService(FingerprintManager.class), this);
-
-        if (!mFingerprintHandler.isFingerprintAuthAvailable()) {
-            dismiss(); //dismiss if fingerpint not available
-        } else {
-            mFingerprintHandler.startAuth(mCryptoObject);
+        final ImageView mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
+        if (this.dialogColor != 0) {
+            mFingerprintImage.setColorFilter(this.dialogColor);
         }
 
+        final TextView mFingerprintSensorDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
+        mFingerprintSensorDescription.setText(this.sensorDescription);
 
-        mCancelButton = (Button) v.findViewById(R.id.cancel_button);
-        mCancelButton.setTextColor(color);
+        final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
+        mCancelButton.setText(this.cancelText);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mFingerprintHandler.endAuth();
+                onCancelled();
             }
         });
+        if (this.dialogColor != 0) {
+            mCancelButton.setTextColor(this.dialogColor);
+        }
 
-        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener()
-         {
-            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event){
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-              dialogCallback.onCancelled();
-              dismiss();
-              return true; // pretend we've processed it
-            } else {
-              return false; // pass on to be processed as normal
+        getDialog().setTitle(this.dialogTitle);
+        getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
+                    return false; // pass on to be processed as normal
+                }
+
+                onCancelled();
+                return true; // pretend we've processed it
             }
-          }
         });
 
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (this.isAuthInProgress) {
+            return;
+        }
+
+        this.isAuthInProgress = true;
+        this.mFingerprintHandler.startAuth(mCryptoObject);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (isAuthInProgress) {
+            this.mFingerprintHandler.endAuth();
+            this.isAuthInProgress = false;
+        }
+    }
+
+
     public void setCryptoObject(FingerprintManager.CryptoObject cryptoObject) {
-        mCryptoObject = cryptoObject;
+        this.mCryptoObject = cryptoObject;
     }
 
     public void setDialogCallback(DialogResultListener newDialogCallback) {
-      dialogCallback = newDialogCallback;
+        this.dialogCallback = newDialogCallback;
     }
 
     public void setReasonForAuthentication(String reason) {
-      authReason = reason;
+        this.authReason = reason;
     }
 
-    public void setAuthConfig(ReadableMap config) {
-      authConfig = config;
+    public void setAuthConfig(final ReadableMap config) {
+        if (config == null) {
+            return;
+        }
+
+        if (config.hasKey("title")) {
+            this.dialogTitle = config.getString("title");
+        }
+        if (config.hasKey("cancelText")) {
+            this.cancelText = config.getString("cancelText");
+        }
+        if (config.hasKey("sensorDescription")) {
+            this.sensorDescription = config.getString("sensorDescription");
+        }
+
+        if (config.hasKey("color")) {
+            this.dialogColor = config.getInt("color");
+        }
     }
 
     public interface DialogResultListener {
-      void onAuthenticated();
-      void onError(String errorString);
-      void onCancelled();
+        void onAuthenticated();
+
+        void onError(String errorString, int errorCode);
+
+        void onCancelled();
     }
 
     @Override
     public void onAuthenticated() {
-        dialogCallback.onAuthenticated();
+        this.isAuthInProgress = false;
+        this.dialogCallback.onAuthenticated();
         dismiss();
     }
 
     @Override
-    public void onError(String errorString) {
-        dialogCallback.onError(errorString);
+    public void onError(String errorString, int errorCode) {
+        this.isAuthInProgress = false;
+        this.dialogCallback.onError(errorString, errorCode);
         dismiss();
     }
 
     @Override
     public void onCancelled() {
-        dialogCallback.onCancelled();
+        this.isAuthInProgress = false;
+        this.mFingerprintHandler.endAuth();
+        this.dialogCallback.onCancelled();
         dismiss();
     }
-
 }
