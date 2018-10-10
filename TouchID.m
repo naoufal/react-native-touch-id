@@ -28,12 +28,17 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
                   options:(NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
+    NSNumber *passcodeFallback = [NSNumber numberWithBool:false];
     LAContext *context = [[LAContext alloc] init];
     NSError *error;
 
     if (RCTNilIfNull([options objectForKey:@"fallbackLabel"]) != nil) {
         NSString *fallbackLabel = [RCTConvert NSString:options[@"fallbackLabel"]];   
         context.localizedFallbackTitle = fallbackLabel;
+    }
+
+    if (RCTNilIfNull([options objectForKey:@"passcodeFallback"]) != nil) {
+        passcodeFallback = [RCTConvert NSNumber:options[@"passcodeFallback"]];
     }
 
     // Device has TouchID
@@ -46,8 +51,8 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
              [self handleAttemptToUseDeviceIDWithSuccess:success error:error callback:callback];
          }];
 
-        // Device does not support TouchID
-    } else if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+        // Device does not support TouchID but user wishes to use passcode fallback
+    } else if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error] && [passcodeFallback boolValue]) {
         // Attempt Authentification
         [context evaluatePolicy:LAPolicyDeviceOwnerAuthentication
                 localizedReason:reason
