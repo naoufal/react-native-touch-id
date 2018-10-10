@@ -151,6 +151,7 @@ __Arguments__
   - `cancelText` - **Android** - cancel button text
   - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
   - `unifiedErrors` - return unified error messages (see below) (default = false)
+  - `passcodeFallback` - **iOS** - by default set to false. If set to true, will allow use of keypad passcode.
 
 
 __Examples__
@@ -161,7 +162,8 @@ const optionalConfigObject = {
   sensorDescription: "Touch sensor", // Android
   cancelText: "Cancel", // Android
   fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
-  unifiedErrors: false // use unified error messages (default false)
+  unifiedErrors: false, // use unified error messages (default false)
+  passcodeFallback: false // iOS
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
