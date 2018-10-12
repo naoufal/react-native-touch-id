@@ -51,6 +51,18 @@
             android:textSize="15dp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/fingerprint_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#F00"
+        android:textSize="15dp" />
+
     <Button
         android:id="@+id/cancel_button"
         style="?android:attr/buttonBarButtonStyle"

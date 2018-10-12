@@ -22,11 +22,14 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private FingerprintHandler mFingerprintHandler;
     private boolean isAuthInProgress;
 
+    private TextView mFingerprintError;
+
     private String authReason;
     private int dialogColor = 0;
     private String dialogTitle = "";
     private String cancelText = "";
     private String sensorDescription = "";
+    private String errorText = "";
 
     @Override
     public void onAttach(Context context) {
@@ -56,6 +59,9 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         final TextView mFingerprintSensorDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
         mFingerprintSensorDescription.setText(this.sensorDescription);
+
+        this.mFingerprintError = (TextView) v.findViewById(R.id.fingerprint_error);
+        this.mFingerprintError.setText(this.errorText);
 
         final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
         mCancelButton.setText(this.cancelText);
@@ -155,9 +161,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
     @Override
     public void onError(String errorString, int errorCode) {
-        this.isAuthInProgress = false;
-        this.dialogCallback.onError(errorString, errorCode);
-        dismiss();
+        this.mFingerprintError.setText(errorString);
     }
 
     @Override
