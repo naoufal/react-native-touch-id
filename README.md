@@ -11,6 +11,11 @@ Note: the awesome folks over at [Expo](https://expo.io) have begun open-sourcing
 
 ![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
+#### Breaking changes
+
+Please review all changes in the [Changelog](https://github.com/naoufal/react-native-touch-id/blob/master/CHANGELOG.md)
+
+
 ## Documentation
 - [Install](https://github.com/naoufal/react-native-touch-id#install)
 - [Usage](https://github.com/naoufal/react-native-touch-id#usage)
