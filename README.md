@@ -59,7 +59,7 @@ There's excellent documentation on how to do this in the [React Native Docs](htt
 
 iOS and Android differ slightly in their TouchID authentication.
 
-On Android you can customize the title and color of the pop-up by passing in the **optional config object** with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up.
+On Android you can customize the title and color of the pop-up by passing in the **optional config object** with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up. iOS does support `passcodeFallback` as an option, which when set to `true` will allow users to use their device pin - useful for people with Face / Touch ID disabled.
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
@@ -151,6 +151,7 @@ __Arguments__
   - `cancelText` - **Android** - cancel button text
   - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
   - `unifiedErrors` - return unified error messages (see below) (default = false)
+  - `passcodeFallback` - **iOS** - by default set to false. If set to true, will allow use of keypad passcode.
 
 
 __Examples__
@@ -161,7 +162,8 @@ const optionalConfigObject = {
   sensorDescription: "Touch sensor", // Android
   cancelText: "Cancel", // Android
   fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
-  unifiedErrors: false // use unified error messages (default false)
+  unifiedErrors: false, // use unified error messages (default false)
+  passcodeFallback: false // iOS
 }
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)

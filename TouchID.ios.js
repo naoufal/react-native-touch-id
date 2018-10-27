@@ -29,7 +29,8 @@ export default {
   authenticate(reason, config) {
     const DEFAULT_CONFIG = {
       fallbackLabel: null,
-      unifiedErrors: false
+      unifiedErrors: false,
+      passcodeFallback: false
     };
     const authReason = reason ? reason : ' ';
     const authConfig = Object.assign({}, DEFAULT_CONFIG, config);
