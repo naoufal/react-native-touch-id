@@ -16,10 +16,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="left"
         android:text="TextView"
-        android:textColor="#000"
+        android:textColor="#696969"
         android:textSize="17dp" />
 
 
@@ -28,14 +28,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="30dp"
+        android:paddingBottom="25dp"
         android:paddingRight="20dp"
-        android:paddingTop="28dp">
+        android:paddingTop="25dp">
 
         <ImageView
             android:id="@+id/fingerprint_icon"
-            android:layout_width="49dp"
-            android:layout_height="49dp"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_marginLeft="25dp"
             android:gravity="left"
             android:src="@drawable/ic_fp_40px" />
@@ -51,6 +51,18 @@
             android:textSize="15dp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/fingerprint_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="TextView"
+        android:textColor="#F00"
+        android:textSize="15dp" />
+
     <Button
         android:id="@+id/cancel_button"
         style="?android:attr/buttonBarButtonStyle"
@@ -62,6 +74,6 @@
         android:layout_marginEnd="10dp"
         android:background="#fff"
         android:text="Cancel"
-        android:textColor="#000" />
+        android:textColor="#696969" />
 
 </LinearLayout>
