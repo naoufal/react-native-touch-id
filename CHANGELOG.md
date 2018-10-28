@@ -1,5 +1,5 @@
 <a name="4.3.0"></a>
-## 4.2.0 (2018-10-27)
+## 4.3.0 (2018-10-27)
 - Change android prop *color* to *imageColor* and add extra properties
 - Change android to allow for up to five attempts as platform default
 - https://github.com/naoufal/react-native-touch-id/pull/163
