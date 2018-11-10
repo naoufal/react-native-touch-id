@@ -14,7 +14,10 @@ RCT_EXPORT_METHOD(isSupported: (RCTResponseSenderBlock)callback)
     if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error]) {
         callback(@[[NSNull null], [self getBiometryType:context]]);
 
-    } // Device does not support FaceID / TouchID
+    } else if ([context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:&error]) {
+        callback(@[[NSNull null], @"Passcode"]);
+    }
+    // Device does not support FaceID / TouchID / Pin
     else {
         callback(@[RCTMakeError(@"RCTTouchIDNotSupported", nil, nil)]);
         return;

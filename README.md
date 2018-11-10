@@ -198,7 +198,9 @@ TouchID.isSupported(optionalConfigObject)
     // Success code
     if (biometryType === 'FaceID') {
         console.log('FaceID is supported.');
-    } else {
+    } else if (biometryTyp === 'Passcode' ) {
+        console.log('Passcode is supported.');
+    }else {
         console.log('TouchID is supported.');
     }
   })
