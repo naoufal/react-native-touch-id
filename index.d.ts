@@ -7,7 +7,7 @@ declare module 'react-native-touch-id' {
     /**
      * Base config to pass to `TouchID.isSupported` and `TouchID.authenticate`
      */
-    interface Config {
+    interface IsSupportedConfig {
       /**
        * Return unified error messages
        */
@@ -17,7 +17,7 @@ declare module 'react-native-touch-id' {
     /**
      * Authentication config
      */
-    export interface AuthenticateConfig extends Config {
+    export interface AuthenticateConfig extends IsSupportedConfig {
       /**
        * **Android only** - Title of confirmation dialog
        */
@@ -105,7 +105,7 @@ declare module 'react-native-touch-id' {
        * 
        * @param config - Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`
        */
-      isSupported(config?: Config): Promise<BiometryType>;
+      isSupported(config?: IsSupportedConfig): Promise<BiometryType>;
     };
     export default TouchID;
   }
