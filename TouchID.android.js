@@ -25,7 +25,8 @@ export default {
       sensorDescription: 'Touch sensor',
       sensorErrorDescription: 'Failed',
       cancelText: 'Cancel',
-      unifiedErrors: false
+      unifiedErrors: false,
+      backgroundMode: false
     };
     var authReason = reason ? reason : ' ';
     var authConfig = Object.assign({}, DEFAULT_CONFIG, config);

@@ -5,6 +5,7 @@ import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.content.Context;
 import android.os.CancellationSignal;
+import com.facebook.react.bridge.ReactApplicationContext;
 
 @TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
@@ -14,11 +15,18 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
+    public boolean isInitialized;
 
     public FingerprintHandler(Context context, Callback callback) {
         mFingerprintManager = context.getSystemService(FingerprintManager.class);
         mCallback = callback;
     }
+
+    public FingerprintHandler(ReactApplicationContext context, Callback callback) {
+        mFingerprintManager = context.getSystemService(FingerprintManager.class);
+        mCallback = callback;
+    }
+
 
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
         cancellationSignal = new CancellationSignal();

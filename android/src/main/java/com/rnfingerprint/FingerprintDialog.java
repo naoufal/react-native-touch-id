@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.facebook.react.bridge.ReadableMap;
 
+import java.net.SocketOption;
+
 public class FingerprintDialog extends DialogFragment implements FingerprintHandler.Callback {
 
     private FingerprintManager.CryptoObject mCryptoObject;
@@ -167,7 +169,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     public void onAuthenticated() {
         this.isAuthInProgress = false;
         this.dialogCallback.onAuthenticated();
-        dismiss();
+        if(mFingerprintHandler!=null) {
+            dismiss();
+        }
+
     }
 
     @Override
@@ -182,6 +187,8 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.isAuthInProgress = false;
         this.mFingerprintHandler.endAuth();
         this.dialogCallback.onCancelled();
-        dismiss();
+        if(mFingerprintHandler!=null) {
+            dismiss();
+        }
     }
 }
