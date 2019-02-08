@@ -110,11 +110,10 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         Boolean backgroundMode = authConfig.getBoolean("backgroundMode");
 
-        if (backgroundMode == true){
+        if (backgroundMode){
           final FingerprintNoDialog fingerprintNoDialog = new FingerprintNoDialog();
           fingerprintNoDialog.setContext(context);
           fingerprintNoDialog.setCryptoObject(cryptoObject);
-          fingerprintNoDialog.setReasonForAuthentication(reason);
           fingerprintNoDialog.setCallback(drh);
           fingerprintNoDialog.startAuth();
         } else {

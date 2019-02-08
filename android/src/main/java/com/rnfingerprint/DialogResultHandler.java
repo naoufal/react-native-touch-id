@@ -29,7 +29,13 @@ public class DialogResultHandler implements FingerprintDialog.DialogResultListen
       errorCallback.invoke(errorString, errorCode);
     }
 
-    public void emitErrorMessage(String message, int code) {
+    @Override
+    public void onCancelled() {
+      FingerprintAuthModule.inProgress = false;
+      errorCallback.invoke("cancelled", FingerprintAuthConstants.AUTHENTICATION_CANCELED);
+    }
+
+    void emitErrorMessage(String message, int code) {
       FingerprintAuthModule.inProgress = false;
 
       WritableMap params = Arguments.createMap();
@@ -38,12 +44,5 @@ public class DialogResultHandler implements FingerprintDialog.DialogResultListen
       context
         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
         .emit("authError", params);
-
-    }
-
-    @Override
-    public void onCancelled() {
-      FingerprintAuthModule.inProgress = false;
-      errorCallback.invoke("cancelled", FingerprintAuthConstants.AUTHENTICATION_CANCELED);
     }
 }
