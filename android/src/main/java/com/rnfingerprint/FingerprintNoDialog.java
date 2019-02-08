@@ -1,20 +1,10 @@
 package com.rnfingerprint;
 
-import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import java.net.SocketOption;
 import com.facebook.react.bridge.ReactApplicationContext;
-
 import com.facebook.react.bridge.ReadableMap;
 
 public class FingerprintNoDialog implements FingerprintHandler.Callback {
@@ -23,19 +13,8 @@ public class FingerprintNoDialog implements FingerprintHandler.Callback {
   private DialogResultHandler dialogCallback;
   private boolean isAuthInProgress;
   private FingerprintHandler mFingerprintHandler;
-  private ImageView mFingerprintImage;
-  private TextView mFingerprintSensorDescription;
-  private TextView mFingerprintError;
 
   private String authReason;
-  private int imageColor = 0;
-  private int imageErrorColor = 0;
-  private String dialogTitle = "";
-  private String cancelText = "";
-  private String sensorDescription = "";
-  private String sensorErrorDescription = "";
-  private String errorText = "";
-
 
   public void setContext(ReactApplicationContext context){
     this.mFingerprintHandler = new FingerprintHandler(context, this);

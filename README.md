@@ -189,7 +189,7 @@ TouchID.authenticate('to demo this react-native component', optionalConfigObject
 
 //Catch the error messages in background mode, which are otherwise displayed in the modal
 TouchID.onAuthError(error => {
-       AlertIOS.alert('Authentication Error');
+       Alert.alert('Authentication Error');
     });
 ```
 
