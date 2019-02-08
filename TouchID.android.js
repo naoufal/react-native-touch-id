@@ -2,17 +2,18 @@ import { NativeModules, processColor } from 'react-native';
 import { androidApiErrorMap, androidModuleErrorMap } from './data/errors';
 import { getError, TouchIDError, TouchIDUnifiedError } from './errors';
 const NativeTouchID = NativeModules.FingerprintAuth;
+import { DeviceEventEmitter } from 'react-native';
 
 export default {
   isSupported(config) {
     return new Promise((resolve, reject) => {
       NativeTouchID.isSupported(
-        (error, code) => {
-          return reject(createError(config, error, code));
-        },
-        success => {
-          return resolve(true);
-        }
+          (error, code) => {
+            return reject(createError(config, error, code));
+          },
+          success => {
+            return resolve(true);
+          }
       );
     });
   },
@@ -38,16 +39,20 @@ export default {
 
     return new Promise((resolve, reject) => {
       NativeTouchID.authenticate(
-        authReason,
-        authConfig,
-        (error, code) => {
-          return reject(createError(authConfig, error, code));
-        },
-        success => {
-          return resolve(true);
-        }
+          authReason,
+          authConfig,
+          (error, code) => {
+            return reject(createError(authConfig, error, code));
+          },
+          success => {
+            return resolve(true);
+          }
       );
     });
+  },
+
+  onAuthError(callback) {
+    return DeviceEventEmitter.addListener('authError', callback);
   }
 };
 
