@@ -75,9 +75,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
         final Activity activity = getCurrentActivity();
         if (inProgress || !isAppActive || activity == null) {
-            System.out.println("xxx, in progress");
             if(mFingerprintHandler!=null && drh!=null){
-                System.out.println("xxx, already init");
                 mFingerprintHandler.endAuth();
                 drh.onCancelled();
             }else {
