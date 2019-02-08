@@ -66,6 +66,7 @@ iOS and Android differ slightly in their TouchID authentication.
 
 On Android you can customize the title and color of the pop-up by passing in the **optional config object** with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up. iOS does support `passcodeFallback` as an option, which when set to `true` will allow users to use their device pin - useful for people with Face / Touch ID disabled. Passcode fallback only happens if the device does not have touch id or face id enabled.
 Android allows running the authentication in background mode without the pop-up.
+When the background mode is active, use `TouchId.onError` to catch authentication errors.
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
@@ -185,6 +186,11 @@ TouchID.authenticate('to demo this react-native component', optionalConfigObject
   .catch(error => {
     AlertIOS.alert('Authentication Failed');
   });
+
+//Catch the error messages in background mode, which are otherwise displayed in the modal
+TouchID.onAuthError(error => {
+       AlertIOS.alert('Authentication Error');
+    });
 ```
 
 ### isSupported()

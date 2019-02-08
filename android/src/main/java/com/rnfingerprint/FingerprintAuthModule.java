@@ -23,8 +23,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     private KeyguardManager keyguardManager;
     private boolean isAppActive;
     private ReactApplicationContext context;
-    private FingerprintHandler mFingerprintHandler;
-    private FingerprintDialog fingerprintDialog;
     private DialogResultHandler drh;
 
     public static boolean inProgress = false;
@@ -75,8 +73,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
         final Activity activity = getCurrentActivity();
         if (inProgress || !isAppActive || activity == null) {
-            if(mFingerprintHandler!=null && drh!=null){
-                mFingerprintHandler.endAuth();
+            if(drh!=null){
                 drh.onCancelled();
             }else {
                 return;
@@ -104,13 +101,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         // TODO: migrate to FingerprintManagerCompat
         final FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
 
-        drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
-
-        fingerprintDialog = new FingerprintDialog();
-        fingerprintDialog.setCryptoObject(cryptoObject);
-        fingerprintDialog.setReasonForAuthentication(reason);
-        fingerprintDialog.setAuthConfig(authConfig);
-        fingerprintDialog.setDialogCallback(drh);
+        drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback, context);
 
         if (!isAppActive) {
             inProgress = false;
@@ -120,10 +111,19 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         Boolean backgroundMode = authConfig.getBoolean("backgroundMode");
 
         if (backgroundMode == true){
-            mFingerprintHandler = new FingerprintHandler(context,fingerprintDialog);
-            mFingerprintHandler.startAuth(cryptoObject);
+          final FingerprintNoDialog fingerprintNoDialog = new FingerprintNoDialog();
+          fingerprintNoDialog.setContext(context);
+          fingerprintNoDialog.setCryptoObject(cryptoObject);
+          fingerprintNoDialog.setReasonForAuthentication(reason);
+          fingerprintNoDialog.setCallback(drh);
+          fingerprintNoDialog.startAuth();
         } else {
-            fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
+          final FingerprintDialog fingerprintDialog = new FingerprintDialog();
+          fingerprintDialog.setCryptoObject(cryptoObject);
+          fingerprintDialog.setReasonForAuthentication(reason);
+          fingerprintDialog.setAuthConfig(authConfig);
+          fingerprintDialog.setDialogCallback(drh);
+          fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
         }
     }
 
