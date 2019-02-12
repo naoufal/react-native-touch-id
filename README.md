@@ -173,7 +173,7 @@ const optionalConfigObject = {
   sensorDescription: "Touch sensor", // Android
   sensorErrorDescription: "Failed", // Android
   cancelText: "Cancel", // Android
-  backgroundMode: true, //Android
+  backgroundMode: false, // Android
   fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
   unifiedErrors: false, // use unified error messages (default false)
   passcodeFallback: false // iOS
