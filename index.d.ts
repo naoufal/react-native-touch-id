@@ -50,9 +50,9 @@ declare module 'react-native-touch-id' {
        * **iOS only** - By default set to false. If set to true, will allow use of keypad passcode.
        */
       passcodeFallback?: boolean;
-        /**
-         * **Android only** - By default set to false. If set to true, will authenticate in background mode
-         */
+      /**
+       * **Android only** - By default set to false. If set to true, will authenticate in background mode
+       */
       backgroundMode?: boolean;
     }
     /**
