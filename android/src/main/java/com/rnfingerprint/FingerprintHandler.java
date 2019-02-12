@@ -71,4 +71,3 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
         void onCancelled();
     }
 }
-
