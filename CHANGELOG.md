@@ -1,7 +1,12 @@
+<a name="4.4.1"></a>
+## 4.4.1 (2019-02-15)
+- Some gradle updates
+
 <a name="4.4.0"></a>
 ## 4.4.0 (2019-02-15)
 - Fixes isSupported to allow for a passcodeFallback config option to be passed in
 - https://github.com/naoufal/react-native-touch-id/pull/182
+
 <a name="4.3.0"></a>
 ## 4.3.0 (2018-10-27)
 - Change android prop *color* to *imageColor* and add extra properties
