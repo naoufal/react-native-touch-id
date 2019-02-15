@@ -15,8 +15,8 @@ Note: the awesome folks over at [Expo](https://expo.io) have begun open-sourcing
 
 Please review all changes in the [Changelog](https://github.com/naoufal/react-native-touch-id/blob/master/CHANGELOG.md)
 
-
 ## Documentation
+
 - [Install](https://github.com/naoufal/react-native-touch-id#install)
 - [Usage](https://github.com/naoufal/react-native-touch-id#usage)
 - [Example](https://github.com/naoufal/react-native-touch-id#example)
@@ -26,38 +26,51 @@ Please review all changes in the [Changelog](https://github.com/naoufal/react-na
 - [License](https://github.com/naoufal/react-native-touch-id#license)
 
 ## Install
+
 ```shell
 npm i --save react-native-touch-id
 ```
+
 or
+
 ```shell
 yarn add react-native-touch-id
 ```
 
 ## Support
-Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README.  If it's out of date, we encourage you to submit a pull request!
+
+Due to the rapid changes being made in the React Native ecosystem, we are not officially going to support this module on anything but the latest version of React Native. The current supported version is indicated on the React Native badge at the top of this README. If it's out of date, we encourage you to submit a pull request!
 
 ## Usage
+
 ### Linking the Library
+
 In order to use Biometric Authentication, you must first link the library to your project.
 
 #### Using react-native link
+
 Use the built-in command:
+
 ```shell
 react-native link react-native-touch-id
 ```
 
 #### Using Cocoapods (iOS only)
+
 On iOS you can also link package by updating your podfile
+
 ```ruby
 pod 'TouchID', :path => "#{node_modules_path}/react-native-touch-id"
 ```
+
 and then run
+
 ```shell
 pod install
 ```
 
 #### Using native linking
+
 There's excellent documentation on how to do this in the [React Native Docs](http://facebook.github.io/react-native/docs/linking-libraries-ios.html#content).
 
 ### Platform Differences
@@ -86,17 +99,21 @@ In your `Info.plist`:
 ```
 
 ### Requesting Face ID/Touch ID Authentication
+
 Once you've linked the library, you'll want to make it available to your app by requiring it:
 
 ```js
 var TouchID = require('react-native-touch-id');
 ```
+
 or
+
 ```js
-import TouchID from 'react-native-touch-id'
+import TouchID from 'react-native-touch-id';
 ```
 
 Requesting Face ID/Touch ID Authentication is as simple as calling:
+
 ```js
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
   .then(success => {
@@ -107,9 +124,10 @@ TouchID.authenticate('to demo this react-native component', optionalConfigObject
   });
 ```
 
-
 ## Example
+
 Using Face ID/Touch ID in your app will usually look like this:
+
 ```js
 import React from "react"
 var TouchID = require('react-native-touch-id');
@@ -142,11 +160,14 @@ class YourComponent extends React.Component {
 ```
 
 ## Methods
+
 ### authenticate(reason, config)
+
 Attempts to authenticate with Face ID/Touch ID.
 Returns a `Promise` object.
 
-__Arguments__
+**Arguments**
+
 - `reason` - **optional** - `String` that provides a clear reason for requesting authentication.
 
 - `config` - **optional** - configuration object for more detailed dialog setup:
@@ -160,20 +181,20 @@ __Arguments__
   - `unifiedErrors` - return unified error messages (see below) (default = false)
   - `passcodeFallback` - **iOS** - by default set to false. If set to true, will allow use of keypad passcode.
 
+**Examples**
 
-__Examples__
 ```js
 const optionalConfigObject = {
-  title: "Authentication Required", // Android
-  imageColor: "#e00606", // Android
-  imageErrorColor: "#ff0000", // Android
-  sensorDescription: "Touch sensor", // Android
-  sensorErrorDescription: "Failed", // Android
-  cancelText: "Cancel", // Android
-  fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
+  title: 'Authentication Required', // Android
+  imageColor: '#e00606', // Android
+  imageErrorColor: '#ff0000', // Android
+  sensorDescription: 'Touch sensor', // Android
+  sensorErrorDescription: 'Failed', // Android
+  cancelText: 'Cancel', // Android
+  fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
   unifiedErrors: false, // use unified error messages (default false)
-  passcodeFallback: false // iOS
-}
+  passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
+};
 
 TouchID.authenticate('to demo this react-native component', optionalConfigObject)
   .then(success => {
@@ -185,12 +206,15 @@ TouchID.authenticate('to demo this react-native component', optionalConfigObject
 ```
 
 ### isSupported()
+
 Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`.
 
-__Examples__
+**Examples**
+
 ```js
 const optionalConfigObject = {
   unifiedErrors: false // use unified error messages (default false)
+  passcodeFallback: false // if true is passed, itwill allow isSupported to return an error if the device is not enrolled in touch id/face id etc. Otherwise, it will just tell you what method is supported, even if the user is not enrolled.  (default false)
 }
 
 TouchID.isSupported(optionalConfigObject)
@@ -209,11 +233,13 @@ TouchID.isSupported(optionalConfigObject)
 ```
 
 ## Errors
-There are various reasons why biomentric authentication may not be available or fail.  `TouchID.isSupported` and `TouchID.authenticate` will return an error representing the reason.
+
+There are various reasons why biomentric authentication may not be available or fail. `TouchID.isSupported` and `TouchID.authenticate` will return an error representing the reason.
 
 #### iOS Errors
 
 Format:
+
 ```
 {
   name: "TheErrorCode",
@@ -225,23 +251,24 @@ Format:
 }
 ```
 
-| name | message |
-|---|---|
-| `LAErrorAuthenticationFailed` | Authentication was not successful because the user failed to provide valid credentials. |
-| `LAErrorUserCancel` | Authentication was canceled by the user—for example, the user tapped Cancel in the dialog. |
-| `LAErrorUserFallback` | Authentication was canceled because the user tapped the fallback button (Enter Password). |
-| `LAErrorSystemCancel` | Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up. |
-| `LAErrorPasscodeNotSet` | Authentication could not start because the passcode is not set on the device. |
-| `LAErrorTouchIDNotAvailable` | Authentication could not start because Touch ID is not available on the device |
-| `LAErrorTouchIDNotEnrolled` | Authentication could not start because Touch ID has no enrolled fingers. |
-| `RCTTouchIDUnknownError` | Could not authenticate for an unknown reason. |
-| `RCTTouchIDNotSupported` | Device does not support Touch ID. |
+| name                          | message                                                                                                                              |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `LAErrorAuthenticationFailed` | Authentication was not successful because the user failed to provide valid credentials.                                              |
+| `LAErrorUserCancel`           | Authentication was canceled by the user—for example, the user tapped Cancel in the dialog.                                           |
+| `LAErrorUserFallback`         | Authentication was canceled because the user tapped the fallback button (Enter Password).                                            |
+| `LAErrorSystemCancel`         | Authentication was canceled by system—for example, if another application came to foreground while the authentication dialog was up. |
+| `LAErrorPasscodeNotSet`       | Authentication could not start because the passcode is not set on the device.                                                        |
+| `LAErrorTouchIDNotAvailable`  | Authentication could not start because Touch ID is not available on the device                                                       |
+| `LAErrorTouchIDNotEnrolled`   | Authentication could not start because Touch ID has no enrolled fingers.                                                             |
+| `RCTTouchIDUnknownError`      | Could not authenticate for an unknown reason.                                                                                        |
+| `RCTTouchIDNotSupported`      | Device does not support Touch ID.                                                                                                    |
 
 _More information on errors can be found in [Apple's Documentation](https://developer.apple.com/library/prerelease/ios/documentation/LocalAuthentication/Reference/LAContext_Class/index.html#//apple_ref/c/tdef/LAError)._
 
 #### Android errors
 
 Format:
+
 ```
 {
   name: "Touch ID Error",
@@ -253,33 +280,34 @@ Format:
 
 isSupported:
 
-| name | message | details | code |
-|---|---|---|---|
-|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_SUPPORTED`|
-|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_AVAILABLE`|
-|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_PRESENT`|
-|`Touch ID Error`|`Touch ID Error`|Not supported.|`NOT_ENROLLED`|
+| name             | message          | details        | code            |
+| ---------------- | ---------------- | -------------- | --------------- |
+| `Touch ID Error` | `Touch ID Error` | Not supported. | `NOT_SUPPORTED` |
+| `Touch ID Error` | `Touch ID Error` | Not supported. | `NOT_AVAILABLE` |
+| `Touch ID Error` | `Touch ID Error` | Not supported. | `NOT_PRESENT`   |
+| `Touch ID Error` | `Touch ID Error` | Not supported. | `NOT_ENROLLED`  |
 
 authenticate:
 
-| name | message | details | code |
-|---|---|---|---|
-|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_SUPPORTED`|
-|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_AVAILABLE`|
-|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_PRESENT`|
-|`Touch ID Error`|`Touch ID Error`|Not supported|`NOT_ENROLLED`|
-|`Touch ID Error`|`Touch ID Error`|failed|`AUTHENTICATION_FAILED`|
-|`Touch ID Error`|`Touch ID Error`|cancelled|`AUTHENTICATION_CANCELED`|
-|`Touch ID Error`|`Touch ID Error`|Too many attempts. Try again Later.|`FINGERPRINT_ERROR_LOCKOUT`
-|`Touch ID Error`|`Touch ID Error`|Too many attempts. Fingerprint sensor disabled.|`FINGERPRINT_ERROR_LOCKOUT_PERMANENT`
-|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_UNABLE_TO_PROCESS`,
-|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_TIMEOUT`,
-|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_CANCELED`,
-|`Touch ID Error`|`Touch ID Error`|?|`FINGERPRINT_ERROR_VENDOR`,
+| name             | message          | details                                         | code                                   |
+| ---------------- | ---------------- | ----------------------------------------------- | -------------------------------------- |
+| `Touch ID Error` | `Touch ID Error` | Not supported                                   | `NOT_SUPPORTED`                        |
+| `Touch ID Error` | `Touch ID Error` | Not supported                                   | `NOT_AVAILABLE`                        |
+| `Touch ID Error` | `Touch ID Error` | Not supported                                   | `NOT_PRESENT`                          |
+| `Touch ID Error` | `Touch ID Error` | Not supported                                   | `NOT_ENROLLED`                         |
+| `Touch ID Error` | `Touch ID Error` | failed                                          | `AUTHENTICATION_FAILED`                |
+| `Touch ID Error` | `Touch ID Error` | cancelled                                       | `AUTHENTICATION_CANCELED`              |
+| `Touch ID Error` | `Touch ID Error` | Too many attempts. Try again Later.             | `FINGERPRINT_ERROR_LOCKOUT`            |
+| `Touch ID Error` | `Touch ID Error` | Too many attempts. Fingerprint sensor disabled. | `FINGERPRINT_ERROR_LOCKOUT_PERMANENT`  |
+| `Touch ID Error` | `Touch ID Error` | ?                                               | `FINGERPRINT_ERROR_UNABLE_TO_PROCESS`, |
+| `Touch ID Error` | `Touch ID Error` | ?                                               | `FINGERPRINT_ERROR_TIMEOUT`,           |
+| `Touch ID Error` | `Touch ID Error` | ?                                               | `FINGERPRINT_ERROR_CANCELED`,          |
+| `Touch ID Error` | `Touch ID Error` | ?                                               | `FINGERPRINT_ERROR_VENDOR`,            |
 
 #### Unified errors
 
 Format:
+
 ```
 {
   name: "TouchIDError",
@@ -288,25 +316,25 @@ Format:
 }
 ```
 
-| name | message | code |
-|---|---|---|
-|`TouchIDError`|Authentication failed|`AUTHENTICATION_FAILED`
-|`TouchIDError`|User canceled authentication|`USER_CANCELED`
-|`TouchIDError`|System canceled authentication|`SYSTEM_CANCELED`
-|`TouchIDError`|Biometry hardware not present|`NOT_PRESENT`
-|`TouchIDError`|Biometry is not supported|`NOT_SUPPORTED`
-|`TouchIDError`|Biometry is not currently available|`NOT_AVAILABLE`
-|`TouchIDError`|Biometry is not enrolled|`NOT_ENROLLED`
-|`TouchIDError`|Biometry timeout|`TIMEOUT`
-|`TouchIDError`|Biometry lockout|`LOCKOUT`
-|`TouchIDError`|Biometry permanent lockout|`LOCKOUT_PERMANENT`
-|`TouchIDError`|Biometry processing error|`PROCESSING_ERROR`
-|`TouchIDError`|User selected fallback|`USER_FALLBACK`
-|`TouchIDError`|User selected fallback not enrolled|`FALLBACK_NOT_ENROLLED`
-|`TouchIDError`|Unknown error|`UNKNOWN_ERROR`
-
+| name           | message                             | code                    |
+| -------------- | ----------------------------------- | ----------------------- |
+| `TouchIDError` | Authentication failed               | `AUTHENTICATION_FAILED` |
+| `TouchIDError` | User canceled authentication        | `USER_CANCELED`         |
+| `TouchIDError` | System canceled authentication      | `SYSTEM_CANCELED`       |
+| `TouchIDError` | Biometry hardware not present       | `NOT_PRESENT`           |
+| `TouchIDError` | Biometry is not supported           | `NOT_SUPPORTED`         |
+| `TouchIDError` | Biometry is not currently available | `NOT_AVAILABLE`         |
+| `TouchIDError` | Biometry is not enrolled            | `NOT_ENROLLED`          |
+| `TouchIDError` | Biometry timeout                    | `TIMEOUT`               |
+| `TouchIDError` | Biometry lockout                    | `LOCKOUT`               |
+| `TouchIDError` | Biometry permanent lockout          | `LOCKOUT_PERMANENT`     |
+| `TouchIDError` | Biometry processing error           | `PROCESSING_ERROR`      |
+| `TouchIDError` | User selected fallback              | `USER_FALLBACK`         |
+| `TouchIDError` | User selected fallback not enrolled | `FALLBACK_NOT_ENROLLED` |
+| `TouchIDError` | Unknown error                       | `UNKNOWN_ERROR`         |
 
 ## License
+
 Copyright (c) 2015, [Naoufal Kadhom](http://naoufal.com/)
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
