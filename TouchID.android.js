@@ -18,7 +18,7 @@ export default {
   },
 
   authenticate(reason, config) {
-    DEFAULT_CONFIG = {
+    var DEFAULT_CONFIG = {
       title: 'Authentication Required',
       imageColor: '#1306ff',
       imageErrorColor: '#ff0000',
