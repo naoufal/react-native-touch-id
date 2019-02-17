@@ -260,6 +260,7 @@ Format:
 | `LAErrorPasscodeNotSet`       | Authentication could not start because the passcode is not set on the device.                                                        |
 | `LAErrorTouchIDNotAvailable`  | Authentication could not start because Touch ID is not available on the device                                                       |
 | `LAErrorTouchIDNotEnrolled`   | Authentication could not start because Touch ID has no enrolled fingers.                                                             |
+| `LAErrorTouchIDLockout`       | Authentication failed because of too many failed attempts.                                                                               |
 | `RCTTouchIDUnknownError`      | Could not authenticate for an unknown reason.                                                                                        |
 | `RCTTouchIDNotSupported`      | Device does not support Touch ID.                                                                                                    |
 
