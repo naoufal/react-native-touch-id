@@ -213,6 +213,13 @@ TouchID.onAuthError(error => {
        Alert.alert('Authentication Error');
     });
 ```
+### onAuthError() - Android only
+
+Returns an `EventEmitter` listener which can be cancelled with the method `remove()`
+
+### cancelBackgroundAuthentication() - Android only
+
+Cancel the current authentication which was run with the config `backgroundMode: true`
 
 ### isSupported()
 

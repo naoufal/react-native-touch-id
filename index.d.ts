@@ -106,6 +106,10 @@ declare module 'react-native-touch-id' {
        */
       authenticate(reason?: string, config?: AuthenticateConfig);
       /**
+       * Cancel background Authentication
+       */
+      cancelBackgroundAuthentication();
+      /**
        * 
        * @param config - Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`
        */

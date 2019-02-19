@@ -24,6 +24,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     private boolean isAppActive;
     private ReactApplicationContext context;
     private DialogResultHandler drh;
+    private FingerprintNoDialog fingerprintNoDialog;
 
     public static boolean inProgress = false;
 
@@ -107,7 +108,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         Boolean backgroundMode = authConfig.getBoolean("backgroundMode");
 
         if (backgroundMode){
-          final FingerprintNoDialog fingerprintNoDialog = new FingerprintNoDialog();
+          fingerprintNoDialog = new FingerprintNoDialog();
           fingerprintNoDialog.setContext(context);
           fingerprintNoDialog.setCryptoObject(cryptoObject);
           fingerprintNoDialog.setCallback(drh);
@@ -119,6 +120,15 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
           fingerprintDialog.setAuthConfig(authConfig);
           fingerprintDialog.setDialogCallback(drh);
           fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
+        }
+    }
+
+    @ReactMethod
+    public void cancelAuthentication() {
+        final Activity activity = getCurrentActivity();
+        if (drh != null) {
+            inProgress = false;
+            fingerprintNoDialog.onCancelled();
         }
     }
 

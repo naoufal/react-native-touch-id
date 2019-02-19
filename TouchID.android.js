@@ -52,6 +52,10 @@ export default {
 
   onAuthError(callback) {
     return DeviceEventEmitter.addListener('authError', callback);
+  },
+
+  cancelBackgroundAuthentication() {
+    NativeTouchID.cancelAuthentication();
   }
 };
 
