@@ -35,7 +35,6 @@ public class FingerprintNoDialog implements FingerprintHandler.Callback {
     }
 
     public void onCancelled() {
-        this.dialogCallback.onCancelled();
         this.mFingerprintHandler.endAuth();
     }
 }
