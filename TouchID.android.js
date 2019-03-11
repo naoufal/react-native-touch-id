@@ -19,7 +19,6 @@ export default {
 
   authenticate(reason, config) {
     var DEFAULT_CONFIG = {
-      title: 'Authentication Required',
       imageColor: '#1306ff',
       imageErrorColor: '#ff0000',
       sensorDescription: 'Touch sensor',
