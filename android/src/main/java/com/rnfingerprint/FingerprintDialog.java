@@ -153,6 +153,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         if (config.hasKey("imageErrorColor")) {
             this.imageErrorColor = config.getInt("imageErrorColor");
         }
+
+        if (config.hasKey("authenticationErrorDescription")) {
+            this.mFingerprintHandler.authenticationErrorDescription = config.getInt("authenticationErrorDescription");
+        }
     }
 
     public interface DialogResultListener {
