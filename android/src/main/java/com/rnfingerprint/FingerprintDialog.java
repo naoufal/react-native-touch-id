@@ -155,7 +155,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         }
 
         if (config.hasKey("authenticationErrorDescription")) {
-            this.mFingerprintHandler.authenticationErrorDescription = config.getInt("authenticationErrorDescription");
+            this.mFingerprintHandler.authenticationErrorDescription = config.getString("authenticationErrorDescription");
         }
     }
 
