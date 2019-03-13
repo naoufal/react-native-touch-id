@@ -15,9 +15,10 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
 
-    public String authenticationErrorDescription = "Not recognized. Try again.";
+    private String authenticationErrorDescription = "";
 
-    public FingerprintHandler(Context context, Callback callback) {
+    public FingerprintHandler(String authenticationErrorDescription, Context context, Callback callback) {
+        this.authenticationErrorDescription = authenticationErrorDescription;
         mFingerprintManager = context.getSystemService(FingerprintManager.class);
         mCallback = callback;
     }
