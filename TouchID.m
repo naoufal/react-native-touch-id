@@ -159,12 +159,9 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
         else if (context.biometryType == LABiometryTypeTouchID) {
             return @"TouchID";
         }
-        else if (context.biometryType == LABiometryNone) {
-            return @"None";
-        }
     }
 
-    return @"TouchID";
+    return @"None";
 }
 
 @end
