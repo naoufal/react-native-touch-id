@@ -6,6 +6,8 @@ import android.os.Build;
 import android.content.Context;
 import android.os.CancellationSignal;
 
+import java.lang.IllegalStateException;
+
 @TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
@@ -23,8 +25,11 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
         cancellationSignal = new CancellationSignal();
         selfCancelled = false;
-        mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
-    }
+        try {
+            mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
+        } catch (IllegalStateException e) {
+            //prevent "Fatal Exception: java.lang.IllegalStateException: Crypto primitive not initialized"
+        }
 
     public void endAuth() {
         cancelAuthenticationSignal();
