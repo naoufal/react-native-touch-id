@@ -59,7 +59,10 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         int result = isFingerprintAuthAvailable();
         if (result == FingerprintAuthConstants.IS_SUPPORTED) {
-            reactSuccessCallback.invoke("Is supported.");
+            // TODO: once this package supports Android's Face Unlock,
+            // implement a method to find out which type of biometry
+            // (not just fingerprint) is actually supported
+            reactSuccessCallback.invoke("Fingerprint");
         } else {
             reactErrorCallback.invoke("Not supported.", result);
         }
