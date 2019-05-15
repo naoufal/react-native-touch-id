@@ -13,6 +13,13 @@ buildscript {
   }
 }
 
+allprojects {
+  repositories {
+    google()
+    jcenter()
+  }
+}
+
 apply plugin: 'com.android.library'
 
 // Inspired by rayronvictor's PR #248 tp react-native-config
