@@ -31,6 +31,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private int imageErrorColor = 0;
     private String dialogTitle = "";
     private String cancelText = "";
+    private String usePassword = "";
     private String sensorDescription = "";
     private String sensorErrorDescription = "";
     private String errorText = "";
@@ -51,25 +52,34 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
+        final View view = inflater.inflate(R.layout.fingerprint_dialog, container, false);
 
-        final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
+        final TextView mFingerprintDescription = (TextView) view.findViewById(R.id.fingerprint_description);
         mFingerprintDescription.setText(this.authReason);
 
-        this.mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
+        this.mFingerprintImage = (ImageView) view.findViewById(R.id.fingerprint_icon);
         if (this.imageColor != 0) {
             this.mFingerprintImage.setColorFilter(this.imageColor);
         }
 
-        this.mFingerprintSensorDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
+        this.mFingerprintSensorDescription = (TextView) view.findViewById(R.id.fingerprint_sensor_description);
         this.mFingerprintSensorDescription.setText(this.sensorDescription);
 
-        this.mFingerprintError = (TextView) v.findViewById(R.id.fingerprint_error);
+        this.mFingerprintError = (TextView) view.findViewById(R.id.fingerprint_error);
         this.mFingerprintError.setText(this.errorText);
 
-        final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
+        final Button mCancelButton = (Button) view.findViewById(R.id.cancel_button);
         mCancelButton.setText(this.cancelText);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onCancelled();
+            }
+        });
+
+        final Button mUsePassword = (Button) view.findViewById(R.id.use_password);
+        mUsePassword.setText(this.usePassword);
+        mUsePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onCancelled();
@@ -88,7 +98,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             }
         });
 
-        return v;
+        return view;
     }
 
     @Override
@@ -136,6 +146,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         if (config.hasKey("cancelText")) {
             this.cancelText = config.getString("cancelText");
+        }
+
+        if (config.hasKey("usePassword")) {
+            this.usePassword = config.getString("usePassword");
         }
 
         if (config.hasKey("sensorDescription")) {
