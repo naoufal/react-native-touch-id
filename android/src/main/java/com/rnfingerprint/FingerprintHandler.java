@@ -23,6 +23,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
         cancellationSignal = new CancellationSignal();
         selfCancelled = false;
+        mCallback.startedAuthentication();
         mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
     }
 
@@ -40,7 +41,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        mCallback.onError("Not recognized. Try again.", FingerprintAuthConstants.AUTHENTICATION_FAILED);
+        mCallback.onError("Fingerprint not recognized. Try again.", FingerprintAuthConstants.AUTHENTICATION_FAILED);
     }
 
     @Override
@@ -58,6 +59,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     public interface Callback {
+        void startedAuthentication();
+
         void onAuthenticated();
 
         void onError(String errorString, int errorCode);

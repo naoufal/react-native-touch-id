@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fingerprint_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="812dp"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -15,65 +15,96 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
         android:layout_marginTop="10dp"
-        android:gravity="left"
-        android:text="TextView"
+        android:layout_marginRight="25dp"
+        android:layout_gravity="start"
+        android:text="Confirm fingerprint to continue"
         android:textColor="#696969"
-        android:textSize="17dp" />
-
+        android:textSize="18sp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="25dp"
-        android:paddingRight="20dp"
-        android:paddingTop="25dp">
+        android:paddingTop="25dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="15dp">
 
-        <ImageView
-            android:id="@+id/fingerprint_icon"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
-            android:layout_marginLeft="25dp"
-            android:gravity="left"
-            android:src="@drawable/ic_fp_40px" />
+        <FrameLayout
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="5sp"
+            >
+
+            <ImageView
+                android:id="@+id/fingerprint_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/rounded_shape"/>
+
+            <ImageView
+                android:id="@+id/fingerprint_icon"
+                android:layout_width="36dp"
+                android:layout_gravity="center"
+                android:layout_height="36dp"
+                android:textColor="#fff"
+                android:src="@drawable/ic_fp_40px"/>
+        </FrameLayout>
 
         <TextView
             android:id="@+id/fingerprint_sensor_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:gravity="left|center_vertical"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="center_vertical"
             android:text="Touch sensor"
             android:textColor="#696969"
-            android:textSize="15dp" />
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/fingerprint_error"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="TextView"
-        android:textColor="#F00"
-        android:textSize="15dp" />
+        android:paddingLeft="10dp"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/cancel_button"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:paddingRight="15dp"
-        android:paddingLeft="15dp"
-        android:layout_marginEnd="10dp"
-        android:background="#fff"
-        android:text="Cancel"
-        android:textColor="#696969" />
+        <Button
+            android:id="@+id/use_password"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:paddingLeft="15dp"
+            android:paddingRight="27dp"
+            android:textSize="18dp"
+            android:text="Cancel"
+            android:paddingBottom="25dp"
+            android:paddingTop="26dp"
+            android:textColor="#009688" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:background="#fff"
+            android:textSize="18dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="25dp"
+            android:paddingTop="26dp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:text="Use Password"
+            android:textColor="#009688" />
+
+    </LinearLayout>
 
 </LinearLayout>
