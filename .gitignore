@@ -4,3 +4,5 @@ npm-debug.log
 .gradle
 build
 .java-version
+.idea
+android/.idea
