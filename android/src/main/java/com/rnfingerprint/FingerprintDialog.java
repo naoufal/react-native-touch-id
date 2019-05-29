@@ -1,21 +1,19 @@
 package com.rnfingerprint;
 
+import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.facebook.react.bridge.ReadableMap;
+
 
 public class FingerprintDialog extends DialogFragment implements FingerprintHandler.Callback {
 
@@ -220,6 +218,11 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
                 "#f4511e",
                 R.drawable.round_error_white,
                 R.drawable.rounded_shape_error);
+
+        ObjectAnimator
+                .ofFloat(this.mFingerprintSensorDescription, "translationX", 0, 8, -8, 8, -8, 8, -8, 8, -8, 0)
+                .setDuration(1000)
+                .start();
     }
 
     @Override
