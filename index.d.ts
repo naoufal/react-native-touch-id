@@ -100,7 +100,7 @@ declare module 'react-native-touch-id' {
        * @param reason String that provides a clear reason for requesting authentication.
        * @param config Configuration object for more detailed dialog setup
        */
-      authenticate(reason?: string, config?: AuthenticateConfig);
+      authenticate(reason?: string, config?: AuthenticateConfig): Promise<true>;
       /**
        * 
        * @param config - Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`
