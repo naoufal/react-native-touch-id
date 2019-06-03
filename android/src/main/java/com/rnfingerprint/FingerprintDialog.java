@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.graphics.Color;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -12,7 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.view.KeyEvent;
 import com.facebook.react.bridge.ReadableMap;
+import android.hardware.fingerprint.FingerprintManager;
+
 
 
 public class FingerprintDialog extends DialogFragment implements FingerprintHandler.Callback {
