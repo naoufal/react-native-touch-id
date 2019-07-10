@@ -14,6 +14,8 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
+    
+    private String sensorFailedDescription = "";
 
     public FingerprintHandler(Context context, Callback callback) {
         mFingerprintManager = context.getSystemService(FingerprintManager.class);
@@ -40,7 +42,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     @Override
     public void onAuthenticationFailed() {
-        mCallback.onError("Not recognized. Try again.", FingerprintAuthConstants.AUTHENTICATION_FAILED);
+        mCallback.onError(this.sensorFailedDescription, FingerprintAuthConstants.AUTHENTICATION_FAILED);
     }
 
     @Override
@@ -55,6 +57,10 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
             cancellationSignal.cancel();
             cancellationSignal = null;
         }
+    }
+
+    public void setSensorFailedDescription(String str) {
+        this.sensorFailedDescription = str;
     }
 
     public interface Callback {
