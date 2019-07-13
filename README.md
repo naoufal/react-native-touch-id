@@ -7,7 +7,7 @@
 
 React Native Touch ID is a [React Native](http://facebook.github.io/react-native/) library for authenticating users with biometric authentication methods like Face ID and Touch ID on both iOS and Android (experimental).
 
-Note: the awesome folks over at [Expo](https://expo.io) have begun open-sourcing some of their modules for compatability with React Native projects not built with Expo. As such you can attempt to use their equivalent library called [LocalAuthentication](https://docs.expo.io/versions/v30.0.0/sdk/local-authentication) at [expo-local-authentication](https://www.npmjs.com/package/expo-local-authentication) if you run into any issues here!
+⚠️ Note: **This library is not currently actively maintained.** If you're looking for something more stable that "just works", the awesome folks over at [Expo](https://expo.io) have begun open-sourcing some of their modules for compatability with React Native projects not built with Expo. As such you can attempt to use their equivalent library called [LocalAuthentication](https://docs.expo.io/versions/v30.0.0/sdk/local-authentication) at [expo-local-authentication](https://www.npmjs.com/package/expo-local-authentication) if you run into any issues here!
 
 ![react-native-touch-id](https://cloud.githubusercontent.com/assets/1627824/7975919/2c69a776-0a42-11e5-9773-3ea1c7dd79f3.gif)
 
