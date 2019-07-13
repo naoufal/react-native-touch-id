@@ -1,35 +1,26 @@
 package com.rnfingerprint;
-import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.hardware.fingerprint.FingerprintManager;
-import android.os.CancellationSignal;
-import android.support.v4.app.ActivityCompat;
-import android.widget.Toast;
 
+import android.annotation.TargetApi;
+import android.hardware.fingerprint.FingerprintManager;
+import android.os.Build;
+import android.content.Context;
+import android.os.CancellationSignal;
+
+@TargetApi(Build.VERSION_CODES.M)
 public class FingerprintHandler extends FingerprintManager.AuthenticationCallback {
 
     private CancellationSignal cancellationSignal;
     private boolean selfCancelled;
-    private Context mAppContext;
 
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
 
-    public FingerprintHandler(Context context, FingerprintManager fingerprintManager, Callback callback) {
-        mAppContext = context;
-        mFingerprintManager = fingerprintManager;
+    public FingerprintHandler(Context context, Callback callback) {
+        mFingerprintManager = context.getSystemService(FingerprintManager.class);
         mCallback = callback;
     }
 
-    public boolean isFingerprintAuthAvailable() {
-        return (android.os.Build.VERSION.SDK_INT >= 23)
-                && mFingerprintManager.isHardwareDetected()
-                && mFingerprintManager.hasEnrolledFingerprints();
-    }
-
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
-
         cancellationSignal = new CancellationSignal();
         selfCancelled = false;
         mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
@@ -40,28 +31,26 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     @Override
-    public void onAuthenticationError(int errMsgId,
+    public void onAuthenticationError(int errCode,
                                       CharSequence errString) {
         if (!selfCancelled) {
-            mCallback.onError(errString.toString()); 
+            mCallback.onError(errString.toString(), errCode);
         }
     }
 
     @Override
     public void onAuthenticationFailed() {
-        mCallback.onError("failed"); 
-        selfCancelled = true;
-        cancelAuthenticationSignal(); 
+        mCallback.onError("Not recognized. Try again.", FingerprintAuthConstants.AUTHENTICATION_FAILED);
     }
 
     @Override
     public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-        
         mCallback.onAuthenticated();
         cancelAuthenticationSignal();
     }
 
     private void cancelAuthenticationSignal() {
+        selfCancelled = true;
         if (cancellationSignal != null) {
             cancellationSignal.cancel();
             cancellationSignal = null;
@@ -70,7 +59,9 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     public interface Callback {
         void onAuthenticated();
-        void onError(String errorString);
+
+        void onError(String errorString, int errorCode);
+
         void onCancelled();
     }
 }
