@@ -1,4 +1,4 @@
-import { NativeModules, processColor } from 'react-native';
+import { DeviceEventEmitter, NativeModules, processColor } from 'react-native';
 import { androidApiErrorMap, androidModuleErrorMap } from './data/errors';
 import { getError, TouchIDError, TouchIDUnifiedError } from './errors';
 const NativeTouchID = NativeModules.FingerprintAuth;
@@ -25,7 +25,8 @@ export default {
       sensorDescription: 'Touch sensor',
       sensorErrorDescription: 'Failed',
       cancelText: 'Cancel',
-      unifiedErrors: false
+      unifiedErrors: false,
+      backgroundMode: false
     };
     var authReason = reason ? reason : ' ';
     var authConfig = Object.assign({}, DEFAULT_CONFIG, config);
@@ -47,6 +48,14 @@ export default {
         }
       );
     });
+  },
+
+  onAuthError(callback) {
+    return DeviceEventEmitter.addListener('authError', callback);
+  },
+
+  cancelBackgroundAuthentication() {
+    NativeTouchID.cancelAuthentication();
   }
 };
 

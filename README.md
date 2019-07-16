@@ -78,6 +78,8 @@ There's excellent documentation on how to do this in the [React Native Docs](htt
 iOS and Android differ slightly in their TouchID authentication.
 
 On Android you can customize the title and color of the pop-up by passing in the **optional config object** with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up. iOS does support `passcodeFallback` as an option, which when set to `true` will allow users to use their device pin - useful for people with Face / Touch ID disabled. Passcode fallback only happens if the device does not have touch id or face id enabled.
+Android allows running the authentication in background mode without the pop-up.
+When the background mode is active, use `TouchId.onError` to catch authentication errors.
 
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
@@ -177,6 +179,7 @@ Returns a `Promise` object.
   - `sensorDescription` - **Android** - text shown next to the fingerprint image
   - `sensorErrorDescription` - **Android** - text shown next to the fingerprint image after failed attempt
   - `cancelText` - **Android** - cancel button text
+  - `backgroundMode` - **Android** - by default set to false. If set to true popup will not show
   - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
   - `unifiedErrors` - return unified error messages (see below) (default = false)
   - `passcodeFallback` - **iOS** - by default set to false. If set to true, will allow use of keypad passcode.
@@ -185,13 +188,14 @@ Returns a `Promise` object.
 
 ```js
 const optionalConfigObject = {
-  title: 'Authentication Required', // Android
-  imageColor: '#e00606', // Android
-  imageErrorColor: '#ff0000', // Android
-  sensorDescription: 'Touch sensor', // Android
-  sensorErrorDescription: 'Failed', // Android
-  cancelText: 'Cancel', // Android
-  fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
+  title: "Authentication Required", // Android
+  imageColor: "#e00606", // Android
+  imageErrorColor: "#ff0000", // Android
+  sensorDescription: "Touch sensor", // Android
+  sensorErrorDescription: "Failed", // Android
+  cancelText: "Cancel", // Android
+  backgroundMode: false, // Android
+  fallbackLabel: "Show Passcode", // iOS (if empty, then label is hidden)
   unifiedErrors: false, // use unified error messages (default false)
   passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.
 };
@@ -203,7 +207,19 @@ TouchID.authenticate('to demo this react-native component', optionalConfigObject
   .catch(error => {
     AlertIOS.alert('Authentication Failed');
   });
+
+//Catch the error messages in background mode, which are otherwise displayed in the modal
+TouchID.onAuthError(error => {
+       Alert.alert('Authentication Error');
+    });
 ```
+### onAuthError() - Android only
+
+Returns an `EventEmitter` listener which can be cancelled with the method `remove()`
+
+### cancelBackgroundAuthentication() - Android only
+
+Cancel the current authentication which was run with the config `backgroundMode: true`
 
 ### isSupported()
 
