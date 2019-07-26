@@ -34,12 +34,13 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private String sensorDescription = "";
     private String sensorErrorDescription = "";
     private String errorText = "";
+    private String authenticationErrorDescription = "Not recognized. Try again.";
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        this.mFingerprintHandler = new FingerprintHandler(context, this);
+        this.mFingerprintHandler = new FingerprintHandler(authenticationErrorDescription, context, this);
     }
 
     @Override
@@ -152,6 +153,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         if (config.hasKey("imageErrorColor")) {
             this.imageErrorColor = config.getInt("imageErrorColor");
+        }
+
+        if (config.hasKey("authenticationErrorDescription")) {
+            this.authenticationErrorDescription = config.getString("authenticationErrorDescription");
         }
     }
 
