@@ -12,6 +12,10 @@ declare module 'react-native-touch-id' {
        * Return unified error messages
        */
       unifiedErrors?: boolean;
+      /**
+       * **iOS only** - By default set to false. If set to true, will allow isSupported to return an error if not enrolled in touch id/face id etc.
+       */
+      passcodeFallback?: boolean;
     }
   
     /**
