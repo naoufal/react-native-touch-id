@@ -213,7 +213,7 @@ Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves wi
 
 ```js
 const optionalConfigObject = {
-  unifiedErrors: false // use unified error messages (default false)
+  unifiedErrors: false, // use unified error messages (default false)
   passcodeFallback: false // if true is passed, itwill allow isSupported to return an error if the device is not enrolled in touch id/face id etc. Otherwise, it will just tell you what method is supported, even if the user is not enrolled.  (default false)
 }
 
