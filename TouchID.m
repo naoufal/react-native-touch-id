@@ -168,16 +168,17 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
     return @"TouchID";
 }
 
-// Checking is fingerprint changed 
-RCT_EXPORT_METHOD(isFingerPrintChanged:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject){
+// Checking is fingerprint changed
+RCT_EXPORT_METHOD(isFingerPrintChanged: (RCTResponseSenderBlock) callback){
     if ([self hasFingerPrintChanged]) {
         // TouchID is changed
-        resolve(@[[NSNull null]]);
+        callback(@[[NSNull null], @"success"]);
     }else{
         // TouchID is not change
-        reject(@"", @"", nil);
+        callback(@[[NSNull null], @"failed"]);
     }
 }
+
 -(BOOL)hasFingerPrintChanged{
     
     BOOL changed = NO;
