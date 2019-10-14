@@ -59,16 +59,19 @@ export default {
     }
 };
 
+function TouchIDError(name, details) {
+  this.name = name || 'TouchIDError';
+  this.message = details.message || 'Touch ID Error';
+  this.details = details || {};
+}
 
-function createError(config, error) {
-  const { unifiedErrors } = config || {};
+TouchIDError.prototype = Object.create(Error.prototype);
+TouchIDError.prototype.constructor = TouchIDError;
 
-  if (unifiedErrors) {
-    return new TouchIDUnifiedError(getError(error));
-  }
-
-  const details = iOSErrors[error];
+function createError(error) {
+  let details = ERRORS[error];
   details.name = error;
 
   return new TouchIDError(error, details);
 }
+
