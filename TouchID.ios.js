@@ -59,10 +59,17 @@ export default {
     }
 };
 
-function createError(error) {
-  let details = ERRORS[error];
+function createError(config, error) {
+  const { unifiedErrors } = config || {};
+
+  if (unifiedErrors) {
+    return new TouchIDUnifiedError(getError(error));
+  }
+
+  const details = iOSErrors[error];
   details.name = error;
 
   return new TouchIDError(error, details);
 }
+
 
