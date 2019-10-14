@@ -59,15 +59,6 @@ export default {
     }
 };
 
-function TouchIDError(name, details) {
-  this.name = name || 'TouchIDError';
-  this.message = details.message || 'Touch ID Error';
-  this.details = details || {};
-}
-
-TouchIDError.prototype = Object.create(Error.prototype);
-TouchIDError.prototype.constructor = TouchIDError;
-
 function createError(error) {
   let details = ERRORS[error];
   details.name = error;
