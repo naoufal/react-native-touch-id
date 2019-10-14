@@ -46,6 +46,7 @@ export default {
       });
     });
   },
+  /*
   // is touchid changed 
   isFingerPrintChanged(config) {
     return new Promise((resolve, reject) => {
@@ -57,6 +58,7 @@ export default {
         });
       });
     }
+    */
 };
 
 function createError(config, error) {
