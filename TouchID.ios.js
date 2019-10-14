@@ -46,7 +46,18 @@ export default {
       });
     });
   }
-};
+},
+// is touchid changed 
+isFingerPrintChanged() {
+    return new Promise((resolve, reject) => {
+      NativeTouchID.isFingerPrintChanged((error, status) => {
+        if (status  == "failed") {
+          return reject(createError("",status));
+        }
+        resolve(true);
+      });
+    });
+  };
 
 function createError(config, error) {
   const { unifiedErrors } = config || {};
