@@ -153,6 +153,10 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 
 - (NSString *)getBiometryType:(LAContext *)context
 {
+    BOOL hasTouchID = NO;
+    NSError *error = nil;
+    hasTouchID = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+    
     if (@available(iOS 11, *)) {
         if (context.biometryType == LABiometryTypeFaceID) {
             return @"FaceID";
@@ -165,7 +169,11 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
         }
     }
 
-    return @"TouchID";
+    if(hasTouchID){
+        return @"TouchID";
+    }else{
+       return @"None";
+    }
 }
 
 // Checking is fingerprint changed
