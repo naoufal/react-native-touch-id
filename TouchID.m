@@ -1,6 +1,7 @@
 #import "TouchID.h"
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
+#import <LocalAuthentication/LocalAuthentication.h>
 
 @implementation TouchID
 
@@ -152,6 +153,10 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
 
 - (NSString *)getBiometryType:(LAContext *)context
 {
+    BOOL hasTouchID = NO;
+    NSError *error = nil;
+    hasTouchID = [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthenticationWithBiometrics error:&error];
+    
     if (@available(iOS 11, *)) {
         if (context.biometryType == LABiometryTypeFaceID) {
             return @"FaceID";
@@ -164,7 +169,58 @@ RCT_EXPORT_METHOD(authenticate: (NSString *)reason
         }
     }
 
-    return @"TouchID";
+    if(hasTouchID){
+        return @"TouchID";
+    }else{
+       return @"None";
+    }
 }
 
+// Checking is fingerprint changed
+RCT_EXPORT_METHOD(isFingerPrintChanged: (RCTResponseSenderBlock) callback){
+    if ([self hasFingerPrintChanged]) {
+        // TouchID is changed
+        callback(@[[NSNull null], @"success"]);
+    }else{
+        // TouchID is not change
+        callback(@[[NSNull null], @"failed"]);
+    }
+}
+
+-(BOOL)hasFingerPrintChanged{
+    
+    BOOL changed = NO;
+    
+    LAContext *context = [[LAContext alloc] init];
+    [context canEvaluatePolicy:LAPolicyDeviceOwnerAuthentication error:nil];
+    
+    NSData *domainState = [context evaluatedPolicyDomainState];
+    
+    // load the last domain state from touch id
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSData *oldDomainState = [defaults objectForKey:@"domainTouchID"];
+    
+    if (oldDomainState)
+    {
+        // check for domain state changes
+        
+        if ([oldDomainState isEqual:domainState])
+        {
+            NSLog(@"nothing changed.");
+        }
+        else
+        {
+            changed = YES;
+            NSLog(@"domain state was changed!");
+            
+        }
+        
+    }
+    // save the domain state that will be loaded next time
+    [defaults setObject:domainState forKey:@"domainTouchID"];
+    [defaults synchronize];
+    
+    
+    return changed;
+}
 @end

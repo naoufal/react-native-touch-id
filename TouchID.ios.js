@@ -45,7 +45,20 @@ export default {
         resolve(true);
       });
     });
-  }
+  },
+
+ 
+ // is touchid changed 
+  isFingerPrintChanged() {
+    return new Promise((resolve, reject) => {
+        NativeTouchID.isFingerPrintChanged((error, status) => {
+          if (status  == "failed") {
+            return reject(createError("","RCTTouchIDFingerPrintError"));
+          }
+          resolve(true);
+        });
+      });
+    }
 };
 
 function createError(config, error) {
@@ -60,3 +73,5 @@ function createError(config, error) {
 
   return new TouchIDError(error, details);
 }
+
+
