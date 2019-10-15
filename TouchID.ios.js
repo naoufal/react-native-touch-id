@@ -46,19 +46,19 @@ export default {
       });
     });
   },
-  /*
-  // is touchid changed 
-  isFingerPrintChanged(config) {
+
+ 
+ // is touchid changed 
+  isFingerPrintChanged() {
     return new Promise((resolve, reject) => {
-        NativeTouchID.isFingerPrintChanged(config, (error, status) => {
+        NativeTouchID.isFingerPrintChanged((error, status) => {
           if (status  == "failed") {
-            return reject(createError("",status));
+            return reject(createError("","RCTTouchIDFingerPrintError"));
           }
           resolve(true);
         });
       });
     }
-    */
 };
 
 function createError(config, error) {
