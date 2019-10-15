@@ -9,7 +9,8 @@ const codes = {
     LAErrorTouchIDNotEnrolled: 'LAErrorTouchIDNotEnrolled',
     LAErrorTouchIDLockout: 'LAErrorTouchIDLockout',
     RCTTouchIDNotSupported: 'RCTTouchIDNotSupported',
-    RCTTouchIDUnknownError: 'RCTTouchIDUnknownError'
+    RCTTouchIDUnknownError: 'RCTTouchIDUnknownError',
+    RCTTouchIDFingerPrintError: 'RCTTouchIDFingerPrintError'
   },
   androidApiCodes: {
     FINGERPRINT_ERROR_HW_UNAVAILABLE: 'FINGERPRINT_ERROR_HW_UNAVAILABLE',
@@ -64,6 +65,9 @@ const iOSErrors = {
   },
   [codes.iOSCodes.RCTTouchIDNotSupported]: {
     message: 'Device does not support Touch ID.'
+  },
+  [codes.iOSCodes.RCTTouchIDFingerPrintError]: {
+    message: 'Add/Remove Finger Print Error.'
   }
 };
 
@@ -145,6 +149,10 @@ const errors = {
   UNKNOWN_ERROR: {
     message: 'Unknown error',
     code: 'UNKNOWN_ERROR'
+  },
+  TOUCHID_CHANGE_ERROR:{
+    message: 'Touch id change error',
+    code: 'TOUCHID_CHANGE_ERROR'
   }
 };
 
