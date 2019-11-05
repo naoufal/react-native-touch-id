@@ -1,21 +1,23 @@
 // Inspired by rayronvictor's PR #248 tp react-native-config
 // https://github.com/luggit/react-native-config/pull/248
 
-buildscript {
-  ext.safeExtGet = {prop, fallback ->
-        rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-  }
-  repositories {
-    maven {
-      url 'https://maven.google.com/'
-      name 'Google'
-    }
-    jcenter()
-    google()
-  }
+def safeExtGet(prop, fallback) {
+	rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
 
-  dependencies {
-    classpath("com.android.tools.build:gradle:${safeExtGet('gradlePluginVersion', '3.4.1')}")
+buildscript {
+  // The Android Gradle plugin is only required when opening the android folder stand-alone.
+  // This avoids unnecessary downloads and potential conflicts when the library is included as a
+  // module dependency in an application project.
+  if (project == rootProject) {
+      repositories {
+        google()
+        jcenter()
+      }
+      
+      dependencies {
+          classpath("com.android.tools.build:gradle:3.5.3")
+      }
   }
 }
 
@@ -41,5 +43,5 @@ repositories {
 }
 
 dependencies {
-  implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
+  implementation "com.facebook.react:react-native:+"
 }
