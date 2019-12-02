@@ -14,6 +14,7 @@
     android:paddingRight="30dp"
     android:orientation="vertical"
     android:background="#0c2646">
+
     <!-- https://medium.com/@chrisbanes/appcompat-v23-2-age-of-the-vectors-91cbafa87c88#.btn3al2l2 appCompat works if app is srcCompat 7 activity-->
     <!-- app:srcCompat="@drawable/ic_fp_40px" -->
     <LinearLayout
@@ -23,6 +24,7 @@
         android:layout_centerVertical="true"
         android:paddingTop="15dp"
         android:paddingBottom="15dp">
+
         <TextView
             android:id="@+id/fingerprint_description"
             android:layout_width="wrap_content"
@@ -31,9 +33,9 @@
             android:textColor="#c2cee1"
             android:letterSpacing="0.02"
             android:lineSpacingExtra="6sp"
-            android:fontFamily="@font/montserrat-medium"
             android:layout_gravity="center"
             android:text="Enable Fingerprint" />
+
         <TextView
             android:id="@+id/fingerprint_title"
             android:layout_width="wrap_content"
@@ -43,9 +45,9 @@
             android:letterSpacing="0.03"
             android:lineSpacingExtra="4sp"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/montserrat-medium"
             android:layout_gravity="center"
             android:text="For faster and secure login" />
+
         <ImageView
             android:id="@+id/fingerprint_icon"
             android:layout_width="80dp"
@@ -53,6 +55,7 @@
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_fp_40px" />
+
         <TextView
             android:id="@+id/fingerprint_sensor_description"
             android:layout_width="wrap_content"
@@ -61,6 +64,7 @@
             android:textColor="#696969"
             android:textSize="15dp"
             android:visibility="gone" />
+
         <TextView
             android:id="@+id/fingerprint_error"
             android:layout_width="wrap_content"
@@ -69,6 +73,7 @@
             android:textColor="#db695e"
             android:textSize="15dp"
             android:lineSpacingExtra="0.4dp" />
+
         <TextView
             android:id="@+id/skip"
             android:layout_width="wrap_content"
@@ -78,8 +83,8 @@
             android:textColor="#c2cee1"
             android:letterSpacing="0.03"
             android:lineSpacingExtra="12sp"
-            android:fontFamily="@font/montserrat-medium"
             android:layout_gravity="center"
             android:text="SKIP" />
+
     </LinearLayout>
 </RelativeLayout>
