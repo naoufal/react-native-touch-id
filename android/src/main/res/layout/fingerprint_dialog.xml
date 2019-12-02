@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:layout_marginTop="25dp"
-            android:textColor="#c2cee1"
+            android:textColor="#738ab7"
             android:letterSpacing="0.03"
             android:lineSpacingExtra="12sp"
             android:fontFamily="@font/montserratmedium"
