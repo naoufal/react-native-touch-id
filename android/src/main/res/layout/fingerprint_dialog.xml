@@ -31,7 +31,7 @@
             android:textColor="#c2cee1"
             android:letterSpacing="0.02"
             android:lineSpacingExtra="6sp"
-            android:fontFamily="@font/montserratmedium"
+            android:fontFamily="@font/montserratregular"
             android:layout_gravity="center"
             android:text="Enable Fingerprint" />
         <TextView
@@ -43,7 +43,7 @@
             android:letterSpacing="0.03"
             android:lineSpacingExtra="4sp"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/montserratmedium"
+            android:fontFamily="@font/montserratregular"
             android:layout_gravity="center"
             android:text="For faster and secure login" />
         <ImageView
@@ -68,6 +68,7 @@
             android:layout_gravity="center"
             android:textColor="#db695e"
             android:textSize="15dp"
+            android:fontFamily="@font/montserratregular"
             android:lineSpacingExtra="0.4dp" />
         <TextView
             android:id="@+id/skip"
@@ -78,7 +79,7 @@
             android:textColor="#738ab7"
             android:letterSpacing="0.03"
             android:lineSpacingExtra="12sp"
-            android:fontFamily="@font/montserratmedium"
+            android:fontFamily="@font/montserratregular"
             android:layout_gravity="center"
             android:text="SKIP" />
     </LinearLayout>
