@@ -149,14 +149,19 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     @Override
     public void onAuthenticated() {
         this.isAuthInProgress = false;
-        this.dialogCallback.onAuthenticated();
+        if (this.dialogCallback != null) {
+          this.dialogCallback.onAuthenticated();
+        }
         dismiss();
     }
 
     @Override
     public void onError(String errorString) {
         this.isAuthInProgress = false;
-        this.dialogCallback.onError(errorString);
+        
+        if (this.dialogCallback != null) {
+          this.dialogCallback.onError(errorString);
+        }
         dismiss();
     }
 
