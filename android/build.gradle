@@ -4,17 +4,19 @@
 def _ext = rootProject.ext
 
 buildscript {
-  repositories {
-    maven {
-      url 'https://maven.google.com/'
-      name 'Google'
+  if (project == rootProject) {
+    repositories {
+      maven {
+        url 'https://maven.google.com/'
+        name 'Google'
+      }
+      jcenter()
+      google()
     }
-    jcenter()
-    google()
-  }
 
-  dependencies {
-    classpath _ext.has('gradleBuildTools') ? _ext.gradleBuildTools : 'com.android.tools.build:gradle:3.4.0'
+    dependencies {
+      classpath 'com.android.tools.build:gradle:3.4.0'
+    }
   }
 }
 
