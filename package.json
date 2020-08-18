@@ -1,6 +1,6 @@
 {
   "name": "react-native-touch-id",
-  "version": "4.0.2",
+  "version": "4.4.1",
   "description": "React Native authentication with the native Touch ID popup.",
   "scripts": {
     "lint": "node_modules/.bin/eslint .",
@@ -8,6 +8,7 @@
     "test": "npm run lint"
   },
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/naoufal/react-native-touch-id.git"
