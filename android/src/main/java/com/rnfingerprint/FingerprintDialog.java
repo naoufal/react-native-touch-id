@@ -27,6 +27,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private TextView mFingerprintError;
 
     private String authReason;
+    private String dialogTitle = "";
     private int imageColor = 0;
     private int imageErrorColor = 0;
     private String cancelText = "";
@@ -75,6 +76,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             }
         });
 
+        getDialog().setTitle(this.dialogTitle);
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
@@ -126,6 +128,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     public void setAuthConfig(final ReadableMap config) {
         if (config == null) {
             return;
+        }
+
+        if (config.hasKey("title")) {
+            this.dialogTitle = config.getString("title");
         }
 
         if (config.hasKey("cancelText")) {
