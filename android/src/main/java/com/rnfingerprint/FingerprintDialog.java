@@ -45,7 +45,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Material_Light_Dialog_NoActionBar_MinWidth);
         setCancelable(false);
     }
     @Override
@@ -55,6 +55,9 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
         mFingerprintDescription.setText(this.authReason);
 
+        final TextView titleTextView = (TextView) v.findViewById(R.id.title);
+        titleTextView.setText(dialogTitle);
+        titleTextView.setTextSize(dialogTitleSize);
 
         this.mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
         if (this.imageColor != 0) {
@@ -76,7 +79,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             }
         });
 
-        getDialog().setTitle(this.dialogTitle);
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
