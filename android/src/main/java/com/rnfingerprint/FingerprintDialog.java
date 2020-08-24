@@ -57,7 +57,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         final TextView titleTextView = (TextView) v.findViewById(R.id.title);
         titleTextView.setText(dialogTitle);
-        titleTextView.setTextSize(dialogTitleSize);
 
         this.mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
         if (this.imageColor != 0) {
