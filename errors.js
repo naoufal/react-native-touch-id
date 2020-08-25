@@ -15,7 +15,7 @@ class TouchIDUnifiedError extends Error {
     super();
     this.name = 'TouchIDError';
     this.message = error.message;
-    this.biometryType = error.biometryType;
+    this.biometryType = biometryType;
     this.code = error.code;
   }
 }
