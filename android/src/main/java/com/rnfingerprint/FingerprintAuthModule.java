@@ -19,9 +19,6 @@ import javax.crypto.Cipher;
 public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener {
 
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
-    private static final int NOT_SUPPORTED = 1;
-    private static final int SUPPORTED_WITH_NO_ENROLLED = 2;
-    private static final int SUPPORTED = 3;
 
     private KeyguardManager keyguardManager;
     private boolean isAppActive;
@@ -59,14 +56,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         if (activity == null) {
             return;
         }
-
         final int result = isFingerprintAuthAvailable();
-        if (result == SUPPORTED) {
-            reactSuccessCallback.invoke("Is supported");
-        } else if (result == NOT_SUPPORTED) {
-            reactErrorCallback.invoke("Not supported");
+        if (result == FingerprintAuthConstants.IS_SUPPORTED) {
+            reactSuccessCallback.invoke("Fingerprint");
         } else {
-            reactErrorCallback.invoke("No enrolled fingerprint");
+            reactErrorCallback.invoke("Not supported.", result);
         }
     }
 
@@ -79,9 +73,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
         inProgress = true;
 
-        if (isFingerprintAuthAvailable() != SUPPORTED) {
+
+        int availableResult = isFingerprintAuthAvailable();
+        if (availableResult != FingerprintAuthConstants.IS_SUPPORTED) {
             inProgress = false;
-            reactErrorCallback.invoke("Not supported");
+            reactErrorCallback.invoke("Not supported", availableResult);
             return;
         }
 
@@ -89,7 +85,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         final Cipher cipher = new FingerprintCipher().getCipher();
         if (cipher == null) {
             inProgress = false;
-            reactErrorCallback.invoke("Not supported");
+            reactErrorCallback.invoke("Not supported", FingerprintAuthConstants.NOT_AVAILABLE);
             return;
         }
 
@@ -116,12 +112,13 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     private int isFingerprintAuthAvailable() {
         if (android.os.Build.VERSION.SDK_INT < 23) {
-            return NOT_SUPPORTED;
+
+            return FingerprintAuthConstants.NOT_SUPPORTED;
         }
 
         final Activity activity = getCurrentActivity();
         if (activity == null) {
-            return NOT_SUPPORTED; // we can't do the check
+            return FingerprintAuthConstants.NOT_AVAILABLE; // we can't do the check
         }
 
         final KeyguardManager keyguardManager = getKeyguardManager();
@@ -132,18 +129,22 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         final FingerprintManager fingerprintManager = (FingerprintManager) activity.getSystemService(Context.FINGERPRINT_SERVICE);
 
         if (keyguardManager == null || !keyguardManager.isKeyguardSecure()) {
-            return NOT_SUPPORTED;
+            return FingerprintAuthConstants.NOT_SUPPORTED;
         }
 
         if (fingerprintManager == null || !fingerprintManager.isHardwareDetected()) {
-            return NOT_SUPPORTED;
+            return FingerprintAuthConstants.NOT_PRESENT;
         }
 
-        if (fingerprintManager.hasEnrolledFingerprints()) {
-            return SUPPORTED;
-        } else {
-            return SUPPORTED_WITH_NO_ENROLLED;
+        if (keyguardManager == null || !keyguardManager.isKeyguardSecure()) {
+            return FingerprintAuthConstants.NOT_AVAILABLE;
         }
+
+        if (!fingerprintManager.hasEnrolledFingerprints()) {
+            return FingerprintAuthConstants.NOT_ENROLLED;
+        }
+
+        return FingerprintAuthConstants.IS_SUPPORTED;
     }
 
     @Override

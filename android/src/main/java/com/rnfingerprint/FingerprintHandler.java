@@ -14,13 +14,10 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
 
     private final FingerprintManager mFingerprintManager;
     private final Callback mCallback;
-    private int attemptCount = 1;
-    private final int limitAttemt;
 
-    public FingerprintHandler(Context context, Callback callback, int limitAttemt) {
+    public FingerprintHandler(Context context, Callback callback) {
         mFingerprintManager = context.getSystemService(FingerprintManager.class);
         mCallback = callback;
-        this.limitAttemt = limitAttemt;
     }
 
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
@@ -34,25 +31,16 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     }
 
     @Override
-    public void onAuthenticationError(int errMsgId,
+    public void onAuthenticationError(int errCode,
                                       CharSequence errString) {
         if (!selfCancelled) {
-            if (attemptCount == 1) {
-                mCallback.onError(errString.toString());
-            } else {
-                mCallback.onError("reached limit attempt");
-            }
+            mCallback.onError(errString.toString(), errCode);
         }
     }
 
     @Override
     public void onAuthenticationFailed() {
-        if (attemptCount < limitAttemt) {
-            attemptCount++;
-        } else {
-            mCallback.onError("failed");
-            cancelAuthenticationSignal();
-        }
+        mCallback.onError("Not recognized. Try again.", FingerprintAuthConstants.AUTHENTICATION_FAILED);
     }
 
     @Override
@@ -72,7 +60,7 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public interface Callback {
         void onAuthenticated();
 
-        void onError(String errorString);
+        void onError(String errorString, int errorCode);
 
         void onCancelled();
     }
