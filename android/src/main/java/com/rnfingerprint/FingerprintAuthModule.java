@@ -111,7 +111,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             }
         };
 
-        BiometricPrompt prompt = new BiometricPrompt(activity, executor, callback);
+        final BiometricPrompt prompt = new BiometricPrompt(activity, executor, callback);
 
         final Cipher cipher = new FingerprintCipher().getCipher();
         if (cipher == null) {
@@ -120,15 +120,20 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             return;
         }
 
-        BiometricPrompt.CryptoObject cryptoObject = new BiometricPrompt.CryptoObject(cipher);
+        final BiometricPrompt.CryptoObject cryptoObject = new BiometricPrompt.CryptoObject(cipher);
 
-        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(reason)
                 .setConfirmationRequired(false)
                 .setNegativeButtonText("Cancel")
                 .build();
 
-        prompt.authenticate(promptInfo, cryptoObject);
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                prompt.authenticate(promptInfo, cryptoObject);
+            }
+        });
 
         if (!isAppActive) {
             inProgress = false;
