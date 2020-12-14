@@ -95,7 +95,23 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                reactErrorCallback.invoke(errString, errorCode);
+                switch (errorCode) {
+                    case BiometricConstants.ERROR_CANCELED:
+                    case BiometricConstants.ERROR_HW_NOT_PRESENT:
+                    case BiometricConstants.ERROR_HW_UNAVAILABLE:
+                    case BiometricConstants.ERROR_LOCKOUT:
+                    case BiometricConstants.ERROR_LOCKOUT_PERMANENT:
+                    case BiometricConstants.ERROR_NEGATIVE_BUTTON:
+                    case BiometricConstants.ERROR_NO_BIOMETRICS:
+                    case BiometricConstants.ERROR_NO_DEVICE_CREDENTIAL:
+                    case BiometricConstants.ERROR_NO_SPACE:
+                    case BiometricConstants.ERROR_TIMEOUT:
+                    case BiometricConstants.ERROR_UNABLE_TO_PROCESS:
+                    case BiometricConstants.ERROR_USER_CANCELED:
+                    case BiometricConstants.ERROR_VENDOR:
+                        reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_FAILED);
+                        break;
+                }
             }
 
             @Override
