@@ -130,20 +130,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         prompt.authenticate(promptInfo, cryptoObject);
 
-
-        final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
-
-        final FingerprintDialog fingerprintDialog = new FingerprintDialog();
-        fingerprintDialog.setReasonForAuthentication(reason);
-        fingerprintDialog.setAuthConfig(authConfig);
-        fingerprintDialog.setDialogCallback(drh);
-
         if (!isAppActive) {
             inProgress = false;
             return;
         }
 
-        fingerprintDialog.show(activity.getFragmentManager(), FRAGMENT_TAG);
     }
 
     private int isFingerprintAuthAvailable() {
