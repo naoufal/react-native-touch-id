@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
-import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -77,7 +76,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     @TargetApi(Build.VERSION_CODES.M)
     @ReactMethod
     public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
-        final FragmentActivity activity = (FragmentActivity)getCurrentActivity();
+        final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
         if (inProgress || !isAppActive || activity == null) {
             return;
         }
@@ -97,6 +96,9 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 super.onAuthenticationError(errorCode, errString);
                 switch (errorCode) {
                     case BiometricConstants.ERROR_CANCELED:
+                    case BiometricConstants.ERROR_USER_CANCELED:
+                        reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_CANCELED);
+                        break;
                     case BiometricConstants.ERROR_HW_NOT_PRESENT:
                     case BiometricConstants.ERROR_HW_UNAVAILABLE:
                     case BiometricConstants.ERROR_LOCKOUT:
@@ -107,9 +109,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     case BiometricConstants.ERROR_NO_SPACE:
                     case BiometricConstants.ERROR_TIMEOUT:
                     case BiometricConstants.ERROR_UNABLE_TO_PROCESS:
-                    case BiometricConstants.ERROR_USER_CANCELED:
                     case BiometricConstants.ERROR_VENDOR:
-                        reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_FAILED);
                         break;
                 }
             }
@@ -171,7 +171,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         BiometricManager biometricManager = BiometricManager.from(activity);
         switch (biometricManager.canAuthenticate()) {
             case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                return  FingerprintAuthConstants.NOT_AVAILABLE;
+                return FingerprintAuthConstants.NOT_AVAILABLE;
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
                 return FingerprintAuthConstants.NOT_ENROLLED;
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
