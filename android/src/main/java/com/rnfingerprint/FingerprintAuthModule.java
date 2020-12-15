@@ -140,6 +140,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(reason)
                 .setConfirmationRequired(false)
+                .setNegativeButtonText("Logout")
                 .build();
 
         activity.runOnUiThread(new Runnable() {
