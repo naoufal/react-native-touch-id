@@ -138,7 +138,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         final BiometricPrompt.CryptoObject cryptoObject = new BiometricPrompt.CryptoObject(cipher);
 
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                .setDescription(reason)
+                .setTitle(reason)
                 .setConfirmationRequired(false)
                 .build();
 
