@@ -97,7 +97,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 switch (errorCode) {
                     case BiometricConstants.ERROR_CANCELED:
                     case BiometricConstants.ERROR_USER_CANCELED:
-                        reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_CANCELED);
+                        reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_FAILED);
                         break;
                     case BiometricConstants.ERROR_HW_NOT_PRESENT:
                     case BiometricConstants.ERROR_HW_UNAVAILABLE:
