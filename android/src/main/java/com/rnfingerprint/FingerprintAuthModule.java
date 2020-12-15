@@ -117,6 +117,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
+                reactErrorCallback.invoke("errString", FingerprintAuthConstants.AUTHENTICATION_FAILED);
             }
 
             @Override
