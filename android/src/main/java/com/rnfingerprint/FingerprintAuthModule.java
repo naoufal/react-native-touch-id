@@ -97,13 +97,13 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 switch (errorCode) {
                     case BiometricConstants.ERROR_CANCELED:
                     case BiometricConstants.ERROR_USER_CANCELED:
+                    case BiometricConstants.ERROR_NEGATIVE_BUTTON:
                         reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_FAILED);
                         break;
                     case BiometricConstants.ERROR_HW_NOT_PRESENT:
                     case BiometricConstants.ERROR_HW_UNAVAILABLE:
                     case BiometricConstants.ERROR_LOCKOUT:
                     case BiometricConstants.ERROR_LOCKOUT_PERMANENT:
-                    case BiometricConstants.ERROR_NEGATIVE_BUTTON:
                     case BiometricConstants.ERROR_NO_BIOMETRICS:
                     case BiometricConstants.ERROR_NO_DEVICE_CREDENTIAL:
                     case BiometricConstants.ERROR_NO_SPACE:
@@ -117,7 +117,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                reactErrorCallback.invoke("errString", FingerprintAuthConstants.AUTHENTICATION_FAILED);
             }
 
             @Override
