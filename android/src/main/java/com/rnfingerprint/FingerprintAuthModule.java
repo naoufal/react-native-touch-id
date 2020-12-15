@@ -95,11 +95,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 switch (errorCode) {
-                    case BiometricConstants.ERROR_CANCELED:
                     case BiometricConstants.ERROR_USER_CANCELED:
                     case BiometricConstants.ERROR_NEGATIVE_BUTTON:
                         reactErrorCallback.invoke(errString, FingerprintAuthConstants.AUTHENTICATION_FAILED);
                         break;
+                    case BiometricConstants.ERROR_CANCELED:
                     case BiometricConstants.ERROR_HW_NOT_PRESENT:
                     case BiometricConstants.ERROR_HW_UNAVAILABLE:
                     case BiometricConstants.ERROR_LOCKOUT:
@@ -137,10 +137,16 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         final BiometricPrompt.CryptoObject cryptoObject = new BiometricPrompt.CryptoObject(cipher);
 
+        String cancelText = "Logout";
+
+        if (authConfig.hasKey("cancelText")) {
+            cancelText = authConfig.getString("cancelText");
+        }
+
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(reason)
                 .setConfirmationRequired(false)
-                .setNegativeButtonText("Logout")
+                .setNegativeButtonText(cancelText)
                 .build();
 
         activity.runOnUiThread(new Runnable() {
