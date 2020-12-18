@@ -147,6 +147,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 .setTitle(reason)
                 .setConfirmationRequired(false)
                 .setNegativeButtonText(cancelText)
+                .setDeviceCredentialAllowed(true)
                 .build();
 
         activity.runOnUiThread(new Runnable() {
