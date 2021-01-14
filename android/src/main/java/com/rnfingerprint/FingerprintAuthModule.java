@@ -145,7 +145,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle(reason)
-//                .setConfirmationRequired(false)
+                .setConfirmationRequired(true)
 //                .setNegativeButtonText(cancelText)
                 .setDeviceCredentialAllowed(true)
                 .build();
