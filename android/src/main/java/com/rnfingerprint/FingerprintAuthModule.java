@@ -135,7 +135,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             return;
         }
 
-        final BiometricPrompt.CryptoObject cryptoObject = new BiometricPrompt.CryptoObject(cipher);
+//        final BiometricPrompt.CryptoObject cryptoObject = new BiometricPrompt.CryptoObject(cipher);
 
         String cancelText = "Logout";
 
@@ -153,7 +153,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                prompt.authenticate(promptInfo, cryptoObject);
+                prompt.authenticate(promptInfo);
             }
         });
 
