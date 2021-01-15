@@ -153,6 +153,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                new BiometricBackground().show(activity.getSupportFragmentManager(), "bg");
                 prompt.authenticate(promptInfo);
             }
         });
