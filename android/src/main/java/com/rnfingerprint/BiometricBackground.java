@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.bumptech.glide.Glide;
+import com.facebook.react.bridge.Callback;
 
 public class BiometricBackground extends DialogFragment {
+
+    private ImageView logo;
+    private Button retryButton;
+    private Button cancelButton;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,8 +45,9 @@ public class BiometricBackground extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
-        ImageView logo = v.findViewById(R.id.logo);
-        Glide.with(requireContext()).load("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png").into(logo);
+        logo = v.findViewById(R.id.logo);
+        cancelButton = v.findViewById(R.id.cancel);
+        retryButton = v.findViewById(R.id.retry);
         return v;
     }
 
@@ -53,5 +60,25 @@ public class BiometricBackground extends DialogFragment {
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
         }
+    }
+
+    public void setLogoUrl(String url){
+        Glide.with(requireContext()).load(url).into(logo);
+    }
+
+    public void setCancelButtonText(String cancel){
+        cancelButton.setText(cancel);
+    }
+
+    public void setRetryButtonText(String retry){
+        retryButton.setText(retry);
+    }
+
+    public void setRetryListener(RetryCallback callback){
+        callback.retry();
+    }
+
+    public void setCancelListener(Callback reactErrorCallback){
+        reactErrorCallback.invoke("error", FingerprintAuthConstants.AUTHENTICATION_FAILED);
     }
 }
