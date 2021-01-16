@@ -24,6 +24,8 @@ public class BiometricBackground extends DialogFragment {
     private Button retryButton;
     private Button cancelButton;
 
+    private String imageUrl;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,7 @@ public class BiometricBackground extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
         logo = v.findViewById(R.id.logo);
+        Glide.with(requireContext()).load(imageUrl).into(logo);
         cancelButton = v.findViewById(R.id.cancel);
         retryButton = v.findViewById(R.id.retry);
         return v;
@@ -62,8 +65,9 @@ public class BiometricBackground extends DialogFragment {
         }
     }
 
+
     public void setLogoUrl(String url){
-        Glide.with(requireContext()).load(url).into(logo);
+        imageUrl = url;
     }
 
     public void setCancelButtonText(String cancel){
