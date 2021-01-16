@@ -25,6 +25,8 @@ public class BiometricBackground extends DialogFragment {
     private Button cancelButton;
 
     private String imageUrl;
+    private String cancelText;
+    private String retryText;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +52,15 @@ public class BiometricBackground extends DialogFragment {
         logo = v.findViewById(R.id.logo);
         Glide.with(requireContext()).load(imageUrl).into(logo);
         cancelButton = v.findViewById(R.id.cancel);
+        if (cancelText != null) {
+            cancelButton.setVisibility(View.VISIBLE);
+            cancelButton.setText(cancelText);
+        }
         retryButton = v.findViewById(R.id.retry);
+        if (retryText != null) {
+            retryButton.setVisibility(View.VISIBLE);
+            retryButton.setText(retryText);
+        }
         return v;
     }
 
@@ -66,23 +76,23 @@ public class BiometricBackground extends DialogFragment {
     }
 
 
-    public void setLogoUrl(String url){
+    public void setLogoUrl(String url) {
         imageUrl = url;
     }
 
-    public void setCancelButtonText(String cancel){
-        cancelButton.setText(cancel);
+    public void setCancelButtonText(String cancel) {
+        cancelText = cancel;
     }
 
-    public void setRetryButtonText(String retry){
-        retryButton.setText(retry);
+    public void setRetryButtonText(String retry) {
+        retryText = retry;
     }
 
-    public void setRetryListener(RetryCallback callback){
+    public void setRetryListener(RetryCallback callback) {
         callback.retry();
     }
 
-    public void setCancelListener(Callback reactErrorCallback){
+    public void setCancelListener(Callback reactErrorCallback) {
         reactErrorCallback.invoke("error", FingerprintAuthConstants.AUTHENTICATION_FAILED);
         dismiss();
     }
