@@ -141,6 +141,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
+                background.dismiss();
                 reactSuccessCallback.invoke("Successfully authenticated.");
             }
         };
@@ -153,6 +154,12 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 .setDeviceCredentialAllowed(true)
                 .build();
 
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                background.show(activity.getSupportFragmentManager(), "bg");
+            }
+        });
         showBiometricDialog();
 
         if (!isAppActive) {
@@ -198,7 +205,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    background.show(activity.getSupportFragmentManager(), "bg");
                     prompt.authenticate(promptInfo);
                 }
             });

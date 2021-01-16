@@ -80,5 +80,6 @@ public class BiometricBackground extends DialogFragment {
 
     public void setCancelListener(Callback reactErrorCallback){
         reactErrorCallback.invoke("error", FingerprintAuthConstants.AUTHENTICATION_FAILED);
+        dismiss();
     }
 }
