@@ -41,6 +41,10 @@ declare module 'react-native-touch-id' {
       /**
        * **Android only** - Cancel button text
        */
+      useBackground?: boolean;
+      /**
+       * **Android only** - Use a background with retry
+       */
       cancelText?: string;
       /**
        * **iOS only** - By default specified 'Show Password' label. If set to empty string label is invisible.
