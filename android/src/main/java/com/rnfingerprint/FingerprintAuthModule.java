@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricConstants;
@@ -21,18 +24,23 @@ import com.facebook.react.bridge.ReadableMap;
 
 import java.util.concurrent.Executor;
 
+import static android.os.Looper.getMainLooper;
+
 public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener, RetryCallback {
 
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
 
     private KeyguardManager keyguardManager;
-    private boolean isAppActive;
+
+    private boolean isAppActive = false;
+    private boolean authSuccess = false;
+    private boolean inProgress = false;
+    private Callback reactSuccessCallback;
 
     private BiometricBackground background;
     private BiometricPrompt prompt;
     private BiometricPrompt.PromptInfo promptInfo;
 
-    public static boolean inProgress = false;
 
     public FingerprintAuthModule(final ReactApplicationContext reactContext) {
         super(reactContext);
@@ -81,16 +89,17 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         if (inProgress || !isAppActive || activity == null) {
             return;
         }
+
         inProgress = true;
+        authSuccess = false;
+        this.reactSuccessCallback = reactSuccessCallback;
 
         String cancelText = "Cancel";
-
         if (authConfig.hasKey("cancelText")) {
             cancelText = authConfig.getString("cancelText");
         }
 
         String retryText = "Retry";
-
         if (authConfig.hasKey("retryText")) {
             retryText = authConfig.getString("retryText");
         }
@@ -98,7 +107,13 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         background = new BiometricBackground();
         background.setLogoUrl("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png");
         background.setCancelButtonText(cancelText);
-        background.setCancelListener(reactErrorCallback);
+        background.setCancelListener(new Callback() {
+                                         @Override
+                                         public void invoke(Object... args) {
+                                             inProgress = false;
+                                             reactErrorCallback.invoke(BiometricConstants.ERROR_USER_CANCELED, "User cancelled");
+                                         }
+                                     });
         background.setRetryButtonText(retryText);
         background.setRetryListener(this);
 
@@ -141,8 +156,9 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-                background.dismiss();
-                reactSuccessCallback.invoke("Successfully authenticated.");
+                inProgress = false;
+                authSuccess = true;
+                onAuthSuccess();
             }
         };
 
@@ -161,12 +177,17 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             }
         });
         showBiometricDialog();
+    }
 
-        if (!isAppActive) {
-            inProgress = false;
-            return;
+    private void onAuthSuccess() {
+        if (isAppActive && authSuccess) {
+            if (background != null) {
+                background.dismiss();
+                background = null;
+            }
+            reactSuccessCallback.invoke("Successfully authenticated.");
+            authSuccess = false;
         }
-
     }
 
     private int isFingerprintAuthAvailable() {
@@ -182,6 +203,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     @Override
     public void onHostResume() {
         isAppActive = true;
+        onAuthSuccess();
     }
 
     @Override
