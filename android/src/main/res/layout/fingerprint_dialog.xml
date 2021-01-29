@@ -10,7 +10,7 @@
     android:orientation="vertical"
     >
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/logo"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:src="@drawable/logo"
         />
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <ImageView
         android:id="@+id/image"
         android:layout_width="wrap_content"
         android:layout_height="170dp"
@@ -28,7 +28,7 @@
         android:src="@drawable/blocked"
         />
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
         android:textSize="17sp"
         />
 
-    <android.support.v7.widget.AppCompatTextView
+    <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
