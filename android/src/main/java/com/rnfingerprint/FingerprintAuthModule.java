@@ -134,6 +134,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     case BiometricPrompt.ERROR_USER_CANCELED:
                     case BiometricPrompt.ERROR_NEGATIVE_BUTTON:
                     case BiometricPrompt.ERROR_TIMEOUT:
+                        inProgress = false;
                         break;
                     case BiometricPrompt.ERROR_CANCELED:
                     case BiometricPrompt.ERROR_HW_NOT_PRESENT:
@@ -161,7 +162,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 // if we don't have a background => end auth
                 if (background == null) {
                     inProgress = false;
-                    reactErrorCallback.invoke(BiometricPrompt.ERROR_CANCELED, "Authentication failed");
+//                    reactErrorCallback.invoke(BiometricPrompt.ERROR_CANCELED, "Authentication failed");
                 }
             }
 
