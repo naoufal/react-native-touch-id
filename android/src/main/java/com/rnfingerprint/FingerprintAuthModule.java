@@ -151,7 +151,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 // if we don't have a background => end auth
                 if (background == null) {
                     inProgress = false;
-                    reactErrorCallback.invoke(errString, errorCode);
+//                    reactErrorCallback.invoke(errString, errorCode);
                 }
             }
 
