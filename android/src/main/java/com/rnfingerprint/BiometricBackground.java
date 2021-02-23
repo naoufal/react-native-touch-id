@@ -1,5 +1,6 @@
 package com.rnfingerprint;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -29,6 +30,20 @@ public class BiometricBackground extends DialogFragment {
     private String retryText;
     private RetryCallback retryCallback;
     private Callback cancelCallback;
+
+    @SuppressLint("StaticFieldLeak")
+    private static BiometricBackground dialog = null;
+
+    public static BiometricBackground getInstance(){
+        if(dialog == null){
+            dialog = new BiometricBackground();
+        }
+        return dialog;
+    }
+
+    private BiometricBackground(){
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

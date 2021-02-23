@@ -104,7 +104,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
 
         if (authConfig.getBoolean("useBackground")) {
-            background = new BiometricBackground();
+            background = BiometricBackground.getInstance();
             background.setLogoUrl("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png");
             background.setCancelButtonText(cancelText);
             background.setCancelListener(new Callback() {
@@ -121,7 +121,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         int availableResult = isFingerprintAuthAvailable();
         if (availableResult != FingerprintAuthConstants.IS_SUPPORTED) {
             inProgress = false;
-            reactErrorCallback.invoke("Not supported", availableResult);
+//            reactErrorCallback.invoke("Not supported", availableResult);
             return;
         }
 
