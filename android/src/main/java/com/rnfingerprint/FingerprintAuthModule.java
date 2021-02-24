@@ -111,7 +111,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             background = BiometricBackground.getInstance();
             background.setLogoUrl("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png");
             background.setCancelButtonText(cancelText);
-            background.setIsRetryAvailable(!isAvailable);
+            background.setIsRetryAvailable(BiometricManager.from(activity).canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS);
             background.setCancelListener(new Callback() {
                 @Override
                 public void invoke(Object... args) {
@@ -205,19 +205,12 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     }
 
     private int isFingerprintAuthAvailable() {
-        if (getCurrentActivity() != null) {
-            BiometricManager biometricManager = BiometricManager.from(getCurrentActivity());
-            switch (biometricManager.canAuthenticate()) {
-                case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                    return FingerprintAuthConstants.NOT_AVAILABLE;
-                case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                    return FingerprintAuthConstants.NOT_ENROLLED;
-                case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                    return FingerprintAuthConstants.NOT_PRESENT;
-                case BiometricManager.BIOMETRIC_SUCCESS:
-                    return FingerprintAuthConstants.IS_SUPPORTED;
+        if (getKeyguardManager() != null)
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && getKeyguardManager().isKeyguardSecure()) {
+                return FingerprintAuthConstants.NOT_SUPPORTED;
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && getKeyguardManager().isDeviceSecure()) {
+                return FingerprintAuthConstants.IS_SUPPORTED;
             }
-        }
         return FingerprintAuthConstants.AUTHENTICATION_FAILED;
     }
 
