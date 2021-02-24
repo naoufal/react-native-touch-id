@@ -133,5 +133,6 @@ public class BiometricBackground extends DialogFragment {
     }
 
     public void setIsRetryAvailable(boolean available) {
+        this.available = available;
     }
 }
