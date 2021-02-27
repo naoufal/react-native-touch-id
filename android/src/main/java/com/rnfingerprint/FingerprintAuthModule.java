@@ -21,13 +21,10 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.module.annotations.ReactModule;
 
 import java.util.concurrent.Executor;
 
-import static android.os.Looper.getMainLooper;
 
-@ReactModule(name = FingerprintAuthModule.NAME)
 public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener, RetryCallback {
     public static final String NAME = "FingerprintAuth";
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
@@ -115,9 +112,11 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
 
         if (authConfig.getBoolean("useBackground")) {
+            // Use singleton for avoiding duplication
             background = BiometricBackground.getInstance();
             background.setLogoUrl("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png");
             background.setCancelButtonText(cancelText);
+            // Hide retry button if user are using only pincode
             background.setIsRetryAvailable(BiometricManager.from(activity).canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS);
             background.setCancelListener(new Callback() {
                 @Override
@@ -140,6 +139,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     case BiometricPrompt.ERROR_USER_CANCELED:
                     case BiometricPrompt.ERROR_NEGATIVE_BUTTON:
                     case BiometricPrompt.ERROR_TIMEOUT:
+                        //Biometric prompt getting close
                         inProgress = false;
                         break;
                     case BiometricPrompt.ERROR_CANCELED:
@@ -211,6 +211,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
     }
 
+    // check is any system security presented on device
     private int isFingerprintAuthAvailable() {
         if (getKeyguardManager() != null)
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && getKeyguardManager().isKeyguardSecure()) {

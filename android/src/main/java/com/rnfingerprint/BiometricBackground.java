@@ -111,7 +111,7 @@ public class BiometricBackground extends DialogFragment {
         }
     }
 
-
+    //maybe would be better to use some static approach
     public void setLogoUrl(String url) {
         imageUrl = url;
     }
