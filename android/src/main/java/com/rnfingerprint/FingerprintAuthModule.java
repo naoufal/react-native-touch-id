@@ -5,6 +5,9 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
@@ -18,11 +21,15 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.module.annotations.ReactModule;
 
 import java.util.concurrent.Executor;
 
-public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener, RetryCallback {
+import static android.os.Looper.getMainLooper;
 
+@ReactModule(name = FingerprintAuthModule.NAME)
+public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener, RetryCallback {
+    public static final String NAME = "FingerprintAuth";
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
 
     private KeyguardManager keyguardManager;
