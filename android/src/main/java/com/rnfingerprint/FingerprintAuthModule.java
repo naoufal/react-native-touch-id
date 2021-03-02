@@ -10,7 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import androidx.annotation.NonNull;
-import androidx.biometric.BiometricConstants;
+import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -21,13 +21,10 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.module.annotations.ReactModule;
 
 import java.util.concurrent.Executor;
 
-import static android.os.Looper.getMainLooper;
 
-@ReactModule(name = FingerprintAuthModule.NAME)
 public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener, RetryCallback {
     public static final String NAME = "FingerprintAuth";
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
@@ -106,27 +103,32 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             retryText = authConfig.getString("retryText");
         }
 
+        int availableResult = isFingerprintAuthAvailable();
+        boolean isAvailable = availableResult != FingerprintAuthConstants.IS_SUPPORTED;
+        if (isAvailable) {
+            inProgress = false;
+            reactErrorCallback.invoke("Not supported", availableResult);
+            return;
+        }
+
         if (authConfig.getBoolean("useBackground")) {
-            background = new BiometricBackground();
+            // Use singleton for avoiding duplication
+            background = BiometricBackground.getInstance();
             background.setLogoUrl("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png");
             background.setCancelButtonText(cancelText);
+            // Hide retry button if user are using only pincode
+            background.setIsRetryAvailable(BiometricManager.from(activity).canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS);
             background.setCancelListener(new Callback() {
                 @Override
                 public void invoke(Object... args) {
                     inProgress = false;
-                    reactErrorCallback.invoke("User cancelled", BiometricConstants.ERROR_USER_CANCELED);
+                    reactErrorCallback.invoke("User cancelled", BiometricPrompt.ERROR_USER_CANCELED);
                 }
             });
             background.setRetryButtonText(retryText);
             background.setRetryListener(this);
         }
 
-        int availableResult = isFingerprintAuthAvailable();
-        if (availableResult != FingerprintAuthConstants.IS_SUPPORTED) {
-            inProgress = false;
-            reactErrorCallback.invoke("Not supported", availableResult);
-            return;
-        }
 
         Executor executor = ContextCompat.getMainExecutor(activity);
         BiometricPrompt.AuthenticationCallback callback = new BiometricPrompt.AuthenticationCallback() {
@@ -134,26 +136,28 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
                 switch (errorCode) {
-                    case BiometricConstants.ERROR_USER_CANCELED:
-                    case BiometricConstants.ERROR_NEGATIVE_BUTTON:
-                    case BiometricConstants.ERROR_TIMEOUT:
+                    case BiometricPrompt.ERROR_USER_CANCELED:
+                    case BiometricPrompt.ERROR_NEGATIVE_BUTTON:
+                    case BiometricPrompt.ERROR_TIMEOUT:
+                        //Biometric prompt getting close
+                        inProgress = false;
                         break;
-                    case BiometricConstants.ERROR_CANCELED:
-                    case BiometricConstants.ERROR_HW_NOT_PRESENT:
-                    case BiometricConstants.ERROR_HW_UNAVAILABLE:
-                    case BiometricConstants.ERROR_LOCKOUT:
-                    case BiometricConstants.ERROR_LOCKOUT_PERMANENT:
-                    case BiometricConstants.ERROR_NO_BIOMETRICS:
-                    case BiometricConstants.ERROR_NO_DEVICE_CREDENTIAL:
-                    case BiometricConstants.ERROR_NO_SPACE:
-                    case BiometricConstants.ERROR_UNABLE_TO_PROCESS:
-                    case BiometricConstants.ERROR_VENDOR:
+                    case BiometricPrompt.ERROR_CANCELED:
+                    case BiometricPrompt.ERROR_HW_NOT_PRESENT:
+                    case BiometricPrompt.ERROR_HW_UNAVAILABLE:
+                    case BiometricPrompt.ERROR_LOCKOUT:
+                    case BiometricPrompt.ERROR_LOCKOUT_PERMANENT:
+                    case BiometricPrompt.ERROR_NO_BIOMETRICS:
+                    case BiometricPrompt.ERROR_NO_DEVICE_CREDENTIAL:
+                    case BiometricPrompt.ERROR_NO_SPACE:
+                    case BiometricPrompt.ERROR_UNABLE_TO_PROCESS:
+                    case BiometricPrompt.ERROR_VENDOR:
                         break;
                 }
                 // if we don't have a background => end auth
                 if (background == null) {
                     inProgress = false;
-                    reactErrorCallback.invoke(errString, errorCode);
+//                    reactErrorCallback.invoke(errString, errorCode);
                 }
             }
 
@@ -164,7 +168,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 // if we don't have a background => end auth
                 if (background == null) {
                     inProgress = false;
-                    reactErrorCallback.invoke(BiometricConstants.ERROR_CANCELED, "Authentication failed");
+                    reactErrorCallback.invoke(BiometricPrompt.ERROR_CANCELED, "Authentication failed");
                 }
             }
 
@@ -207,6 +211,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
     }
 
+    // check is any system security presented on device
     private int isFingerprintAuthAvailable() {
         if (getKeyguardManager() != null)
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M && getKeyguardManager().isKeyguardSecure()) {

@@ -1,5 +1,6 @@
 package com.rnfingerprint;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,8 +28,23 @@ public class BiometricBackground extends DialogFragment {
     private String imageUrl;
     private String cancelText;
     private String retryText;
+    private boolean available = true;
     private RetryCallback retryCallback;
     private Callback cancelCallback;
+
+    @SuppressLint("StaticFieldLeak")
+    private static BiometricBackground dialog = null;
+
+    public static BiometricBackground getInstance() {
+        if (dialog == null) {
+            dialog = new BiometricBackground();
+        }
+        return dialog;
+    }
+
+    private BiometricBackground() {
+
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +85,9 @@ public class BiometricBackground extends DialogFragment {
 
         retryButton = v.findViewById(R.id.retry);
         if (retryText != null) {
-            retryButton.setVisibility(View.VISIBLE);
+            if (available) {
+                retryButton.setVisibility(View.VISIBLE);
+            }
             retryButton.setText(retryText);
         }
         retryButton.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +111,7 @@ public class BiometricBackground extends DialogFragment {
         }
     }
 
-
+    //maybe would be better to use some static approach
     public void setLogoUrl(String url) {
         imageUrl = url;
     }
@@ -112,5 +130,9 @@ public class BiometricBackground extends DialogFragment {
 
     public void setCancelListener(Callback reactErrorCallback) {
         cancelCallback = reactErrorCallback;
+    }
+
+    public void setIsRetryAvailable(boolean available) {
+        this.available = available;
     }
 }
