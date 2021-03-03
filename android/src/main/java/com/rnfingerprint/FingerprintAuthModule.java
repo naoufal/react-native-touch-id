@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
@@ -84,12 +81,14 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @TargetApi(Build.VERSION_CODES.M)
     @ReactMethod
-    public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
-        final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
-        if (inProgress || !isAppActive || activity == null) {
+    public void authenticateOnActivity(final FragmentActivity activity, final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
+        if (inProgress || activity == null) {
             return;
         }
-
+        // authentication on different activity requires manual activation with call to hostResume
+        if (activity != getCurrentActivity()) {
+            isAppActive = false;
+        }
         inProgress = true;
         authSuccess = false;
         this.reactSuccessCallback = reactSuccessCallback;
@@ -115,7 +114,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         if (authConfig.getBoolean("useBackground")) {
             // Use singleton for avoiding duplication
             background = BiometricBackground.getInstance();
-            background.setLogoUrl("https://www.managebac.com/wp-content/uploads/2020/07/ManageBac-vertical@2x-1024x758-1.png");
             background.setCancelButtonText(cancelText);
             // Hide retry button if user are using only pincode
             background.setIsRetryAvailable(BiometricManager.from(activity).canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS);
@@ -129,7 +127,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             background.setRetryButtonText(retryText);
             background.setRetryListener(this);
         }
-
 
         Executor executor = ContextCompat.getMainExecutor(activity);
         BiometricPrompt.AuthenticationCallback callback = new BiometricPrompt.AuthenticationCallback() {
@@ -190,15 +187,28 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 .setDeviceCredentialAllowed(true)
                 .build();
 
-        if (background != null) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (background != null) {
                     background.show(activity.getSupportFragmentManager(), "bg");
                 }
-            });
-        }
+            }
+        });
         showBiometricDialog();
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @ReactMethod
+    public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
+        if (!isAppActive) { return; }
+
+        final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
+        authenticateOnActivity(activity, reason, authConfig, reactErrorCallback, reactSuccessCallback);
+    }
+
+    public boolean hasPendingAuthSuccess() {
+        return authSuccess;
     }
 
     private void onAuthSuccess() {

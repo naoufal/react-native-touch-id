@@ -21,11 +21,9 @@ import com.facebook.react.bridge.Callback;
 
 public class BiometricBackground extends DialogFragment {
 
-    private ImageView logo;
     private Button retryButton;
     private Button cancelButton;
 
-    private String imageUrl;
     private String cancelText;
     private String retryText;
     private boolean available = true;
@@ -67,8 +65,6 @@ public class BiometricBackground extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
-        logo = v.findViewById(R.id.logo);
-        Glide.with(requireContext()).load(imageUrl).into(logo);
 
         cancelButton = v.findViewById(R.id.cancel);
         if (cancelText != null) {
@@ -109,11 +105,6 @@ public class BiometricBackground extends DialogFragment {
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
         }
-    }
-
-    //maybe would be better to use some static approach
-    public void setLogoUrl(String url) {
-        imageUrl = url;
     }
 
     public void setCancelButtonText(String cancel) {
