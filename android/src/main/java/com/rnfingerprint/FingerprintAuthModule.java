@@ -21,10 +21,11 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.module.annotations.ReactModule;
 
 import java.util.concurrent.Executor;
 
-
+@ReactModule(name = FingerprintAuthModule.NAME)
 public class FingerprintAuthModule extends ReactContextBaseJavaModule implements LifecycleEventListener, RetryCallback {
     public static final String NAME = "FingerprintAuth";
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
