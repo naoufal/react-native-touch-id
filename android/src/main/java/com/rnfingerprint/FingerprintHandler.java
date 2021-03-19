@@ -23,7 +23,12 @@ public class FingerprintHandler extends FingerprintManager.AuthenticationCallbac
     public void startAuth(FingerprintManager.CryptoObject cryptoObject) {
         cancellationSignal = new CancellationSignal();
         selfCancelled = false;
-        mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
+        try {
+            mFingerprintManager.authenticate(cryptoObject, cancellationSignal, 0, this, null);
+        } catch (NullPointerException exception) {
+            mCallback.onCancelled();
+        }
+
     }
 
     public void endAuth() {
