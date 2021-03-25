@@ -48,7 +48,7 @@ repositories {
 
 dependencies {
   implementation "com.facebook.react:react-native:${_reactNativeVersion}"
-  implementation "androidx.biometric:biometric:1.0.1"
+  implementation "androidx.biometric:biometric:1.1.0"
   implementation 'androidx.appcompat:appcompat:1.2.0'
   implementation 'com.github.bumptech.glide:glide:4.11.0'
   annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
