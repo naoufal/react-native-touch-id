@@ -29,7 +29,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     public static final int CONFIRM_DEVICE_CREDENTIAL_CODE = 10001;
     private static final String FRAGMENT_TAG = "fingerprint_dialog";
 
-
     private KeyguardManager keyguardManager;
 
     private boolean isAppActive = false;
@@ -40,7 +39,8 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     private BiometricBackground background;
     private BiometricPrompt prompt;
     private BiometricPrompt.PromptInfo promptInfo;
-
+    private String reason = "Authenticate";
+    private int confirmDeviceCredentialCode = CONFIRM_DEVICE_CREDENTIAL_CODE;
 
     public FingerprintAuthModule(final ReactApplicationContext reactContext) {
         super(reactContext);
@@ -116,7 +116,10 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
         inProgress = true;
         authSuccess = false;
+
         this.reactSuccessCallback = reactSuccessCallback;
+        this.confirmDeviceCredentialCode = confirmDeviceCredentialCode;
+        this.reason = reason;
 
         String cancelText = "Cancel";
         if (authConfig.hasKey("cancelText")) {
@@ -153,21 +156,10 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             background.setRetryListener(this);
         }
 
-        // for non biometric authentication (PIN code) use device credentials
-        if (BiometricManager.from(activity).canAuthenticate() != BiometricManager.BIOMETRIC_SUCCESS) {
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (background != null) {
-                        background.show(activity.getSupportFragmentManager(), "bg");
-                    }
-                }
-            });
-            showDeviceCredentialActivity(activity, reason, null, confirmDeviceCredentialCode);
-        } else {
+        // for biometric authentication (NOT PIN code -> will use device credentials)
+        if ((BiometricManager.from(activity).canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS)) {
             Executor executor = ContextCompat.getMainExecutor(activity);
             BiometricPrompt.AuthenticationCallback callback = new BiometricPrompt.AuthenticationCallback() {
-
                 @Override
                 public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                     super.onAuthenticationError(errorCode, errString);
@@ -224,17 +216,18 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     .setConfirmationRequired(true)
                     .setAllowedAuthenticators(BiometricManager.Authenticators.BIOMETRIC_STRONG | BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL)
                     .build();
-
-            activity.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (background != null) {
-                        background.show(activity.getSupportFragmentManager(), "bg");
-                    }
-                }
-            });
-            showBiometricDialog();
         }
+
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (background != null) {
+                    background.show(activity.getSupportFragmentManager(), "bg");
+                }
+            }
+        });
+
+        showAuthenticationDialog();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -290,16 +283,20 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @Override
     public void retry() {
-        showBiometricDialog();
+        showAuthenticationDialog();
     }
 
-    private void showBiometricDialog() {
+    private void showAuthenticationDialog() {
         final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
         if (activity != null) {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    prompt.authenticate(promptInfo);
+                    if (prompt == null) {
+                        showDeviceCredentialActivity(activity, reason, null, confirmDeviceCredentialCode);
+                    } else {
+                        prompt.authenticate(promptInfo);
+                    }
                 }
             });
         }
