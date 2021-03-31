@@ -115,8 +115,8 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             // Use singleton for avoiding duplication
             background = BiometricBackground.getInstance();
             background.setCancelButtonText(cancelText);
-            // Hide retry button if user are using only pincode
-            background.setIsRetryAvailable(BiometricManager.from(activity).canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS);
+
+            background.setIsRetryAvailable(true);
             background.setCancelListener(new Callback() {
                 @Override
                 public void invoke(Object... args) {
