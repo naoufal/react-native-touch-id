@@ -5,7 +5,9 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricManager;
@@ -106,7 +108,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @TargetApi(Build.VERSION_CODES.M)
     @ReactMethod
-    public void authenticateOnActivity(final FragmentActivity activity, final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback, int confirmDeviceCredentialCode) {
+    public void authenticateOnActivity(final FragmentActivity activity, final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback, final int confirmDeviceCredentialCode) {
         if (inProgress || activity == null) {
             return;
         }
@@ -114,8 +116,13 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         if (activity != getCurrentActivity()) {
             isAppActive = false;
         }
+
         inProgress = true;
         authSuccess = false;
+
+        promptInfo = null;
+        prompt = null;
+        background = null;
 
         this.reactSuccessCallback = reactSuccessCallback;
         this.confirmDeviceCredentialCode = confirmDeviceCredentialCode;
@@ -163,9 +170,13 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 @Override
                 public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                     super.onAuthenticationError(errorCode, errString);
+                    Log.e("Fingerprint", "Error: " + errString + " " + errorCode);
+
                     switch (errorCode) {
-                        case BiometricPrompt.ERROR_USER_CANCELED:
                         case BiometricPrompt.ERROR_NEGATIVE_BUTTON:
+                            // use PIN was pressed
+                            return;
+                        case BiometricPrompt.ERROR_USER_CANCELED:
                         case BiometricPrompt.ERROR_TIMEOUT:
                             //Biometric prompt getting close
                             inProgress = false;
@@ -185,7 +196,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     // if we don't have a background => end auth
                     if (background == null) {
                         inProgress = false;
-                        //                    reactErrorCallback.invoke(errString, errorCode);
                     }
                 }
 
@@ -196,7 +206,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     // if we don't have a background => end auth
                     if (background == null) {
                         inProgress = false;
-                        reactErrorCallback.invoke(BiometricPrompt.ERROR_CANCELED, "Authentication failed");
+                        reactErrorCallback.invoke("Authentication failed", BiometricPrompt.ERROR_CANCELED);
                     }
                 }
 
@@ -243,6 +253,10 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         return authSuccess;
     }
 
+    public boolean isLocked() {
+        return inProgress || (background != null);
+    }
+
     private void authFinished() {
         if (isAppActive && authSuccess) {
             if (background != null) {
@@ -286,13 +300,23 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         showAuthenticationDialog();
     }
 
+    private Boolean shouldShowDeviceCredentialActivity(FragmentActivity activity) {
+        final PackageManager pm = activity.getPackageManager();
+        boolean advancedSensor = pm.hasSystemFeature(PackageManager.FEATURE_IRIS)
+                || pm.hasSystemFeature(PackageManager.FEATURE_FACE);
+
+        // on android 10 & below there is an issue with the fallback PIN with biometric prompt
+        // it does result in a authentication error cancelled initially
+        return (prompt == null) || (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) && !advancedSensor;
+    }
+
     private void showAuthenticationDialog() {
         final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
         if (activity != null) {
             activity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (prompt == null) {
+                    if (shouldShowDeviceCredentialActivity(activity)) {
                         showDeviceCredentialActivity(activity, reason, null, confirmDeviceCredentialCode);
                     } else {
                         prompt.authenticate(promptInfo);
