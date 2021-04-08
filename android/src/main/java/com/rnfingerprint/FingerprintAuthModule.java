@@ -33,16 +33,16 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     private KeyguardManager keyguardManager;
 
-    private boolean isAppActive = false;
-    private boolean authSuccess = false;
     private boolean inProgress = false;
     private Callback reactSuccessCallback;
+    private Callback reactErrorCallback;
 
     private BiometricBackground background;
     private BiometricPrompt prompt;
     private BiometricPrompt.PromptInfo promptInfo;
     private String reason = "Authenticate";
     private int confirmDeviceCredentialCode = CONFIRM_DEVICE_CREDENTIAL_CODE;
+    private FragmentActivity launchActivity;
 
     public FingerprintAuthModule(final ReactApplicationContext reactContext) {
         super(reactContext);
@@ -60,7 +60,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         }
 
         keyguardManager = (KeyguardManager) activity.getSystemService(Context.KEYGUARD_SERVICE);
-
         return keyguardManager;
     }
 
@@ -95,9 +94,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     @TargetApi((Build.VERSION_CODES.M))
     @ReactMethod
     public void deviceCredentialActivityResult(int resultCode) {
-        authSuccess = (resultCode == Activity.RESULT_OK);
-        inProgress = false;
-        authFinished();
+        authFinished(resultCode == Activity.RESULT_OK);
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -112,19 +109,14 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         if (inProgress || activity == null) {
             return;
         }
-        // authentication on different activity requires manual activation with call to hostResume
-        if (activity != getCurrentActivity()) {
-            isAppActive = false;
-        }
 
         inProgress = true;
-        authSuccess = false;
-
         promptInfo = null;
         prompt = null;
         background = null;
 
         this.reactSuccessCallback = reactSuccessCallback;
+        this.reactErrorCallback = reactErrorCallback;
         this.confirmDeviceCredentialCode = confirmDeviceCredentialCode;
         this.reason = reason;
 
@@ -156,6 +148,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 @Override
                 public void invoke(Object... args) {
                     inProgress = false;
+                    launchActivity = null;
                     reactErrorCallback.invoke("User cancelled", BiometricPrompt.ERROR_USER_CANCELED);
                 }
             });
@@ -178,9 +171,6 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                             return;
                         case BiometricPrompt.ERROR_USER_CANCELED:
                         case BiometricPrompt.ERROR_TIMEOUT:
-                            //Biometric prompt getting close
-                            inProgress = false;
-                            break;
                         case BiometricPrompt.ERROR_CANCELED:
                         case BiometricPrompt.ERROR_HW_NOT_PRESENT:
                         case BiometricPrompt.ERROR_HW_UNAVAILABLE:
@@ -195,6 +185,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                     }
                     // if we don't have a background => end auth
                     if (background == null) {
+                        launchActivity = null;
                         inProgress = false;
                     }
                 }
@@ -202,20 +193,18 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
                 @Override
                 public void onAuthenticationFailed() {
                     super.onAuthenticationFailed();
-
-                    // if we don't have a background => end auth
-                    if (background == null) {
-                        inProgress = false;
-                        reactErrorCallback.invoke("Authentication failed", BiometricPrompt.ERROR_CANCELED);
-                    }
+                    authFinished(false);
                 }
 
                 @Override
                 public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                     super.onAuthenticationSucceeded(result);
-                    inProgress = false;
-                    authSuccess = true;
-                    authFinished();
+                    launchActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            authFinished(true);
+                        }
+                    });
                 }
             };
 
@@ -237,34 +226,33 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
             }
         });
 
+        launchActivity = activity;
         showAuthenticationDialog();
     }
 
     @TargetApi(Build.VERSION_CODES.M)
     @ReactMethod
     public void authenticate(final String reason, final ReadableMap authConfig, final Callback reactErrorCallback, final Callback reactSuccessCallback) {
-        if (!isAppActive) { return; }
-
         final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
         authenticateOnActivity(activity, reason, authConfig, reactErrorCallback, reactSuccessCallback);
     }
 
-    public boolean hasPendingAuthSuccess() {
-        return authSuccess;
-    }
-
-    public boolean isLocked() {
-        return inProgress || (background != null);
-    }
-
-    private void authFinished() {
-        if (isAppActive && authSuccess) {
+    private void authFinished(Boolean success) {
+        if (success) {
+            inProgress = false;
+            launchActivity = null;
             if (background != null) {
                 background.dismiss();
                 background = null;
             }
             reactSuccessCallback.invoke("Successfully authenticated.");
-            authSuccess = false;
+        } else {
+            // if we don't have a background => end auth because no retry
+            if (background == null) {
+                launchActivity = null;
+                inProgress = false;
+                reactErrorCallback.invoke("Authentication failed", BiometricPrompt.ERROR_CANCELED);
+            }
         }
     }
 
@@ -281,18 +269,14 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @Override
     public void onHostResume() {
-        isAppActive = true;
-        authFinished();
     }
 
     @Override
     public void onHostPause() {
-        isAppActive = false;
     }
 
     @Override
     public void onHostDestroy() {
-        isAppActive = false;
     }
 
     @Override
@@ -311,13 +295,12 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     }
 
     private void showAuthenticationDialog() {
-        final FragmentActivity activity = (FragmentActivity) getCurrentActivity();
-        if (activity != null) {
-            activity.runOnUiThread(new Runnable() {
+        if (launchActivity != null) {
+            launchActivity.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if (shouldShowDeviceCredentialActivity(activity)) {
-                        showDeviceCredentialActivity(activity, reason, null, confirmDeviceCredentialCode);
+                    if (shouldShowDeviceCredentialActivity(launchActivity)) {
+                        showDeviceCredentialActivity(launchActivity, reason, null, confirmDeviceCredentialCode);
                     } else {
                         prompt.authenticate(promptInfo);
                     }
