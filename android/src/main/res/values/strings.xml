@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="application_locked">Application Locked</string>
+    <string name="unable_to_unlock">Unable to unlock the app, select Retry to try again.</string>
+</resources>
