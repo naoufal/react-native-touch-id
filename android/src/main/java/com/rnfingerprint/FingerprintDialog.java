@@ -12,6 +12,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.graphics.Color;
+import android.widget.LinearLayout;
+import android.graphics.drawable.Drawable;
+import android.graphics.PorterDuff;
 
 import com.facebook.react.bridge.ReadableMap;
 
@@ -25,11 +29,15 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private ImageView mFingerprintImage;
     private TextView mFingerprintSensorDescription;
     private TextView mFingerprintError;
+    private View mLine;
+    private LinearLayout mfingerprint_container;
 
     private String authReason;
     private int imageColor = 0;
     private int imageErrorColor = 0;
-    private String dialogTitle = "";
+    private String textColor = "#333333";
+    private String lineColor = "#2782E5";
+    private String backgroundColor = "#ffffff";
     private String cancelText = "";
     private String sensorDescription = "";
     private String sensorErrorDescription = "";
@@ -45,7 +53,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.MyDialogStyle);
         setCancelable(false);
     }
 
@@ -67,6 +75,9 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintError = (TextView) v.findViewById(R.id.fingerprint_error);
         this.mFingerprintError.setText(this.errorText);
 
+        this.mfingerprint_container = (LinearLayout) v.findViewById(R.id.fingerprint_container);
+        this.mLine = (View) v.findViewById(R.id.line_division);
+
         final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
         mCancelButton.setText(this.cancelText);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +87,20 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             }
         });
 
-        getDialog().setTitle(this.dialogTitle);
+        try{
+           Drawable backgroundModal = mfingerprint_container.getBackground();
+            backgroundModal.setColorFilter(Color.parseColor(this.backgroundColor), PorterDuff.Mode.SRC_IN);
+
+            mLine.setBackgroundColor(Color.parseColor(this.lineColor));
+
+            mCancelButton.setTextColor(Color.parseColor(this.textColor));
+            mFingerprintError.setTextColor(Color.parseColor(this.textColor));
+            mFingerprintDescription.setTextColor(Color.parseColor(this.textColor));
+            mFingerprintSensorDescription.setTextColor(Color.parseColor(this.textColor));
+         }catch (Exception e){
+                
+         }
+
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
@@ -130,8 +154,16 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
             return;
         }
 
-        if (config.hasKey("title")) {
-            this.dialogTitle = config.getString("title");
+        if (config.hasKey("textColor")) {
+            this.textColor = config.getString("textColor");
+        }
+
+        if (config.hasKey("backgroundColor")) {
+            this.backgroundColor = config.getString("backgroundColor");
+        }
+
+        if (config.hasKey("lineColor")) {
+            this.lineColor = config.getString("lineColor");
         }
 
         if (config.hasKey("cancelText")) {
@@ -172,7 +204,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
     @Override
     public void onError(String errorString, int errorCode) {
-        this.mFingerprintError.setText(errorString);
         this.mFingerprintImage.setColorFilter(this.imageErrorColor);
         this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
     }
