@@ -2185,7 +2185,7 @@ react-native-passcode-auth@0.1.0:
   resolved "https://registry.yarnpkg.com/react-native-passcode-auth/-/react-native-passcode-auth-0.1.0.tgz#2d088ece450ec366037f14fd5ad18e79265b69a8"
 
 "react-native-touch-id@file:../..":
-  version "3.1.0"
+  version "4.4.1"
 
 react-native@^0.40.0:
   version "0.40.0"
@@ -2716,8 +2716,8 @@ time-stamp@^1.0.0:
   resolved "https://registry.yarnpkg.com/time-stamp/-/time-stamp-1.1.0.tgz#764a5a11af50561921b133f3b44e618687e0f5c3"
 
 tmpl@1.0.x:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.4.tgz#23640dd7b42d00433911140820e5cf440e521dd1"
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
 
 to-fast-properties@^1.0.3:
   version "1.0.3"
