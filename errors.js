@@ -72,9 +72,6 @@ const getError = (code) => {
   case codes.iOSCodes.LAErrorUserFallback:
     return errors.USER_FALLBACK;
 
-  case codes.iOSCodes.LAErrorTouchIDLockout:
-    return errors.LOCKOUT;
-
   default:
     return errors.UNKNOWN_ERROR;
   }
