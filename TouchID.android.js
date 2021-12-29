@@ -10,8 +10,8 @@ export default {
         (error, code) => {
           return reject(createError(config, error, code));
         },
-        (biometryType) => {
-          return resolve(biometryType);
+        success => {
+          return resolve(true);
         }
       );
     });

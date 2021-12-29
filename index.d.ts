@@ -2,7 +2,7 @@ declare module 'react-native-touch-id' {
     /**
      * The supported biometry type
      */
-    type BiometryType = 'FaceID' | 'TouchID' | 'Fingerprint';
+    type BiometryType = 'FaceID' | 'TouchID';
   
     /**
      * Base config to pass to `TouchID.isSupported` and `TouchID.authenticate`
@@ -100,7 +100,7 @@ declare module 'react-native-touch-id' {
        * @param reason String that provides a clear reason for requesting authentication.
        * @param config Configuration object for more detailed dialog setup
        */
-      authenticate(reason?: string, config?: AuthenticateConfig): Promise<true>;
+      authenticate(reason?: string, config?: AuthenticateConfig);
       /**
        * 
        * @param config - Returns a `Promise` that rejects if TouchID is not supported. On iOS resolves with a `biometryType` `String` of `FaceID` or `TouchID`

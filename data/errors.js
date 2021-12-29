@@ -7,7 +7,6 @@ const codes = {
     LAErrorPasscodeNotSet: 'LAErrorPasscodeNotSet',
     LAErrorTouchIDNotAvailable: 'LAErrorTouchIDNotAvailable',
     LAErrorTouchIDNotEnrolled: 'LAErrorTouchIDNotEnrolled',
-    LAErrorTouchIDLockout: 'LAErrorTouchIDLockout',
     RCTTouchIDNotSupported: 'RCTTouchIDNotSupported',
     RCTTouchIDUnknownError: 'RCTTouchIDUnknownError'
   },
@@ -55,9 +54,6 @@ const iOSErrors = {
   },
   [codes.iOSCodes.LAErrorTouchIDNotEnrolled]: {
     message: 'Authentication could not start because Touch ID has no enrolled fingers.'
-  },
-  [codes.iOSCodes.LAErrorTouchIDLockout]: {
-    message: 'Authentication failed because of too many failed attempts.'
   },
   [codes.iOSCodes.RCTTouchIDUnknownError]: {
     message: 'Could not authenticate for an unknown reason.'
