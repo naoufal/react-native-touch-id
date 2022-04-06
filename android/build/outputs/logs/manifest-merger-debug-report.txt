@@ -1,0 +1,41 @@
+-- Merging decision tree log ---
+manifest
+ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+	package
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:70-97
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+	android:versionCode
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:1-4:12
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.USE_FINGERPRINT
+ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:3:5-75
+	android:name
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:3:23-72
+uses-sdk
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		ADDED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+		INJECTED from D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml

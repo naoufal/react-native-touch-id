@@ -1,0 +1,17 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.rnfingerprint"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+8-->D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="30" />
+9-->D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+11-->D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:3:5-75
+11-->D:\ETC\app\node_modules\react-native-touch-id\android\src\main\AndroidManifest.xml:3:23-72
+12
+13</manifest>

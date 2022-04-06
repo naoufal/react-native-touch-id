@@ -1,0 +1,19 @@
+<style
+        name="dialog">
+    <!-- title encapsulating main part (backgroud) of custom alertdialog -->
+    <item
+            name="android:windowFrame">@null</item>
+    <!-- turn off any drawable used to draw a frame on the window -->
+    <item
+            name="android:windowBackground">@null</item>
+    <!-- turn off any drawable used to draw a frame on the window -->
+    <item
+            name="android:windowIsFloating">true</item>
+    <!-- float the window so it does not fill the screen -->
+    <item
+            name="android:windowNoTitle">true</item>
+    <!-- remove the title bar we make our own-->
+    <item
+            name="android:windowContentOverlay">@null</item>
+    <!-- remove the shadow from under the title bar -->
+</style>

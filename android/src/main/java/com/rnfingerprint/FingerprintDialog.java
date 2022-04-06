@@ -13,6 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import android.view.Window;
+import android.view.WindowManager;
+
 import com.facebook.react.bridge.ReadableMap;
 
 public class FingerprintDialog extends DialogFragment implements FingerprintHandler.Callback {
@@ -46,13 +49,15 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setStyle(DialogFragment.STYLE_NORMAL, android.R.style.Theme_Material_Light_Dialog);
-        setCancelable(false);
+       // setCancelable(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View v = inflater.inflate(R.layout.fingerprint_dialog, container, false);
-
+        getDialog().setCanceledOnTouchOutside(false);
+        getDialog().getWindow().setBackgroundDrawableResource(R.drawable.bg_touch_id_xml);
+        //getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
         mFingerprintDescription.setText(this.authReason);
 
