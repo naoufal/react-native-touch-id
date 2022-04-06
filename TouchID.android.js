@@ -19,12 +19,12 @@ export default {
 
   authenticate(reason, config) {
     var DEFAULT_CONFIG = {
-      title: 'Authentication Required',
-      imageColor: '#1306ff',
-      imageErrorColor: '#ff0000',
-      sensorDescription: 'Touch sensor',
-      sensorErrorDescription: 'Failed',
-      cancelText: 'Cancel',
+      title: '',
+      imageColor: '',
+      imageErrorColor: '',
+      sensorDescription: '',
+      sensorErrorDescription: '',
+      cancelText: '',
       unifiedErrors: false
     };
     var authReason = reason ? reason : ' ';
