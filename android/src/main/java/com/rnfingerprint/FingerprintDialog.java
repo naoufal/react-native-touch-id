@@ -25,7 +25,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private FingerprintHandler mFingerprintHandler;
     private boolean isAuthInProgress;
 
+    private final int TOO_MANY_ATTEMPT_CODE = 7;
+
     private ImageView mFingerprintImage;
+    private TextView mFingerprintDescription;
     private TextView mFingerprintSensorDescription;
     private TextView mFingerprintError;
 
@@ -36,6 +39,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private String cancelText = "";
     private String sensorDescription = "";
     private String sensorErrorDescription = "";
+    private String tooManyAttempError = "";
     private String errorText = "";
 
     @Override
@@ -58,13 +62,13 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         getDialog().setCanceledOnTouchOutside(false);
         getDialog().getWindow().setBackgroundDrawableResource(R.drawable.bg_touch_id_xml);
         //getDialog().getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        final TextView mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
-        mFingerprintDescription.setText(this.authReason);
+        this.mFingerprintDescription = (TextView) v.findViewById(R.id.fingerprint_description);
+        this.mFingerprintDescription.setText(this.authReason);
 
         this.mFingerprintImage = (ImageView) v.findViewById(R.id.fingerprint_icon);
-        if (this.imageColor != 0) {
-            this.mFingerprintImage.setColorFilter(this.imageColor);
-        }
+//        if (this.imageColor != 0) {
+//            this.mFingerprintImage.setColorFilter(this.imageColor);
+//        }
 
         this.mFingerprintSensorDescription = (TextView) v.findViewById(R.id.fingerprint_sensor_description);
         this.mFingerprintSensorDescription.setText(this.sensorDescription);
@@ -158,6 +162,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         if (config.hasKey("imageErrorColor")) {
             this.imageErrorColor = config.getInt("imageErrorColor");
         }
+
+        if (config.hasKey("sensorTooManyAttemptDescription")) {
+            this.tooManyAttempError = config.getString("sensorTooManyAttemptDescription");
+        }
     }
 
     public interface DialogResultListener {
@@ -177,9 +185,15 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
     @Override
     public void onError(String errorString, int errorCode) {
-        this.mFingerprintError.setText(errorString);
-        this.mFingerprintImage.setColorFilter(this.imageErrorColor);
-        this.mFingerprintSensorDescription.setText(this.sensorErrorDescription);
+        this.mFingerprintError.setText(errorString + "" + errorCode);
+//        this.mFingerprintImage.setColorFilter(this.imageErrorColor);
+      if (errorCode == TOO_MANY_ATTEMPT_CODE) {
+          this.mFingerprintDescription.setText(this.authReason);
+          this.mFingerprintSensorDescription.setText(this.tooManyAttempError);
+          return;
+      }
+      this.mFingerprintDescription.setText(this.sensorErrorDescription);
+//      this.mFingerprintDescription.setTextColor(this.imageErrorColor);
     }
 
     @Override
