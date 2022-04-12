@@ -24,19 +24,19 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
     private DialogResultListener dialogCallback;
     private FingerprintHandler mFingerprintHandler;
     private boolean isAuthInProgress;
-
+    private Button mCancelButton;
     private final int TOO_MANY_ATTEMPT_CODE = 7;
 
     private ImageView mFingerprintImage;
     private TextView mFingerprintDescription;
     private TextView mFingerprintSensorDescription;
     private TextView mFingerprintError;
-
     private String authReason;
     private int imageColor = 0;
     private int imageErrorColor = 0;
     private String dialogTitle = "";
     private String cancelText = "";
+    private String cancelTextTooManyAttempt = "";
     private String sensorDescription = "";
     private String sensorErrorDescription = "";
     private String tooManyAttempError = "";
@@ -76,9 +76,9 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintError = (TextView) v.findViewById(R.id.fingerprint_error);
         this.mFingerprintError.setText(this.errorText);
 
-        final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
-        mCancelButton.setText(this.cancelText);
-        mCancelButton.setOnClickListener(new View.OnClickListener() {
+        this.mCancelButton = (Button) v.findViewById(R.id.cancel_button);
+        this.mCancelButton.setText(this.cancelText);
+        this.mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onCancelled();
@@ -91,7 +91,6 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
                 if (keyCode != KeyEvent.KEYCODE_BACK || mFingerprintHandler == null) {
                     return false; // pass on to be processed as normal
                 }
-
                 onCancelled();
                 return true; // pretend we've processed it
             }
@@ -166,6 +165,9 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         if (config.hasKey("sensorTooManyAttemptDescription")) {
             this.tooManyAttempError = config.getString("sensorTooManyAttemptDescription");
         }
+        if (config.hasKey("cancelTextTooManyAttempt")) {
+            this.cancelTextTooManyAttempt = config.getString("cancelTextTooManyAttempt");
+        }
     }
 
     public interface DialogResultListener {
@@ -190,8 +192,10 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
       if (errorCode == TOO_MANY_ATTEMPT_CODE) {
           this.mFingerprintDescription.setText(this.authReason);
           this.mFingerprintSensorDescription.setText(this.tooManyAttempError);
+          this.mCancelButton.setText(this.cancelTextTooManyAttempt);
           return;
       }
+
       this.mFingerprintDescription.setText(this.sensorErrorDescription);
 //      this.mFingerprintDescription.setTextColor(this.imageErrorColor);
     }
