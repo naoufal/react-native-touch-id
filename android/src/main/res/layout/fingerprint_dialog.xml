@@ -59,6 +59,7 @@
         android:layout_gravity="center_horizontal"
         android:background="#ffffff"
         android:layout_margin="15dp"
+        android:textAllCaps="false"
         android:text="Cancel"
         android:textColor="#1F5CAB" />
 
