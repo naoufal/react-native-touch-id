@@ -6,6 +6,12 @@
 
 RCT_EXPORT_MODULE();
 
+RCT_EXPORT_METHOD(invalidate) {
+    LAContext *context = [[LAContext alloc] init];
+    
+    [context invalidate];
+}
+
 RCT_EXPORT_METHOD(isSupported: (NSDictionary *)options
                   callback: (RCTResponseSenderBlock)callback)
 {
