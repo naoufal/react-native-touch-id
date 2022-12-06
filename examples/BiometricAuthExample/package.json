@@ -8,7 +8,7 @@
 	},
 	"dependencies": {
 		"react": "16.0.0",
-		"react-native": "0.50.1",
+		"react-native": "0.70.6",
 		"react-native-passcode-auth": "0.1.0",
 		"react-native-touch-id": "../.."
 	},
