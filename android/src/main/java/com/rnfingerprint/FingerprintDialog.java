@@ -28,6 +28,8 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
     private String authReason;
     private int imageColor = 0;
+    private int cancelTextColor = 0;
+    private int cancelButtonColor = 0;
     private int imageErrorColor = 0;
     private String dialogTitle = "";
     private String cancelText = "";
@@ -68,6 +70,12 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintError.setText(this.errorText);
 
         final Button mCancelButton = (Button) v.findViewById(R.id.cancel_button);
+        if (this.cancelTextColor != 0) {
+            mCancelButton.setTextColor(this.cancelTextColor);
+        }
+        if (this.cancelButtonColor != 0) {
+            mCancelButton.setBackgroundColor(this.cancelButtonColor);
+        }
         mCancelButton.setText(this.cancelText);
         mCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +144,14 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
 
         if (config.hasKey("cancelText")) {
             this.cancelText = config.getString("cancelText");
+        }
+
+        if (config.hasKey("cancelTextColor")) {
+            this.cancelTextColor = config.getInt("cancelTextColor");
+        }
+
+        if (config.hasKey("cancelButtonColor")) {
+            this.cancelButtonColor = config.getInt("cancelButtonColor");
         }
 
         if (config.hasKey("sensorDescription")) {

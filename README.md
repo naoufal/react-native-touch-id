@@ -177,6 +177,8 @@ Returns a `Promise` object.
   - `sensorDescription` - **Android** - text shown next to the fingerprint image
   - `sensorErrorDescription` - **Android** - text shown next to the fingerprint image after failed attempt
   - `cancelText` - **Android** - cancel button text
+  - `cancelTextColor` - **Android** - cancel button text color
+  - `cancelButtonColor` - **Android** - cancel button color
   - `fallbackLabel` - **iOS** - by default specified 'Show Password' label. If set to empty string label is invisible.
   - `unifiedErrors` - return unified error messages (see below) (default = false)
   - `passcodeFallback` - **iOS** - by default set to false. If set to true, will allow use of keypad passcode.
@@ -191,6 +193,8 @@ const optionalConfigObject = {
   sensorDescription: 'Touch sensor', // Android
   sensorErrorDescription: 'Failed', // Android
   cancelText: 'Cancel', // Android
+  cancelTextColor: '#ffffff', // Android
+  cancelButtonColor: '#e00606', // Android
   fallbackLabel: 'Show Passcode', // iOS (if empty, then label is hidden)
   unifiedErrors: false, // use unified error messages (default false)
   passcodeFallback: false, // iOS - allows the device to fall back to using the passcode, if faceid/touch is not available. this does not mean that if touchid/faceid fails the first few times it will revert to passcode, rather that if the former are not enrolled, then it will use the passcode.

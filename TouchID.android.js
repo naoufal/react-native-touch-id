@@ -25,15 +25,21 @@ export default {
       sensorDescription: 'Touch sensor',
       sensorErrorDescription: 'Failed',
       cancelText: 'Cancel',
+      cancelTextColor: '#ffffff',
+      cancelButtonColor: '#6200ee',
       unifiedErrors: false
     };
     var authReason = reason ? reason : ' ';
     var authConfig = Object.assign({}, DEFAULT_CONFIG, config);
     var imageColor = processColor(authConfig.imageColor);
     var imageErrorColor = processColor(authConfig.imageErrorColor);
+    var cancelTextColor = processColor(authConfig.cancelTextColor);
+    var cancelButtonColor = processColor(authConfig.cancelButtonColor);
 
     authConfig.imageColor = imageColor;
     authConfig.imageErrorColor = imageErrorColor;
+    authConfig.cancelTextColor = cancelTextColor;
+    authConfig.cancelButtonColor = cancelButtonColor;
 
     return new Promise((resolve, reject) => {
       NativeTouchID.authenticate(
