@@ -3298,8 +3298,8 @@ react-native-passcode-auth@0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/react-native-passcode-auth/-/react-native-passcode-auth-0.1.0.tgz#2d088ece450ec366037f14fd5ad18e79265b69a8"
 
-"react-native-touch-id@file:../..":
-  version "3.1.0"
+react-native-touch-id@../..:
+  version "4.4.1"
 
 react-native@0.50.1:
   version "0.50.1"
