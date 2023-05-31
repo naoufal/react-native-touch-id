@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/naoufal/react-native-touch-id",
   "devDependencies": {
-    "eslint": "2.0.0",
-    "eslint-plugin-react": "2.7.1"
+    "eslint": "^8.41.0",
+    "eslint-plugin-react": "^7.32.2"
   }
 }
