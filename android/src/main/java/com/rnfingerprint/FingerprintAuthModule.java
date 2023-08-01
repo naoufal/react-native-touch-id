@@ -6,6 +6,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
+import android.util.Log;
 
 import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.LifecycleEventListener;
@@ -24,6 +25,8 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
     private boolean isAppActive;
 
     public static boolean inProgress = false;
+
+    private FingerprintDialog fingerprintDialog;
 
     public FingerprintAuthModule(final ReactApplicationContext reactContext) {
         super(reactContext);
@@ -96,7 +99,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
         final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
 
-        final FingerprintDialog fingerprintDialog = new FingerprintDialog();
+        fingerprintDialog = new FingerprintDialog();
         fingerprintDialog.setCryptoObject(cryptoObject);
         fingerprintDialog.setReasonForAuthentication(reason);
         fingerprintDialog.setAuthConfig(authConfig);
@@ -143,16 +146,25 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     @Override
     public void onHostResume() {
+        Log.d("onHostResume", "onHostResume: ");
         isAppActive = true;
     }
 
     @Override
     public void onHostPause() {
         isAppActive = false;
+        if(fingerprintDialog != null && fingerprintDialog.isVisible()){
+            fingerprintDialog.dismiss();
+            inProgress = false;
+        }
     }
 
     @Override
     public void onHostDestroy() {
         isAppActive = false;
+        if(fingerprintDialog != null && fingerprintDialog.isVisible()){
+            fingerprintDialog.dismiss();
+            inProgress = false;
+        }
     }
 }
