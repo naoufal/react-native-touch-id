@@ -190,6 +190,7 @@ public class FingerprintDialog extends DialogFragment implements FingerprintHand
         this.mFingerprintError.setText(errorString + "" + errorCode);
 //        this.mFingerprintImage.setColorFilter(this.imageErrorColor);
       if (errorCode == TOO_MANY_ATTEMPT_CODE) {
+          this.dialogCallback.onError(errorString, errorCode);
           this.mFingerprintDescription.setText(this.authReason);
           this.mFingerprintSensorDescription.setText(this.tooManyAttempError);
           this.mCancelButton.setText(this.cancelTextTooManyAttempt);

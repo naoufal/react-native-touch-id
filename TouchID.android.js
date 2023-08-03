@@ -1,7 +1,9 @@
-import { NativeModules, processColor } from 'react-native';
+import { NativeModules, processColor, NativeEventEmitter } from 'react-native';
 import { androidApiErrorMap, androidModuleErrorMap } from './data/errors';
 import { getError, TouchIDError, TouchIDUnifiedError } from './errors';
 const NativeTouchID = NativeModules.FingerprintAuth;
+
+let listener;
 
 export default {
   isSupported(config) {
@@ -47,6 +49,15 @@ export default {
         }
       );
     });
+  },
+  addListener(callback) {
+    const event = new NativeEventEmitter(NativeTouchID);
+    listener = event.addListener('onErrorListener', (ev) => {
+      callback(createError({}, ev.errorString, ev.errorCode));
+    });
+  },
+  remove() {
+    listener.remove();
   }
 };
 

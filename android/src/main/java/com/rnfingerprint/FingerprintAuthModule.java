@@ -13,6 +13,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReactContext;
 
 import javax.crypto.Cipher;
 
@@ -25,8 +26,13 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
 
     public static boolean inProgress = false;
 
+    private FingerprintDialog fingerprintDialog;
+
+    private ReactContext context;
+
     public FingerprintAuthModule(final ReactApplicationContext reactContext) {
         super(reactContext);
+        context = reactContext;
 
         reactContext.addLifecycleEventListener(this);
     }
@@ -94,7 +100,7 @@ public class FingerprintAuthModule extends ReactContextBaseJavaModule implements
         // TODO: migrate to FingerprintManagerCompat
         final FingerprintManager.CryptoObject cryptoObject = new FingerprintManager.CryptoObject(cipher);
 
-        final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback);
+        final DialogResultHandler drh = new DialogResultHandler(reactErrorCallback, reactSuccessCallback, context);
 
         final FingerprintDialog fingerprintDialog = new FingerprintDialog();
         fingerprintDialog.setCryptoObject(cryptoObject);
