@@ -79,6 +79,11 @@ iOS and Android differ slightly in their TouchID authentication.
 
 On Android you can customize the title and color of the pop-up by passing in the **optional config object** with a color and title key to the `authenticate` method. Even if you pass in the config object, iOS **does not** allow you change the color nor the title of the pop-up. iOS does support `passcodeFallback` as an option, which when set to `true` will allow users to use their device pin - useful for people with Face / Touch ID disabled. Passcode fallback only happens if the device does not have touch id or face id enabled.
 
+### passcodeFallback will be enabled after face ID fails ( only in iOS )
+
+Now, I have added the `passcodeFallback` after the face ID fails. So if user fail to login via faceID or Touch ID than it will give
+one option for enter passcode. previoously it was giving error but now it is working. so user can enter the device PIN and it will give the success response
+
 Error handling is also different between the platforms, with iOS currently providing much more descriptive error codes.
 
 ### App Permissions
